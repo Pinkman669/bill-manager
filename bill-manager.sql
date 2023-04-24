@@ -13,3 +13,14 @@ CREATE TABLE friends (
     FOREIGN KEY (user1_id) REFERENCES users(id),
     FOREIGN KEY (user2_id) REFERENCES users(id)
 );
+
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    msg TEXT,
+    name VARCHAR(255) NOT NULL,
+    date DATE NOT NULL,
+    method VARCHAR(255) NOT NULL,
+    amount INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
