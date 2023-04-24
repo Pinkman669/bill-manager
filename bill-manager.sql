@@ -24,3 +24,28 @@ CREATE TABLE events (
     amount INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE records (
+    id SERIAL PRIMARY KEY,
+    requestor_id INTEGER NOT NULL,
+    receiver_id INTEGER NOT NULL,
+    event_id INTEGER NOT NULL,
+    amount INTEGER NOT NULL,
+    due BOOLEAN,
+    accepted BOOLEAN,
+    FOREIGN KEY (requestor_id) REFERENCES users(id),
+    FOREIGN KEY (receiver_id) REFERENCES users(id),
+    FOREIGN KEY (event_id) REFERENCES events(id)
+);
+
+CREATE TABLE groups (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE user_group (
+    group_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (group_id) REFERENCES groups(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+)
