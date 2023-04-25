@@ -1,0 +1,15 @@
+.container-fluid{
+    max-width: 1240px;
+}
+
+.login-signup{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+}
+
+.sign-up-panel{
+    display: flex;
+    flex-direction: column;
+}
