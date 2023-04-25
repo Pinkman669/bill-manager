@@ -5,19 +5,11 @@ document
 		e.preventDefault();
 
 		const form = e.target;
-		let formObject = {
-			email: form.email.value,
-			password: form.password.value,
-			nickname: form.nickname.value,
-			image: form.image.value
-		};
+		const formData = new FormData(form);
 
 		const res = await fetch('/sign', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(formObject)
+			body: formData
 		});
 		form.reset();
 
