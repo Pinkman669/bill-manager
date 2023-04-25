@@ -39,17 +39,20 @@
                         </label>
                     </div>
                     <label for="email">Email: </label>
-                    <input name="email" type="email" placeholder="Email" />
+                    <input name="email" type="email" placeholder="Email" required/>
                     <label for="password">Password: </label>
-                    <input name="password" type="password" placeholder="PASSWORD" minlength="10" />
+                    <input name="password" type="password" placeholder="PASSWORD" minlength="10" required/>
                     <label for="confirm-password">Confirm Password</label>
-                    <input name="confirm-password" type="password" placeholder="PASSWORD" minlength="10" />
+                    <input name="confirm-password" type="password" placeholder="PASSWORD" minlength="10" required/>
                     <label for="nickname">Nickname: </label>
-                    <input name="nickname" type="text" placeholder="Your name" />
+                    <input name="nickname" type="text" placeholder="Your name" required/>
                     <button type="submit">Sign up</button>
                 </div>
-                <a href="/login.html">Already a member?</a>
             </form>
+            <a href="/login.html">Already a member?</a>
+            <div class="e-msg-div">
+                <p id="e-msg" class="alert alert-danger" role="alert"></p>
+            </div>
         </div>
     </div>
 

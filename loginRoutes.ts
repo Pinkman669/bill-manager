@@ -4,6 +4,7 @@ import { client } from './main';
 import { logger } from './logger';
 import { form } from './main'
 import formidable from 'formidable';
+import { hashPassword, checkPassword } from './hash';
 
 export const loginRoutes = express.Router();
 
@@ -11,20 +12,35 @@ loginRoutes.post('/sign', signIn); // sign-in route
 
 export async function signIn(req: Request, res: Response) {
 	try {
-		form.parse(req, async (err, fields, files)=>{
-            await client.query(
-                'INSERT INTO users (email, password, nickname, image) VALUES ($1, $2, $3, $4)',[
-                    fields.email as string,
-                    fields.password as string,
-                    fields.nickname as string,
-                    (files.image as formidable.File)?.newFilename
-                ]
-            );
+        form.parse(req, async (err, fields, files)=>{
+            // check existed user
+            const checkUser = await client.query('SELECT * FROM users WHERE email = $1',[
+                fields.email as String
+            ])
+            if (checkUser.rowCount){
+                res.json({success: false, msg: 'User existed.'})
+                return
+            }
+            // Add user
+            hashPassword(fields.password as string).then(async (hashed)=>{
+                await client.query(
+                    'INSERT INTO users (email, password, nickname, image) VALUES ($1, $2, $3, $4)',[
+                        fields.email as string,
+                        hashed as string,
+                        fields.nickname as string,
+                        (files.image as formidable.File)?.newFilename
+                    ]
+                );
+            })
+            logger.info('sign up success')
+            res.json({ success: true });
         })
-        logger.info('sign up success')
-		res.json({ success: true });
 	} catch (e) {
 		logger.error(e);
-		res.json({ success: false });
+		res.json({ success: false , msg: '[Err001]'});
 	}
 }
+
+
+
+checkPassword; // placeholder only
