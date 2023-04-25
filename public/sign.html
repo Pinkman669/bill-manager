@@ -18,23 +18,25 @@
                 <a class="navbar-brand">Home Logo</a>
                 <ul class="nav justify-content-end">
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Login</a>
+                      <a class="nav-link" href="/login.html">Login</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Sign up</a>
+                      <a class="nav-link" href="/sign.html">Sign up</a>
                     </li>
                   </ul>
             </div>
         </nav>
         <div class="main-block">
-            <h1>Sign Up</h1>
+            <h1 class="title">Sign Up</h1>
         </div>
         <div class="login-signup">
             <form id="sign-up-form">
                 <div class="sign-up-panel">
                     <div class="profile-pic-div">
-
-                        <input type="file" id="image">
+                        <img src="image/default_profile.jpg" alt="profile-image" class="profile-pic">
+                        <input type="file" id="image" name="image">
+                        <label for="image" class="image-upload-btn">
+                        </label>
                     </div>
                     <label for="email">Email: </label>
                     <input name="email" type="email" placeholder="Email">
