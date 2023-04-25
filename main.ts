@@ -1,9 +1,12 @@
 import express from 'express';
 import expressSession from 'express-session';
 // import { Request, Response } from 'express'
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import { logger } from './logger';
-import pg from 'pg'
+import pg from 'pg';
+import formidable from 'formidable';
+import fs from 'fs';
+import { loginRoutes } from './loginRoutes';
 
 declare module 'express-session' {
 	interface SessionData {
@@ -13,13 +16,13 @@ declare module 'express-session' {
 }
 
 // Configure psql
-dotenv.config()
+dotenv.config();
 export const client = new pg.Client({
-    database: process.env.DB_NAME,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD
+	database: process.env.DB_NAME,
+	user: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD
 });
-client.connect()
+client.connect();
 
 //  Configure express
 const app = express();
@@ -34,8 +37,21 @@ app.use(
 	})
 );
 
+// Configure formidable
+const uploadDir = 'uploads';
+fs.mkdirSync(uploadDir, { recursive: true });
+
+export const form = formidable({
+	uploadDir: uploadDir,
+	keepExtensions: true,
+	maxFiles: 1,
+	maxFileSize: 1024 ** 2 * 20,
+	filter: (part) => part.mimetype?.startsWith('image/') || false
+});
+
 // Start
 app.use(express.static('public'));
+app.use('/', loginRoutes);
 
 const PORT = 8080;
 app.listen(PORT, () => {

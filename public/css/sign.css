@@ -1,65 +1,65 @@
 .container-fluid {
-    max-width: 1240px;
+	max-width: 1240px;
 }
 
 .main-block {
-    background-color: #FFCD29;
-    width: 100%;
-    height: 400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	background-color: #ffcd29;
+	width: 100%;
+	height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-@media screen and (max-width: 400px){
-    div.main-block {
-        height: 250px;
-    }
+@media screen and (max-width: 400px) {
+	div.main-block {
+		height: 250px;
+	}
 }
 
 .login-signup {
-    display: flex;
-    justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 
 .sign-up-panel {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin-top: 80px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	margin-top: 80px;
 }
 
 .profile-pic {
-    width: 100%;
-    border: solid black 3px;
-    border-radius: 50%;
+	width: 100%;
+	border: solid black 3px;
+	border-radius: 50%;
 }
 
 .profile-pic-div {
-    position: absolute;
-    top: -75%;
+	position: absolute;
+	top: -75%;
 }
 
 #image {
-    display: none;
+	display: none;
 }
 
 .image-upload-btn {
-    position: absolute;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    right: -50%;
-    color: white;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	right: -50%;
+	color: white;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
 }
 
-.image-upload-btn:hover{
-    background: rgba(0, 0, 0, .7);
+.image-upload-btn:hover {
+	background: rgba(0, 0, 0, 0.7);
 }
 
-.sign-up-panel > input{
-    margin: 5px 0;
+.sign-up-panel > input {
+	margin: 5px 0;
 }
