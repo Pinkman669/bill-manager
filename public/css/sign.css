@@ -8,7 +8,7 @@
 	height: 400px;
 	display: flex;
 	justify-content: center;
-	align-items: center;
+	padding: 50px;
 }
 
 @media screen and (max-width: 400px) {
@@ -31,13 +31,19 @@
 
 .profile-pic {
 	width: 100%;
-	border: solid black 3px;
-	border-radius: 50%;
+	height: 100%;
 }
 
 .profile-pic-div {
 	position: absolute;
-	top: -75%;
+	top: -30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 150px;
+	height: 150px;
+	border: solid black 3px;
+	border-radius: 50%;
+	overflow: hidden;
 }
 
 #image {
@@ -46,18 +52,16 @@
 
 .image-upload-btn {
 	position: absolute;
-	top: 50%;
-	transform: translate(-50%, -50%);
+	top: 75%;
+	transform: translateX(-50%);
 	right: -50%;
 	color: white;
 	text-align: center;
 	width: 100%;
-	height: 100%;
-	border-radius: 50%;
-}
-
-.image-upload-btn:hover {
+	height: 40px;
 	background: rgba(0, 0, 0, 0.7);
+	font-size: 15px;
+	cursor: pointer;
 }
 
 .sign-up-panel > input {
