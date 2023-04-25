@@ -1,9 +1,9 @@
 import express from 'express';
 import expressSession from 'express-session';
 // import { Request, Response } from 'express'
-// import dotenv from 'dotenv'
+import dotenv from 'dotenv'
 import { logger } from './logger';
-// import pg from 'pg'
+import pg from 'pg'
 
 declare module 'express-session' {
 	interface SessionData {
@@ -13,13 +13,13 @@ declare module 'express-session' {
 }
 
 // Configure psql
-// dotenv.config()
-// export const client = new pg.Client({
-//     database: process.env.DB_NAME,
-//     user: process.env.DB_USERNAME,
-//     password: process.env.DB_PASSWORD
-// });
-// client.connect()
+dotenv.config()
+export const client = new pg.Client({
+    database: process.env.DB_NAME,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD
+});
+client.connect()
 
 //  Configure express
 const app = express();
