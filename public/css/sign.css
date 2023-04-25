@@ -2,11 +2,15 @@
     max-width: 1240px;
 }
 
+.main-block{
+    background-color: #FFCD29;
+    width: 100%;
+    height: 400px;
+}
+
 .login-signup{
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
+    justify-content: center;
 }
 
 .sign-up-panel{

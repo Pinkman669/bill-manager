@@ -13,10 +13,29 @@
 
 <body>
     <div class="container-fluid">
-        <div class="login-signup">
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand">Home Logo</a>
+                <ul class="nav justify-content-end">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Login</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Sign up</a>
+                    </li>
+                  </ul>
+            </div>
+        </nav>
+        <div class="main-block">
             <h1>Sign Up</h1>
+        </div>
+        <div class="login-signup">
             <form id="sign-up-form">
                 <div class="sign-up-panel">
+                    <div class="profile-pic-div">
+
+                        <input type="file" id="image">
+                    </div>
                     <label for="email">Email: </label>
                     <input name="email" type="email" placeholder="Email">
                     <label for="password">Password: </label>
