@@ -72,18 +72,7 @@ export const form = formidable({
 // Start
 app.use(express.static('public'));
 app.use('/', loginRoutes); // Login and sign up routes
-app.use('/member', memberRoutes); // routes about member function
-
-
-// // Login guard
-// export function isLoggedIn(req: express.Request, res: express.Response, next: express.NextFunction){
-// 	if (req.session.user){
-// 		next()
-// 	} else{
-// 		res.status(404).sendFile(path.resolve('./public/404.html'))
-// 	}
-// }
-
+app.use('/home', memberRoutes); // routes about member function
 
 // Redirecting
 app.use((req: express.Request, res: express.Response) => {
