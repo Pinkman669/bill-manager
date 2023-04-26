@@ -74,13 +74,13 @@ app.use(express.static('public'));
 app.use('/', loginRoutes); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 
+// admin.html should be inside protected
+app.use(isLoggedIn, express.static("protected"));
+
 // Redirecting
 app.use((req: express.Request, res: express.Response) => {
 	res.sendFile(path.resolve('./public/404.html'));
 });
-
-// admin.html should be inside protected
-app.use(isLoggedIn, express.static("protected"));
 
 const PORT = 8080;
 app.listen(PORT, () => {
