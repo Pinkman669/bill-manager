@@ -4,6 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
+		"hash": "ts-node hash.ts",
 		"start": "ts-node-dev main.ts",
 		"format": "prettier --write .",
 		"test": "echo \"Error: no test specified\" && exit 1"

@@ -15,3 +15,11 @@ export async function checkPassword(
     const isMatched: boolean = await bcrypt.compare(plainPassword, hashPassword)
     return isMatched
 }
+
+// async function hash(){
+//    const result = await hashPassword("12345678910");
+//    console.log(result)
+// }
+
+// hash();
+

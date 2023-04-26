@@ -17,7 +17,7 @@ import grant from 'grant';
 declare module 'express-session' {
 	interface SessionData {
 		user?: string;
-		userID?: number;		
+		userID?: number;	
 	}
 }
 
