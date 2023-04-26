@@ -50,3 +50,14 @@
 .userdata-div > h4{
     margin: 15px 0;
 }
+
+.table a{
+    color: black;
+}
+
+.users-pic{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: inline-block;
+}
