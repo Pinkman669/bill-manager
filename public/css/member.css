@@ -1,0 +1,43 @@
+@import url('sign.css');
+
+
+.main-block{
+    justify-content: flex-start;
+}
+
+.container-fluid.member{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.member-profile{
+    display: flex;
+    align-items: flex-end;
+}
+
+.greet-div{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.member-pic-div{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid black;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 500px){
+    div.member-pic-div{
+        width: 80px;
+        height: 80px;
+    }
+    div.main-block{
+        padding: 20px;
+    }
+}

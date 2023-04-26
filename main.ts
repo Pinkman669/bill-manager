@@ -7,6 +7,7 @@ import formidable from 'formidable';
 import fs from 'fs';
 import { loginRoutes } from './loginRoutes';
 import path from 'path'
+import {memberRoutes} from './memberRoutes'
 
 declare module 'express-session' {
 	interface SessionData {
@@ -51,7 +52,8 @@ export const form = formidable({
 
 // Start
 app.use(express.static('public'));
-app.use('/', loginRoutes);
+app.use('/', loginRoutes); // Login and sign up routes
+app.use('/member', memberRoutes); // routes about member function
 
 
 // Login guard
