@@ -1,18 +1,17 @@
 // Load user info
-async function loadUser(){
+async function loadUser() {
     const res = await fetch('/member')
     const userInfo = await res.json()
     const username = document.querySelector('#greet-user')
-    const userPic = document.querySelector('.profile-pic')
+    const userPic = document.querySelector('.member-pic-div')
     // const balance = document.querySelector('#user-balance')
-    username.textContent = userInfo.user.nickname
-    if (userInfo.image){
-        userPic.setAttribute('src', userInfo.image)
-    }
+    username.textContent = userInfo.nickname
+    userPic.innerHTML += `<img src="${userInfo.image ? `uploads/${userInfo.image}` : `image/default_profile.jpg`}" 
+    alt="profile-image" class="profile-pic" />`
 }
 
 
 // Window onload function
-window.addEventListener('load', async ()=>{
+window.addEventListener('load', async () => {
     loadUser()
 })

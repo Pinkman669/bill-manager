@@ -39,7 +39,7 @@ app.use(
 );
 
 // Configure formidable
-const uploadDir = 'uploads';
+const uploadDir = 'public/uploads';
 fs.mkdirSync(uploadDir, { recursive: true });
 
 export const form = formidable({
