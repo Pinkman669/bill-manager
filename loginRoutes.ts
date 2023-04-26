@@ -33,7 +33,7 @@ export async function signIn(req: Request, res: Response) {
                 );
             })
             logger.info('sign up success')
-            res.json({ success: true });
+            res.json({ success: true , msg: 'Registered successfully!'});
         })
 	} catch (e) {
 		logger.error(e);

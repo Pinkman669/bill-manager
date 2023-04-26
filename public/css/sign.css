@@ -70,15 +70,14 @@
 	margin: 5px 0;
 }
 
-#e-msg{
-	margin-top: 5px;
+#res-msg{
+	margin-top: 15px;
 	width: 300px;
 	text-align: center;
 	font-weight: bold;
-	visibility: hidden;
 }
 
 /* visible class for js */
-.visible{
-	visibility: visible;
+.invisible{
+	display: hidden;
 }

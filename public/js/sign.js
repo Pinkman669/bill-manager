@@ -3,7 +3,7 @@ const imgDiv = document.querySelector('.profile-pic-div')
 const img = document.querySelector('.profile-pic')
 const file = document.querySelector('#image')
 const uploadBtn = document.querySelector('.image-upload-btn')
-const eMsg = document.querySelector('#e-msg')
+const resMsg = document.querySelector('#res-msg')
 
 // Sign up btn
 document
@@ -17,8 +17,9 @@ document
         const formData = new FormData(form);
         form.reset();
         if (password !== confirmPw){
-            eMsg.classList.add('visible')
-            eMsg.textContent = 'Password not match'
+            resMsg.classList.replace('alert-success', 'alert-danger')
+            resMsg.classList.remove('invisible')
+            resMsg.textContent = 'Password not match'
             return
         }
 
@@ -29,10 +30,13 @@ document
 
         const result = await res.json();
         if (result.success){
-            console.log('success')
+            resMsg.classList.replace('alert-danger', 'alert-success')
+            resMsg.classList.remove('invisible')
+            resMsg.textContent = result.msg
         } else{
-            eMsg.classList.add('visible')
-            eMsg.textContent = result.msg
+            resMsg.classList.replace('alert-success', 'alert-danger')
+            resMsg.classList.remove('invisible')
+            resMsg.textContent = result.msg
         }
     });
 
