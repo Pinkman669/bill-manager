@@ -39,7 +39,6 @@
 			<div class="container-fluid member">
 				<div class="member-profile">
 					<div class="member-pic-div">
-						<!-- <img src="image/default_profile.jpg" alt="profile-image" class="profile-pic" /> -->
 					</div>
 					<div class="greet-div">
 						<h2 id="greet">Welcome back,</h2>
@@ -49,6 +48,32 @@
 				<div class="balance-div">
 					<h3>Balance: $<span id="user-balance"></span></h3>
 				</div>
+			</div>
+		</div>
+		<div class="userdata-div">
+			<h4 id="user-owe">Owe (-): $</h4>
+			<div id="user-owe-div">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Users</th>
+							<th scope="col">Amount($)</th>
+						</tr>
+					</thead>
+					<tbody id="user-owe-detail"></tbody>
+				</table>
+			</div>
+			<h4 id="user-credit">Credit (+): $</h4>
+			<div id="user-credit-div">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Users</th>
+							<th scope="col">Amount($)</th>
+						</tr>
+					</thead>
+					<tbody id="user-credit-detail"></tbody>
+				</table>
 			</div>
 		</div>
 		<script

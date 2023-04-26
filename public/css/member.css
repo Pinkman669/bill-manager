@@ -42,3 +42,11 @@
         padding: 20px;
     }
 }
+
+.userdata-div{
+    padding: 20px 100px;
+}
+
+.userdata-div > h4{
+    margin: 15px 0;
+}
