@@ -6,18 +6,15 @@ import pg from 'pg';
 import formidable from 'formidable';
 import fs from 'fs';
 import { loginRoutes } from './loginRoutes';
-<<<<<<< HEAD
 import path from 'path'
 import {memberRoutes} from './memberRoutes'
-=======
 import { isLoggedIn } from './loginRoutes';
 import grant from 'grant';
->>>>>>> 2d387f8 (created login page)
 
 declare module 'express-session' {
 	interface SessionData {
 		user?: string;
-		userID?: number;	
+		userID?: number;		
 	}
 }
 
@@ -78,14 +75,14 @@ app.use('/', loginRoutes); // Login and sign up routes
 app.use('/member', memberRoutes); // routes about member function
 
 
-// Login guard
-export function isLoggedIn(req: express.Request, res: express.Response, next: express.NextFunction){
-	if (req.session.user){
-		next()
-	} else{
-		res.status(404).sendFile(path.resolve('./public/404.html'))
-	}
-}
+// // Login guard
+// export function isLoggedIn(req: express.Request, res: express.Response, next: express.NextFunction){
+// 	if (req.session.user){
+// 		next()
+// 	} else{
+// 		res.status(404).sendFile(path.resolve('./public/404.html'))
+// 	}
+// }
 
 
 // Redirecting
