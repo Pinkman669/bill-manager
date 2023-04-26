@@ -93,7 +93,7 @@ loginRoutes.get('/login/google', async (req:express.Request, res:express.Respons
     if(req.session){
         req.session['userID'] = user.id
         };
-        res.redirect('/landing.html')
+        res.redirect('/home.html')
     }
 )
 
