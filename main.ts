@@ -1,12 +1,12 @@
 import express from 'express';
 import expressSession from 'express-session';
-// import { Request, Response } from 'express'
 import dotenv from 'dotenv';
 import { logger } from './logger';
 import pg from 'pg';
 import formidable from 'formidable';
 import fs from 'fs';
 import { loginRoutes } from './loginRoutes';
+import path from 'path'
 
 declare module 'express-session' {
 	interface SessionData {
@@ -52,6 +52,22 @@ export const form = formidable({
 // Start
 app.use(express.static('public'));
 app.use('/', loginRoutes);
+
+
+// Login guard
+export function isLoggedIn(req: express.Request, res: express.Response, next: express.NextFunction){
+	if (req.session.user){
+		next()
+	} else{
+		res.status(404).sendFile(path.resolve('./public/404.html'))
+	}
+}
+
+
+// Redirecting
+app.use((req: express.Request, res: express.Response) => {
+	res.sendFile(path.resolve('./public/404.html'));
+});
 
 const PORT = 8080;
 app.listen(PORT, () => {

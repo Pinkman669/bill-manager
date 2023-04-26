@@ -22,16 +22,15 @@ export async function signIn(req: Request, res: Response) {
                 return
             }
             // Add user
-            hashPassword(fields.password as string).then(async (hashed)=>{
-                await client.query(
-                    'INSERT INTO users (email, password, nickname, image) VALUES ($1, $2, $3, $4)',[
-                        fields.email as string,
-                        hashed as string,
-                        fields.nickname as string,
-                        (files.image as formidable.File)?.newFilename
-                    ]
-                );
-            })
+            const hashedPw: string = await hashPassword(fields.password as string)
+            await client.query(
+                'INSERT INTO users (email, password, nickname, image) VALUES ($1, $2, $3, $4)',[
+                    fields.email as string,
+                    hashedPw,
+                    fields.nickname as string,
+                    (files.image as formidable.File)?.newFilename
+                ]
+            );
             logger.info('sign up success')
             res.json({ success: true , msg: 'Registered successfully!'});
         })

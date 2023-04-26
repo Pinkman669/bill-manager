@@ -15,4 +15,3 @@ export async function checkPassword(
     const isMatched: boolean = await bcrypt.compare(plainPassword, hashPassword)
     return isMatched
 }
-
