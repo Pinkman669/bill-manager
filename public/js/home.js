@@ -38,12 +38,6 @@ async function loadUser() {
     balanceTag.textContent = balance
 }
 
-// Log out
-export function logOut(){
-    document.querySelector('.logout-btn').addEventListener('click', async ()=>{
-        const res = await fetch('/member/logout')
-    })
-}
 
 
 // Window onload function

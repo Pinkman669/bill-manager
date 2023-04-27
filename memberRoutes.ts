@@ -2,17 +2,16 @@ import express from 'express';
 import { Request, Response } from 'express';
 import { client } from './main';
 import { logger } from './logger';
+import { isLoggedIn } from './loginRoutes';
 
 export const memberRoutes = express.Router()
 
-memberRoutes.get('/', getMember) // Member home page
-memberRoutes.get('/logout', logOut)
+memberRoutes.get('/', isLoggedIn,getMember) // Member home page
 
 
 export async function getMember(req: Request, res: Response) {
     try {
-        req.session.userID = 30 // Temp use only
-        const userID: number = req.session.userID
+        const userID = req.session.userID
         const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
             userID
         ])
@@ -35,15 +34,5 @@ export async function getMember(req: Request, res: Response) {
     } catch (e) {
         logger.error('[Err002] User not found' + e)
         res.json({ success: false, msg: '[ERR002]' })
-    }
-}
-
-export function logOut(req: Request, res: Response) {
-    try{
-        req.session.destroy((err)=> err)
-        res.redirect('/')
-    } catch (e){
-        logger.error('[Err003]' + e)
-        res.json({ success: false, msg: '[ERR003]' })
     }
 }
