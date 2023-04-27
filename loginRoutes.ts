@@ -101,7 +101,7 @@ loginRoutes.get('/login/google', async (req:express.Request, res:express.Respons
 
 loginRoutes.get('/logout',(req,res)=>{
     if(req.session){
-        delete req.session['user']
+        delete req.session['userID']
         delete req.session['email']
         logger.info('logout success')
         res.redirect('/')
