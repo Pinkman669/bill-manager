@@ -1,1 +1,11 @@
 @import url('sign.css');
+.container-fluid.member{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.member-profile{
+    display: flex;
+    align-items: flex-end;
+}
