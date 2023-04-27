@@ -39,8 +39,7 @@ async function loadUser() {
 }
 
 
-
 // Window onload function
 window.addEventListener('load', async () => {
-    loadUser()
+    await loadUser();
 })
