@@ -9,6 +9,7 @@ import { loginRoutes } from './loginRoutes';
 import path from 'path'
 import {memberRoutes} from './memberRoutes'
 import { isLoggedIn } from './loginRoutes';
+import { friendsRoutes } from './friendsRoutes';
 import grant from 'grant';
 
 declare module 'express-session' {
@@ -77,6 +78,8 @@ app.use('/'
 // 	next()} 
 ,loginRoutes); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
+
+app.use('/friends',friendsRoutes); // routes for friends record
 
 // admin.html should be inside protected
 app.use(isLoggedIn, express.static("protected"));
