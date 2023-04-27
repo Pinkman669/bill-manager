@@ -21,6 +21,6 @@ document
     if (status.success === false){
         document.querySelector("#invalid-message").textContent = "Incorrect email or password."
     }else{
-    window.location = '/landing.html'
+    window.location = '/home.html'
     };
   })
