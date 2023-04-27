@@ -1,0 +1,35 @@
+@import url('home.css');
+
+.container-fluid.history{
+    margin-top: 20px;
+}
+
+.filter-div{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.filter-div div:first-child{
+    display: flex;
+    align-items: baseline;
+}
+
+#filter-indicator{
+    padding: 0 10px;
+}
+
+.history-detail-div{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.events-amount-div{
+    display: flex;
+    align-items: flex-end;
+}
+
+.history-div > hr{
+    margin-top: 0;
+}

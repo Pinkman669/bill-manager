@@ -11,7 +11,6 @@ memberRoutes.get('/', isLoggedIn,getMember) // Member home page
 
 export async function getMember(req: Request, res: Response) {
     try {
-        // req.session.userID = 30 // Temp use only
         const userID = req.session.userID
         const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
             userID
