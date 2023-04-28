@@ -8,7 +8,7 @@ async function loadUser() {
    
     let balance = 0;
     // const balance = document.querySelector('#user-balance')
-    username.textContent = result.user.nickname
+    username.textContent = result.user[0].nickname
 
     for (let i in result.requestor) {
         friendTable.innerHTML += `
@@ -17,7 +17,7 @@ async function loadUser() {
                                     <a href="#" userID="${result.requestor[i].id}">${result.requestor[i].nickname}</a>
                                     <img class="users-pic" src="${result.requestor[i].image ? `uploads/${result.requestor[i].image}` : `image/default_profile.jpg`}">
                                 </th>   
-                                    <td>-${result.requestor[i].amount}</td>
+                                    <td> You own $ ${result.requestor[i].amount}</td>
                                 </tr>
                                 `
     }
