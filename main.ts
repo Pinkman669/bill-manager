@@ -10,6 +10,7 @@ import path from 'path'
 import {memberRoutes} from './memberRoutes'
 import { isLoggedIn } from './loginRoutes';
 import grant from 'grant';
+import { historyRoutes } from './historyRoutes';
 
 declare module 'express-session' {
 	interface SessionData {
@@ -72,11 +73,12 @@ export const form = formidable({
 // Start
 app.use(express.static('public'));
 app.use('/'
-,(req, res, next)=>{ // temp use only
-	req.session.userID = 30 
-	next()} 
+// ,(req, res, next)=>{ // temp use only
+// 	req.session.userID = 30 
+// 	next()} 
 ,loginRoutes); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
+app.use('/history', historyRoutes); //routes about history page
 
 // admin.html should be inside protected
 app.use(isLoggedIn, express.static("protected"));

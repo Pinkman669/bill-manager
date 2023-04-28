@@ -40,16 +40,16 @@ function changeFilter(){
         userPic.innerHTML = ''
         events.innerHTML = ''
         if (e.target.value === 'recent-history'){
-            const res = await fetch('home/history')
+            const res = await fetch('/history')
             return await loadHistory(res)
         } else if (e.target.value === 'lent-history'){
-            const res = await fetch('/home/lentHistory')
+            const res = await fetch('/history/lentHistory')
             return await loadHistory(res)
         } else if (e.target.value === 'borrowed-history'){
-            const res = await fetch('/home/borrowedHistory')
+            const res = await fetch('/history/borrowedHistory')
             return await loadHistory(res)
         } else if (e.target.value === 'all-history'){
-            const res = await fetch('home/allHistory')
+            const res = await fetch('history/allHistory')
             return await loadHistory(res)
         }
     })
@@ -58,7 +58,7 @@ function changeFilter(){
 
 // Windows onload
 window.addEventListener('load', async () => {
-    const res = await fetch('home/history')
+    const res = await fetch('/history')
     await loadHistory(res)
     changeFilter()
 })
