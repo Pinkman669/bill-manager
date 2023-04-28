@@ -15,7 +15,9 @@ import { historyRoutes } from './historyRoutes';
 declare module 'express-session' {
 	interface SessionData {
 		user?: string;
-		userID?: number;		
+		userID?: number;
+		image?: string;
+		nickname?: string;		
 	}
 }
 
@@ -75,6 +77,8 @@ app.use(express.static('public'));
 app.use('/'
 // ,(req, res, next)=>{ // temp use only
 // 	req.session.userID = 30 
+// 	req.session.image = 'cffedf62bdd20668651f5e700.jpg'
+// 	req.session.nickname = 'james2@gmail.com'
 // 	next()} 
 ,loginRoutes); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function

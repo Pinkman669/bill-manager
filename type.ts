@@ -2,6 +2,8 @@ export interface User {
 	id: number;
 	email: string;
 	password: string;
+	image?: string;
+	nickname: string;
 }
 
 export interface UserHistory{

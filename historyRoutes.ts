@@ -17,9 +17,6 @@ export async function getHistory(req: Request, res: Response) {
         const monthToSec = 30 * 24 * 60 * 60 * 1000
         const threeMonths = new Date(new Date().getTime() - 3 * monthToSec)
         const userID = req.session.userID
-        const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
-            userID
-        ])
 
         const requestorInfo = await client.query(`SELECT DISTINCT events.date,records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
         FROM records INNER JOIN events ON records.requestor_id = events.user_id 
@@ -38,8 +35,8 @@ export async function getHistory(req: Request, res: Response) {
         ])
 
         const userHistory: UserHistory = {
-            nickname: userInfo.rows[0].nickname,
-            image: userInfo.rows[0].image,
+            nickname: req.session.nickname!,
+            image: req.session.image!,
             history: []
         }
         setHistory(userHistory.history, requestorInfo.rows, 'request')
@@ -56,9 +53,6 @@ export async function getHistory(req: Request, res: Response) {
 export async function getLentHistory(req: Request, res: Response) {
     try {
         const userID = req.session.userID
-        const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
-            userID
-        ])
 
         const receiverInfo = await client.query(`SELECT DISTINCT users.id as user_id, users.nickname, events.date, records.amount, records.event_id as event_id,events.name, records.due 
             FROM events INNER JOIN records ON records.requestor_id = events.user_id 
@@ -68,8 +62,8 @@ export async function getLentHistory(req: Request, res: Response) {
         ])
 
         const userHistory: UserHistory = {
-            nickname: userInfo.rows[0].nickname,
-            image: userInfo.rows[0].image,
+            nickname: req.session.nickname!,
+            image: req.session.image!,
             history: []
         }
         setHistory(userHistory.history, receiverInfo.rows, 'receive')
@@ -83,9 +77,6 @@ export async function getLentHistory(req: Request, res: Response) {
 async function getBorrowedHistory(req: Request, res: Response) {
     try {
         const userID = req.session.userID
-        const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
-            userID
-        ])
 
         const requestorInfo = await client.query(`SELECT DISTINCT events.date,records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
         FROM records INNER JOIN events ON records.requestor_id = events.user_id 
@@ -94,8 +85,8 @@ async function getBorrowedHistory(req: Request, res: Response) {
             userID,
         ])
         const userHistory: UserHistory = {
-            nickname: userInfo.rows[0].nickname,
-            image: userInfo.rows[0].image,
+            nickname: req.session.nickname!,
+            image: req.session.image!,
             history: []
         }
         setHistory(userHistory.history, requestorInfo.rows, 'request')
@@ -109,9 +100,6 @@ async function getBorrowedHistory(req: Request, res: Response) {
 export async function getAllHistory(req: Request, res: Response) {
     try {
         const userID = req.session.userID
-        const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
-            userID
-        ])
 
         const requestorInfo = await client.query(`SELECT DISTINCT events.date,records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
         FROM records INNER JOIN events ON records.requestor_id = events.user_id 
@@ -128,8 +116,8 @@ export async function getAllHistory(req: Request, res: Response) {
         ])
 
         const userHistory: UserHistory = {
-            nickname: userInfo.rows[0].nickname,
-            image: userInfo.rows[0].image,
+            nickname: req.session.nickname!,
+            image: req.session.image!,
             history: []
         }
         setHistory(userHistory.history, requestorInfo.rows, 'request')
