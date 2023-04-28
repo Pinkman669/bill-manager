@@ -33,3 +33,11 @@
 .history-div > hr{
     margin-top: 0;
 }
+
+.events-info > a{
+    color: black;
+}
+
+.events-location > a{
+    color: black;
+}

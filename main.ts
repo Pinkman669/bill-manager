@@ -72,9 +72,9 @@ export const form = formidable({
 // Start
 app.use(express.static('public'));
 app.use('/'
-// ,(req, res, next)=>{ // temp use only
-// 	req.session.userID = 30 
-// 	next()} 
+,(req, res, next)=>{ // temp use only
+	req.session.userID = 30 
+	next()} 
 ,loginRoutes); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 

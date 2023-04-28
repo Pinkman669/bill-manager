@@ -7,13 +7,16 @@ export interface User {
 export interface UserHistory{
 	nickname: string;
 	image: string;
-	history: History[]
+	history: History[];
 }
 
 export interface History{
+	user_id: number;
 	nickname: string;
 	amount: number;
-	event: string;
+	event_id: number;
+	name: string;
 	date: Date;
 	type: string;
+	due: boolean | null
 }
