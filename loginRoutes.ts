@@ -57,6 +57,8 @@ loginRoutes.post("/login" ,async(req, res) =>{
         if (await checkPassword(password,user.password)){
             req.session.user = email
             req.session.userID = user.id
+            req.session.image = user.image
+            req.session.nickname = user.nickname
 		    console.log("login success");
             res.json({success: true});
         }else{
@@ -103,6 +105,8 @@ loginRoutes.get('/logout',(req,res)=>{
     if(req.session){
         delete req.session['userID']
         delete req.session['email']
+        delete req.session['image']
+        delete req.session['nickname']
         logger.info('logout success')
         res.redirect('/')
     }
