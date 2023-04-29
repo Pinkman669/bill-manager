@@ -7,7 +7,7 @@ import { isLoggedIn } from './loginRoutes';
 export const friendsRoutes = express.Router();
 
 friendsRoutes.get('/', isLoggedIn,userTotalAmount);
-friendsRoutes.get('/', isLoggedIn,btwFriendsAmount);
+// friendsRoutes.get('/', isLoggedIn,btwFriendsAmount);
 
 
 export async function userTotalAmount(req: Request, res: Response) {
@@ -18,158 +18,198 @@ export async function userTotalAmount(req: Request, res: Response) {
         const userInfo = await client.query(`SELECT nickname FROM users WHERE id = $1`, [
             userID
         ]);
-        // console.log(`User Name: ${JSON.stringify(userInfo,null,2)}`);
        
-        // all records related to user
-
-        // interface usersRecords{
-        //     requestor_id: number;
-        //     receiver_id: number;
-        //     due: boolean;
-        //     accepted: boolean;
-        //     id : number;
-        //     nickname: string;
-        //     image: string;
-        //    }
-           
-        
-        const usersRecords = await client.query(
+        const usersRecordsReq = await client.query(
             `SELECT 
             records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
             FROM
-            records INNER JOIN users 
-            ON
-            records.requestor_id = $1 OR records.receiver_id =$1
+            records INNER JOIN users ON records.receiver_id = users.id 
             WHERE
-            users.id = $1 AND records.due = false AND records.accepted = true
+            records.requestor_id = $1  AND records.due = false AND records.accepted = true
             ORDER BY 
-            records.id`,[
+            records.receiver_id`,[
                 userID
             ])
-            
-        //    console.log(`all records:${JSON.stringify(usersRecords,null,2)}`);
 
+        const usersRecordsRes = await client.query(
+            `SELECT 
+            records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
+            FROM
+            records INNER JOIN users ON records.requestor_id = users.id 
+            WHERE
+            records.receiver_id = $1  AND records.due = false AND records.accepted = true
+            ORDER BY 
+            records.requestor_id`,[
+                userID
+            ])
+        
+        //    console.log(`all records:${JSON.stringify(usersRecords,null,2)}`);
            
         let totalAmount:number = 0;
 
-        for (let i of usersRecords.rows ){
-
-            // console.log(`for-loops record: ${JSON.stringify(i,null,2)}`)
-            if (i.requestor_id = i.id){
+        // get the total req amount: 
+        for (let i of usersRecordsReq.rows ){
                 totalAmount += i.amount;
-                console.log(`totalAmount: + ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},i.id${i.id},userID:${userID}`);
-            }else if (i.receiver_id = i.id){
-                totalAmount -= i.amount;
-                console.log(`totalAmount: - ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},i.id${i.id},userID:${userID}`)
-            }
+                console.log(`totalAmount: + ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},fd_id${i.id},name:${i.nickname}`);
         }
-        // console.log(`Total:${totalAmount}`)
+        // get the total res amount: 
+        for (let i of usersRecordsRes.rows ){
+            totalAmount -= i.amount;
+            console.log(`totalAmount: - ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},fd_id${i.id},name:${i.nickname}`);
+        } 
 
-        // interface friends{
-        //     nickname:string;
-        //     totalAmount: number;
-        // }
+        console.log(`total amount: ${totalAmount}`)
+        
+        // friends amount ===================================================================
 
-        // let friendsinfo ={
-        //     nickname: userInfo,
-        //     totalAmount: totalAmount
-        // }
+        interface allFriendsAmount{
+         friendID: number;
+         friendsName: string;
+         friendsImage: string;
+        }
+        let allFriendsAmount ={};
+        
 
-
-        res.json({ user: userInfo.rows,totalBalance: totalAmount});
-        // console.log( res.json({ user: userInfo.rows,totalBalance: totalAmount}))
-
-    } catch (e) {
-        logger.error('[Err003] User not found ' + e)
-        res.json({ success: false, msg: '[ERR003]' })
+            for (let i of usersRecordsReq.rows ){
+                    if (i.receiver_id in allFriendsAmount){
+                        allFriendsAmount[i.receiver_id] += i.amount;
+                        console.log(`friendAmountreq: + ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
+        
+                    }
+                    else{
+                        allFriendsAmount[i.receiver_id] = i.amount;
+                        console.log(`NEWreq: + ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
+                    }
+                }
+            
+            for (let i of usersRecordsRes.rows ){
+                    if (i.request_id in allFriendsAmount){
+                        allFriendsAmount[i.request_id] -= i.amount;
+                        console.log(`friendAmountres: - ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
+                    }
+                    else{
+                        allFriendsAmount[i.request_id] = -(i.amount);
+                        console.log(`NEWres: - ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
+                    }
+                }
+            res.json({ user: userInfo.rows,totalBalance: totalAmount,friendsRecords: allFriendsAmount});
+            // console.log( res.json({ user: userInfo.rows,totalBalance: totalAmount}))
+    
+        } catch (e) {
+            logger.error('[Err003] User not found ' + e)
+            res.json({ success: false, msg: '[ERR003]' })
+        }
     }
-}
+    
+        // for (let i of usersRecordsReq.rows ){
+        // //  let friend = i.id
+        // // //  let amount:number = 0;
+        // // if (i.receiver_id=friend){
+        //     if (friend in allFriendsAmount){
+        //         allFriendsAmount[friend] += i.amount;
+        //     }
+        //     else{
+        //         allFriendsAmount[friend] = i.amount;
+        //     }
+        //  }else{
+        //     continue;
+        //  }
+        // }
 
+
+        
+
+     
+        
 //______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
 
-export async function btwFriendsAmount(req: Request, res: Response) {
-    try {
-        const userID = req.session.userID
-        // console.log(`User ID: ${userID}`);
-        // console.log(`Session: ${JSON.stringify(req.session,null,2)}`);
-        const userInfo = await client.query(`SELECT nickname FROM users WHERE id = $1`, [
-            userID
-        ])
+// export async function btwFriendsAmount(req: Request, res: Response) {
+//     try {
+//         const userID = req.session.userID
+//         // console.log(`User ID: ${userID}`);
+//         // console.log(`Session: ${JSON.stringify(req.session,null,2)}`);
+//         const userInfo = await client.query(`SELECT nickname FROM users WHERE id = $1`, [
+//             userID
+//         ])
            
         
-        const usersRecords = await client.query(
-            `SELECT 
-            records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
-            FROM
-            records INNER JOIN users 
-            ON
-            records.requestor_id = $1 OR records.receiver_id =$1
-            WHERE
-            users.id = $1 AND records.due = false AND records.accepted = true
-            ORDER BY 
-            records.id`,[
-                userID
-            ])
+//         const usersRecords = await client.query(
+//             `SELECT 
+//             records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
+//             FROM
+//             records INNER JOIN users 
+//             ON
+//             records.requestor_id = $1 OR records.receiver_id =$1
+//             WHERE
+//             users.id = $1 AND records.due = false AND records.accepted = true
+//             ORDER BY 
+//             records.id`,[
+//                 userID
+//             ])
             
-           console.log(`all records:${JSON.stringify(usersRecords,null,2)}`);
+//            console.log(`all records:${JSON.stringify(usersRecords,null,2)}`);
 
-           interface friendsAmount{
-            friendID: number;
-           }
-           let friendsAmount ={};
+//            interface friendsAmount{
+//             friendID: number;
+//            }
+//            let friendsAmount ={};
 
-        for (let i of usersRecords.rows ){
-            let friendID:number = 0;
+//         for (let i of usersRecords.rows ){
+//             let friendID:number = 0;
         
-            if (i.requestor_id == i.id){
-                friendID = i.receiver_id;
-                friendsAmount[friendID] = friendsAmount[friendID].value + i.amount;
-            }else if (i.receiver_id == i.id){
-                friendID = i.requestor_id;
-                friendsAmount[friendID] = friendsAmount[friendID].value - i.amount;
-            }
-            }
-        }
-        console.log(`Total:${totalAmount}`)
+//             if (i.requestor_id == i.id){
+//                 friendID = i.receiver_id;
+//                 if (friendID in friendsAmount){
+//                     friendsAmount[friendID] += i.amount;
+//                     console.log(`friend(+): ${friendsAmount}`)
+//                 }else{
+//                     friendsAmount[friendID] = i.amount;
+//                     console.log(`new friend added(+): ${friendsAmount}`)
+//                 }
+//             }else if (i.receiver_id == i.id){
+//                 friendID = i.requestor_id;
+//                 if (friendID in friendsAmount){
+//                     friendsAmount[friendID] -= i.amount;
+//                     console.log(`friend(-): ${friendsAmount}`)
+//                 }else{
+//                     friendsAmount[friendID] = i.amount;
+//                     console.log(`new friend added(-): ${friendsAmount}`)
+//                 }
+//             }
+//             }
 
-        // interface friends{
-        //     nickname:string;
-        //     totalAmount: number;
-        // }
+//         // console.log(`final:${friendsAmount}`)
+//         res.json({ user: userInfo.rows,friendsRecords: friendsAmount});
+//         console.log( res.json({ user: userInfo.rows,totalBalance: friendsAmount}))
 
-        // let friendsinfo ={
-        //     nickname: userInfo,
-        //     totalAmount: totalAmount
-        // }
+//     } catch (e) {
+//         logger.error('[Err003] User not found ' + e)
+//         res.json({ success: false, msg: '[ERR003]' })
+//     }
+// }
 
+// ===================================================================
 
-        res.json({ user: userInfo.rows,totalBalance: totalAmount});
-        console.log( res.json({ user: userInfo.rows,totalBalance: totalAmount}))
+// for (let i of usersRecords.rows ){
+//     let friendID:number = 0;
 
-    } catch (e) {
-        logger.error('[Err003] User not found ' + e)
-        res.json({ success: false, msg: '[ERR003]' })
-    }
-}
-
-
-
-
-// const friendsInfo_res = await client.query(
-//     `SELECT 
-//     records.id,records.requestor_id,records.receiver_id,records.amount,records.due,records.accepted,
-//     users.id, users.image ,users.nickname 
-
-//     FROM 
-//     records INNER JOIN users ON records.receiver_id =$1
-
-//     WHERE 
-//     records.due = false AND records.accepted = true 
-
-//     ORDER BY 
-//     records.requestor_id`,[
-//         userID
-//     ])
-    
-//     console.log(`receive:${JSON.stringify(friendsInfo_res,null,2)}`);
-    
+//     if (i.requestor_id == i.id){
+//         friendID = i.receiver_id;
+//         if (friendID in friendsAmount){
+//             friendsAmount[friendID] += i.amount;
+//             console.log(`friend(+): ${friendsAmount}`)
+//         }else{
+//             friendsAmount[friendID] = i.amount;
+//             console.log(`new friend added(+): ${friendsAmount}`)
+//         }
+//     }else if (i.receiver_id == i.id){
+//         friendID = i.requestor_id;
+//         if (friendID in friendsAmount){
+//             friendsAmount[friendID] -= i.amount;
+//             console.log(`friend(-): ${friendsAmount}`)
+//         }else{
+//             friendsAmount[friendID] = i.amount;
+//             console.log(`new friend added(-): ${friendsAmount}`)
+//         }
+//     }
+//     }
