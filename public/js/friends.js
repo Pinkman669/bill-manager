@@ -6,7 +6,7 @@ async function loadUser() {
     const balanceTag = document.querySelector('#user-balance')
     const friendTable = document.querySelector('#friends-table')
    
-    let balance = 0;
+    let balance = result.totalBalance;
     // const balance = document.querySelector('#user-balance')
     username.textContent = result.user[0].nickname
 
