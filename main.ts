@@ -76,11 +76,11 @@ export const form = formidable({
 // Start
 app.use(express.static('public'));
 app.use('/'
-,(req, res, next)=>{ // temp use only
-	req.session.userID = 30 
-	req.session.image = 'cffedf62bdd20668651f5e700.jpg'
-	req.session.nickname = 'james2@gmail.com'
-	next()} 
+// ,(req, res, next)=>{ // temp use only
+	// req.session.userID = 30 
+	// req.session.image = 'cffedf62bdd20668651f5e700.jpg'
+	// req.session.nickname = 'james2@gmail.com'
+	// next()} 
 ,loginRoutes); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page

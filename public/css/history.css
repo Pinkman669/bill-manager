@@ -41,3 +41,19 @@
 .events-location > a{
     color: black;
 }
+
+.accept-btn{
+    border: none;
+    background-color: white;
+    padding: 0;
+    margin: 0 5px;
+    font-size: 20px;
+}
+
+#accept:hover{
+    color: green;
+}
+
+#decline:hover{
+    color: red;
+}
