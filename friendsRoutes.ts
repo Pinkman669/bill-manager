@@ -62,37 +62,50 @@ export async function userTotalAmount(req: Request, res: Response) {
         
         // friends amount ===================================================================
 
-        interface allFriendsAmount{
+        interface FriendsDetail{
          friendID: number;
          friendsName: string;
          friendsImage: string;
+         friendsAmount: number;
         }
-        let allFriendsAmount ={};
-        
-
+        let allFriendsDetail:FriendsDetail [] =[];
+    
             for (let i of usersRecordsReq.rows ){
-                    if (i.receiver_id in allFriendsAmount){
-                        allFriendsAmount[i.receiver_id] += i.amount;
-                        console.log(`friendAmountreq: + ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
-        
+                let friend = allFriendsDetail.find(obj => obj.friendID === i.receiver_id);
+                    if (friend){
+                        friend.friendsAmount -= i.amount;
+                        console.log(`friendAmountReq: + ${i.amount} allFriendsDetail: ${JSON.stringify(allFriendsDetail,null,2)}`);
                     }
                     else{
-                        allFriendsAmount[i.receiver_id] = i.amount;
-                        console.log(`NEWreq: + ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
+                        allFriendsDetail.push({
+                            friendID: i.receiver_id,
+                            friendsName: i.nickname,
+                            friendsImage: i.image,
+                            friendsAmount: i.amount
+                        })
+                        console.log(`NEWreq: + ${i.amount} allFriendsDetail:${JSON.stringify(allFriendsDetail,null,2)}`);
                     }
                 }
+
+                for (let i of usersRecordsRes.rows ){
+                    let friend = allFriendsDetail.find(obj => obj.friendID === i.requestor_id);
+                        if (friend){
+                            friend.friendsAmount -= i.amount;
+                            console.log(`friendAmountRes: - ${i.amount} allFriendsDetail: ${JSON.stringify(allFriendsDetail,null,2)}`);
+                        }
+                        else{
+                            allFriendsDetail.push({
+                                friendID: i.requestor_id,
+                                friendsName: i.nickname,
+                                friendsImage: i.image,
+                                friendsAmount: -(i.amount)
+                            })
+                            console.log(`NEWreq: - ${i.amount} allFriendsDetail:${JSON.stringify(allFriendsDetail,null,2)}`);
+                        }
+                    }
             
-            for (let i of usersRecordsRes.rows ){
-                    if (i.request_id in allFriendsAmount){
-                        allFriendsAmount[i.request_id] -= i.amount;
-                        console.log(`friendAmountres: - ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
-                    }
-                    else{
-                        allFriendsAmount[i.request_id] = -(i.amount);
-                        console.log(`NEWres: - ${i.amount},allFriendsAmount: ${JSON.stringify(allFriendsAmount,null,2)}`);
-                    }
-                }
-            res.json({ user: userInfo.rows,totalBalance: totalAmount,friendsRecords: allFriendsAmount});
+            
+            res.json({ user: userInfo.rows,totalBalance: totalAmount,friendsRecords: allFriendsDetail});
             // console.log( res.json({ user: userInfo.rows,totalBalance: totalAmount}))
     
         } catch (e) {
@@ -100,116 +113,5 @@ export async function userTotalAmount(req: Request, res: Response) {
             res.json({ success: false, msg: '[ERR003]' })
         }
     }
-    
-        // for (let i of usersRecordsReq.rows ){
-        // //  let friend = i.id
-        // // //  let amount:number = 0;
-        // // if (i.receiver_id=friend){
-        //     if (friend in allFriendsAmount){
-        //         allFriendsAmount[friend] += i.amount;
-        //     }
-        //     else{
-        //         allFriendsAmount[friend] = i.amount;
-        //     }
-        //  }else{
-        //     continue;
-        //  }
-        // }
 
 
-        
-
-     
-        
-//______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-
-// export async function btwFriendsAmount(req: Request, res: Response) {
-//     try {
-//         const userID = req.session.userID
-//         // console.log(`User ID: ${userID}`);
-//         // console.log(`Session: ${JSON.stringify(req.session,null,2)}`);
-//         const userInfo = await client.query(`SELECT nickname FROM users WHERE id = $1`, [
-//             userID
-//         ])
-           
-        
-//         const usersRecords = await client.query(
-//             `SELECT 
-//             records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
-//             FROM
-//             records INNER JOIN users 
-//             ON
-//             records.requestor_id = $1 OR records.receiver_id =$1
-//             WHERE
-//             users.id = $1 AND records.due = false AND records.accepted = true
-//             ORDER BY 
-//             records.id`,[
-//                 userID
-//             ])
-            
-//            console.log(`all records:${JSON.stringify(usersRecords,null,2)}`);
-
-//            interface friendsAmount{
-//             friendID: number;
-//            }
-//            let friendsAmount ={};
-
-//         for (let i of usersRecords.rows ){
-//             let friendID:number = 0;
-        
-//             if (i.requestor_id == i.id){
-//                 friendID = i.receiver_id;
-//                 if (friendID in friendsAmount){
-//                     friendsAmount[friendID] += i.amount;
-//                     console.log(`friend(+): ${friendsAmount}`)
-//                 }else{
-//                     friendsAmount[friendID] = i.amount;
-//                     console.log(`new friend added(+): ${friendsAmount}`)
-//                 }
-//             }else if (i.receiver_id == i.id){
-//                 friendID = i.requestor_id;
-//                 if (friendID in friendsAmount){
-//                     friendsAmount[friendID] -= i.amount;
-//                     console.log(`friend(-): ${friendsAmount}`)
-//                 }else{
-//                     friendsAmount[friendID] = i.amount;
-//                     console.log(`new friend added(-): ${friendsAmount}`)
-//                 }
-//             }
-//             }
-
-//         // console.log(`final:${friendsAmount}`)
-//         res.json({ user: userInfo.rows,friendsRecords: friendsAmount});
-//         console.log( res.json({ user: userInfo.rows,totalBalance: friendsAmount}))
-
-//     } catch (e) {
-//         logger.error('[Err003] User not found ' + e)
-//         res.json({ success: false, msg: '[ERR003]' })
-//     }
-// }
-
-// ===================================================================
-
-// for (let i of usersRecords.rows ){
-//     let friendID:number = 0;
-
-//     if (i.requestor_id == i.id){
-//         friendID = i.receiver_id;
-//         if (friendID in friendsAmount){
-//             friendsAmount[friendID] += i.amount;
-//             console.log(`friend(+): ${friendsAmount}`)
-//         }else{
-//             friendsAmount[friendID] = i.amount;
-//             console.log(`new friend added(+): ${friendsAmount}`)
-//         }
-//     }else if (i.receiver_id == i.id){
-//         friendID = i.requestor_id;
-//         if (friendID in friendsAmount){
-//             friendsAmount[friendID] -= i.amount;
-//             console.log(`friend(-): ${friendsAmount}`)
-//         }else{
-//             friendsAmount[friendID] = i.amount;
-//             console.log(`new friend added(-): ${friendsAmount}`)
-//         }
-//     }
-//     }

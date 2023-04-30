@@ -5,7 +5,9 @@
     justify-content: space-between;
 }
 
-.member-profile{
-    display: flex;
-    align-items: flex-end;
+.users-pic{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: inline-block;
 }
