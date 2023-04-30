@@ -17,8 +17,10 @@ export interface History{
 	nickname: string;
 	amount: number;
 	event_id: number;
+	record_id: number;
 	name: string;
 	date: Date;
 	type: string;
-	due: boolean | null
+	due: boolean | null;
+	accepted: boolean | null;
 }
