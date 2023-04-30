@@ -4,11 +4,11 @@ import { client } from './main';
 import { logger } from './logger';
 import { isLoggedIn } from './loginRoutes';
 
-export const friendsRoutes = express.Router();
+export const friendsDetail = express.Router();
 
-friendsRoutes.get('/', isLoggedIn,userTotalAmount);
+friendsDetail.get('/', isLoggedIn,getFriendsDetail);
 
-export async function userTotalAmount(req: Request, res: Response) {
+export async function getFriendsDetail(req: Request, res: Response) {
     try {
         const userID = req.session.userID
         // console.log(`User ID: ${userID}`);
