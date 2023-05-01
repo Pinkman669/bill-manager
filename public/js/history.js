@@ -6,7 +6,7 @@ const userPic = document.querySelector('.member-pic-div')
 async function loadPic() {
     const res = await fetch('/home')
     const result = await res.json()
-    userPic.innerHTML += `<img src="${result.user[0].image ? `uploads/${result.user[0].image}` : `image/default_profile.jpg`}" 
+    userPic.innerHTML += `<img src="${result.image ? `uploads/${result.image}` : `image/default_profile.jpg`}" 
     alt="profile-image" class="profile-pic" />`
 }
 

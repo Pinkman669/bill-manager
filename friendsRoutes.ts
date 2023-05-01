@@ -15,7 +15,7 @@ export async function userTotalAmount(req: Request, res: Response) {
         const userID = req.session.userID
         // console.log(`User ID: ${userID}`);
         // console.log(`Session: ${JSON.stringify(req.session,null,2)}`);
-        const userInfo = await client.query(`SELECT nickname FROM users WHERE id = $1`, [
+        const userInfo = await client.query(`SELECT nickname, image FROM users WHERE id = $1`, [
             userID
         ]);
        
