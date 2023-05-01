@@ -21,7 +21,7 @@ async function loadUser() {
     alt="profile-image" class="profile-pic" />`;
 
 	for (let i = 0; i < result.friendsRecords.length; i++) {
-		// if (result.friendsRecords[i].friendsAmount < 0) {
+		if (result.friendsRecords[i].friendsAmount < 0) {
 			oweTable.innerHTML += `<tr class="animate__animated ${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
                                         <th scope="row">
                                             <a href="#" userID="${
@@ -41,7 +41,7 @@ async function loadUser() {
 												.friendsAmount
 										}</td>
                                     </tr>`;
-		// } else {
+		} else {
 			creditTable.innerHTML += `<tr class="${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
                                         <th scope="row">
                                             <a href="#" userID="${
@@ -61,7 +61,7 @@ async function loadUser() {
 												.friendsAmount
 										}</td>
                                     </tr>`;
-		// }
+		}
 	}
 	oweDiv.innerHTML += `<div class="load-btn-div"><button type="button" state="load" load="owe" class="btn btn-dark loadMore-Btn">Load more</button></div>`
 	creditDiv.innerHTML += `<div class="load-btn-div"><button type="button" state="load" load="credit" class="btn btn-dark loadMore-Btn">Load more</button></div>`

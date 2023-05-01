@@ -62,7 +62,7 @@
 	display: inline-block;
 }
 
-@media screen and (max-width: 500px){
+@media screen and (max-width: 800px){
 	div.history-detail-div{
 		flex-direction: column;
 	}
@@ -72,4 +72,8 @@
 	form.pending-request{
 		display: block;
 	}
+}
+
+.invisible{
+	display: none;
 }

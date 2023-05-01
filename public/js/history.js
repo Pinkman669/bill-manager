@@ -13,54 +13,61 @@ async function loadPic() {
 // Load user's history info in most recent 3 months
 async function loadHistory(res) {
     const result = await res.json()
-
     for (let i in result.history) {
         const event = result.history[i]
         const nickname = uppercaseName(event.nickname)
         const date = new Date(result.history[i].date).toDateString()
 
-        setTimeout(()=>{
-            events.innerHTML += `<div class="history-detail-div animate__fadeInDown animate__animated">
-                                    <div class="history-events-div">
-                                        <p class="events-date">Date: ${date}</p>
-                                        <p class="events-location">Event Name: <a href="#" event-id="${event.event_id}">${event.name}</a></p>
-                                    </div>
-                                    <div class="events-amount-div">
-                                        <div class="events-info" event_id="${event.event_id}"> 
-                                        ${event.accepted ? // if user accepted
-                                            `<p class="trans-info">[Transaction: ${event.due ? `Completed` : `Not yet complete`}]</p>
-                                                                                            ${event.type === `request` ?
-                                                `${event.due ?
-                                                    ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
-                                                    ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
-                                                }` :
-                                                `${event.due ?
-                                                    ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
-                                                    `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
-                                                }`
-                                            }`
-                                        // if user rejected
-                                        : `${event.accepted === false ?
-                                            `<p class="trans-info">[Transaction: Cancelled]</p> ${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
-                                                ` <a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}`
-                                            // if accepted = null = pending
-                                            : `<p class="trans-info">[Pending]</p> 
-                                                ${event.type === `request` ?
-                                                `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
-                                                                                                <div class="pending-request" event_id="${event.event_id}">
-                                                                                                    <button type="button" id="accept" class="pending-btn">
-                                                                                                    <i class="bi bi-check" alt="accept-request"></i></button>
-                                                                                                    <button type="button" id="reject" class="pending-btn">
-                                                                                                    <i class="bi bi-x" alt="reject-request"></i></button>
-                                                                                                </div>` :
-                                                `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
-                                                }`
-                                            }`
-                                        }</div>
-                                    </div>
+        events.innerHTML += `<div class="history-detail-div invisible">
+                                <div class="history-events-div">
+                                    <p class="events-date">Date: ${date}</p>
+                                    <p class="events-location">Event Name: <a href="#" event-id="${event.event_id}">${event.name}</a></p>
                                 </div>
-                                <hr>`
-        },100)
+                                <div class="events-amount-div">
+                                    <div class="events-info" event_id="${event.event_id}"> 
+                                    ${event.accepted ? // if user accepted
+                                        `<p class="trans-info">[Transaction: ${event.due ? `Completed` : `Not yet complete`}]</p>
+                                                                                        ${event.type === `request` ?
+                                            `${event.due ?
+                                                ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
+                                                ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
+                                            }` :
+                                            `${event.due ?
+                                                ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
+                                                `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
+                                            }`
+                                        }`
+                                    // if user rejected
+                                    : `${event.accepted === false ?
+                                        `<p class="trans-info">[Transaction: Cancelled]</p> ${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
+                                            ` <a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}`
+                                        // if accepted = null = pending
+                                        : `<p class="trans-info">[Pending]</p> 
+                                            ${event.type === `request` ?
+                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
+                                                                                            <div class="pending-request" event_id="${event.event_id}">
+                                                                                                <button type="button" id="accept" class="pending-btn">
+                                                                                                <i class="bi bi-check" alt="accept-request"></i></button>
+                                                                                                <button type="button" id="reject" class="pending-btn">
+                                                                                                <i class="bi bi-x" alt="reject-request"></i></button>
+                                                                                            </div>` :
+                                            `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
+                                            }`
+                                        }`
+                                    }</div>
+                                </div>
+                                </div>
+                                <hr class="line invisible">`
+    }
+    // Animation delay effect
+    const detailDivs = [...document.querySelectorAll('.history-detail-div')]
+    const hrLines = [...document.querySelectorAll('.line')]
+    for (let j in detailDivs){
+        setTimeout(()=>{
+            animateCSS(detailDivs[j], 'animate__fadeIn')
+            detailDivs[j].classList.remove('invisible')
+            hrLines[j].classList.remove('invisible')
+        }, 0 + Number(j)*50)
     }
     // change accept value 
     const changeAcceptDivs = [...document.querySelectorAll('.pending-request')]
@@ -137,3 +144,16 @@ window.addEventListener('load', async () => {
     await loadHistory(res)
     changeFilter()
 })
+
+// Animated function
+function animateCSS(node, animation){
+        node.classList.add('animate__animated')
+        node.classList.add(animation)
+
+        function handleAnimationEnd(e){
+            e.stopPropagation()
+            node.classList.remove(`animate__animated`)
+            node.classList.remove(animation)
+        }
+        node.addEventListener('animationend', handleAnimationEnd)
+}
