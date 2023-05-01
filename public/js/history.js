@@ -19,82 +19,76 @@ async function loadHistory(res) {
         const nickname = uppercaseName(event.nickname)
         const date = new Date(result.history[i].date).toDateString()
 
-        events.innerHTML += `<div class="history-detail-div">
-                                <div class="history-events-div">
-                                    <p class="events-date">Date: ${date}</p>
-                                    <p class="events-location">Event Name: <a href="#" event-id="${event.event_id}">${event.name}</a></p>
+        setTimeout(()=>{
+            events.innerHTML += `<div class="history-detail-div animate__fadeInDown animate__animated">
+                                    <div class="history-events-div">
+                                        <p class="events-date">Date: ${date}</p>
+                                        <p class="events-location">Event Name: <a href="#" event-id="${event.event_id}">${event.name}</a></p>
+                                    </div>
+                                    <div class="events-amount-div">
+                                        <div class="events-info" event_id="${event.event_id}"> 
+                                        ${event.accepted ? // if user accepted
+                                            `<p class="trans-info">[Transaction: ${event.due ? `Completed` : `Not yet complete`}]</p>
+                                                                                            ${event.type === `request` ?
+                                                `${event.due ?
+                                                    ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
+                                                    ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
+                                                }` :
+                                                `${event.due ?
+                                                    ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
+                                                    `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
+                                                }`
+                                            }`
+                                        // if user rejected
+                                        : `${event.accepted === false ?
+                                            `<p class="trans-info">[Transaction: Cancelled]</p> ${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
+                                                ` <a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}`
+                                            // if accepted = null = pending
+                                            : `<p class="trans-info">[Pending]</p> 
+                                                ${event.type === `request` ?
+                                                `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
+                                                                                                <div class="pending-request" event_id="${event.event_id}">
+                                                                                                    <button type="button" id="accept" class="pending-btn">
+                                                                                                    <i class="bi bi-check" alt="accept-request"></i></button>
+                                                                                                    <button type="button" id="reject" class="pending-btn">
+                                                                                                    <i class="bi bi-x" alt="reject-request"></i></button>
+                                                                                                </div>` :
+                                                `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
+                                                }`
+                                            }`
+                                        }</div>
+                                    </div>
                                 </div>
-                                <div class="events-amount-div">
-                                    <div class="events-info" event_id="${event.event_id}"> ${event.accepted ? // if user accepted
-                `[Transaction: ${event.due ? `Completed` : `Not yet complete`}]
-                                                                ${event.type === `request` ?
-                    `${event.due ?
-                        ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
-                        ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
-                    }` :
-                    `${event.due ?
-                        ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
-                        `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
-                    }`
-                }`
-                // if user rejected
-                : `${event.accepted === false ?
-                    `[Transaction: Cancelled] ${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
-                        ` <a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}`
-                    // if accepted = null = pending
-                    : `[Pending] 
-                                                                    ${event.type === `request` ?
-                        `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
-                                                                        <form method="POST" class="pending-request" event_id="${event.event_id}">
-                                                                            <button type="submit" id="accept" class="accept-btn">
-                                                                            <i class="bi bi-check"></i></button>
-                                                                            <button type="submit" id="reject" class="accept-btn">
-                                                                            <i class="bi bi-x"></i></button>
-                                                                        </form>` :
-                        `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
-                    }`
-                }`
-            }</div>
-                                </div>
-                            </div>
-                            <hr>`
+                                <hr>`
+        },100)
     }
-
     // change accept value 
-    const changeAcceptForms = [...document.querySelectorAll('.pending-request')]
-    for (let i in changeAcceptForms) {
-        const form = changeAcceptForms[i]
+    const changeAcceptDivs = [...document.querySelectorAll('.pending-request')]
+    for (let i in changeAcceptDivs) {
+        const form = changeAcceptDivs[i]
         const eventID = form.getAttribute('event_id')
-        form.querySelector('#accept').addEventListener('click', async (e)=>{
-            e.preventDefault()
-
-            const res = await fetch(`/home/accept`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({eventID})
+        const pendingBtns = [...form.querySelectorAll('.pending-btn')]
+        for (let j in pendingBtns){
+            pendingBtns[j].addEventListener('click', async (e)=>{
+                const acceptance = e.currentTarget.id === "accept" ? true : false
+                const res = await fetch(`/home/accept`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({eventID, acceptance})
+                })
+                const result = await res.json()
+                console.log(result)
+                if (result.success){
+                    form.innerHTML = ""
+                    const newP = document.createElement("div")
+                    newP.appendChild(document.createTextNode(`<Requested ${acceptance? `accepted`:`rejected`}>`))
+                    form.appendChild(newP)
+                }
             })
-            const result = await res.json()
-            if (result.success){
-                console.log('Accepted!')
-            }
-        })
-        form.querySelector('#reject').addEventListener('click', async (e)=>{
-            e.preventDefault()
 
-            const res = await fetch(`/home/reject`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({eventID})
-            })
-            const result = await res.json()
-            if (result.success){
-                console.log('Rejected!')
-            }
-        })
+        }
     }
 }
 

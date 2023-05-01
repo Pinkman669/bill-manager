@@ -1,13 +1,13 @@
 @import url('sign.css');
-.container-fluid.member{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.container-fluid.member {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
-.users-pic{
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    display: inline-block;
+.users-pic {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	display: inline-block;
 }

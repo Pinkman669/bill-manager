@@ -1,53 +1,70 @@
-
 async function loadFriends() {
-    const res = await fetch('/friends')
-    const result = await res.json()
-    const username = document.querySelector('#username')
-    const balanceTag = document.querySelector('#user-balance')
-    const friendTable = document.querySelector('#friends-table')
-   
-    let balance = result.totalBalance;
-    // const balance = document.querySelector('#user-balance')
-    username.textContent = result.user[0].nickname
+	const res = await fetch('/friends');
+	const result = await res.json();
+	const username = document.querySelector('#username');
+	const balanceTag = document.querySelector('#user-balance');
+	const friendTable = document.querySelector('#friends-table');
 
-    balanceTag.textContent = balance
+	let balance = result.totalBalance;
+	// const balance = document.querySelector('#user-balance')
+	username.textContent = result.user[0].nickname;
 
-    for (let i in result.friendsRecords) {
-        if (result.friendsRecords[i].friendsAmount > 0){
-            console.log(`+ amount`)
-            friendTable.innerHTML += `
+	balanceTag.textContent = balance;
+
+	for (let i in result.friendsRecords) {
+		if (result.friendsRecords[i].friendsAmount > 0) {
+			console.log(`+ amount`);
+			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
-                                    <a href="#" userID="${result.friendsRecords[i].friendID}">${result.friendsRecords[i].friendsName}</a>
-                                    <img class="users-pic" src="${result.friendsRecords[i].friendsImage ? `uploads/${result.friendsRecords[i].friendsImage}` : `image/default_profile.jpg`}">
-                                    <img src="${result.user[0].image ? `uploads/${result.user[0].image}` : `image/default_profile.jpg`}" 
+                                    <a href="#" userID="${
+										result.friendsRecords[i].friendID
+									}">${
+				result.friendsRecords[i].friendsName
+			}</a>
+                                    <img class="users-pic" src="${
+										result.friendsRecords[i].friendsImage
+											? `uploads/${result.friendsRecords[i].friendsImage}`
+											: `image/default_profile.jpg`
+									}">
+                                    <img src="${
+										result.user[0].image
+											? `uploads/${result.user[0].image}`
+											: `image/default_profile.jpg`
+									}" 
                                   
                                     </th>   
-                                    <td> You lent $ ${result.friendsRecords[i].friendsAmount}</td>
+                                    <td> You lent $ ${
+										result.friendsRecords[i].friendsAmount
+									}</td>
                                 </tr>
-                                `
-        }else if (result.friendsRecords[i].friendsAmount < 0){
-            console.log(`- amount`)
-            let ownAmount = result.friendsRecords[i].friendsAmount
-            let amount = ownAmount * (-1);
-            friendTable.innerHTML += `
+                                `;
+		} else if (result.friendsRecords[i].friendsAmount < 0) {
+			console.log(`- amount`);
+			let ownAmount = result.friendsRecords[i].friendsAmount;
+			let amount = ownAmount * -1;
+			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
-                                    <a href="#" userID="${result.friendsRecords[i].friendID}">${result.friendsRecords[i].friendsName}</a>
-                                    <img class="users-pic" src="${result.friendsRecords[i].image ? `uploads/${result.friendsRecords[i].friendsImage}` : `image/default_profile.jpg`}">
+                                    <a href="#" userID="${
+										result.friendsRecords[i].friendID
+									}">${
+				result.friendsRecords[i].friendsName
+			}</a>
+                                    <img class="users-pic" src="${
+										result.friendsRecords[i].image
+											? `uploads/${result.friendsRecords[i].friendsImage}`
+											: `image/default_profile.jpg`
+									}">
                                 </th>   
                                     <td> You borrowed $ ${amount}</td>
                                 </tr>
-                                `
-                            }
-        
-    }
-
-
-    
+                                `;
+		}
+	}
 }
 
 // Window onload function
 window.addEventListener('load', async () => {
-    loadFriends()
-})
+	loadFriends();
+});

@@ -6,13 +6,13 @@ export interface User {
 	nickname: string;
 }
 
-export interface UserHistory{
+export interface UserHistory {
 	nickname: string;
 	image: string;
 	history: History[];
 }
 
-export interface History{
+export interface History {
 	user_id: number;
 	nickname: string;
 	amount: number;

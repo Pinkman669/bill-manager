@@ -1,59 +1,75 @@
 @import url('home.css');
 
-.container-fluid.history{
-    margin-top: 20px;
+.container-fluid.history {
+	margin-top: 20px;
 }
 
-.filter-div{
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
+.filter-div {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
 }
 
-.filter-div div:first-child{
-    display: flex;
-    align-items: baseline;
+.filter-div div:first-child {
+	display: flex;
+	align-items: baseline;
 }
 
-#filter-indicator{
-    padding: 0 10px;
+.history-detail-div {
+	display: flex;
+	justify-content: space-between;
+	padding: 0 20px;
 }
 
-.history-detail-div{
-    display: flex;
-    justify-content: space-between;
-    padding: 0 20px;
+.events-amount-div {
+	display: flex;
+	align-items: flex-end;
 }
 
-.events-amount-div{
-    display: flex;
-    align-items: flex-end;
+.history-div > hr {
+	margin-top: 5px;
 }
 
-.history-div > hr{
-    margin-top: 0;
+.events-info > a {
+	color: black;
 }
 
-.events-info > a{
-    color: black;
+.events-location > a {
+	color: black;
 }
 
-.events-location > a{
-    color: black;
+.accept-btn {
+	border: none;
+	background-color: white;
+	padding: 0;
+	margin: 0 5px;
+	font-size: 20px;
 }
 
-.accept-btn{
-    border: none;
-    background-color: white;
-    padding: 0;
-    margin: 0 5px;
-    font-size: 20px;
+#accept:hover {
+	color: green;
 }
 
-#accept:hover{
-    color: green;
+#decline:hover {
+	color: red;
 }
 
-#decline:hover{
-    color: red;
+.trans-info{
+	display: inline-block;
+}
+
+.pending-request{
+	display: inline-block;
+}
+
+@media screen and (max-width: 500px){
+	div.history-detail-div{
+		flex-direction: column;
+	}
+	p.trans-info{
+		display: block;
+	}
+	form.pending-request{
+		display: block;
+	}
 }
