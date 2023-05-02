@@ -20,7 +20,7 @@ async function loadFriends() {
                                 <th scope="row">
                                     <a href="/friendsdetail.html" userID="${result.friendsRecords[i].friendID}">${result.friendsRecords[i].friendsName}</a>
                                     <img class="users-pic" src="${result.friendsRecords[i].friendsImage ? `uploads/${result.friendsRecords[i].friendsImage}` : `image/default_profile.jpg`}">
-                                    <img src="${result.user[0].image ? `uploads/${result.user[0].image}` : `image/default_profile.jpg`}" 
+                                    
                                   
                                     </th>   
                                     <td> You lent $ ${result.friendsRecords[i].friendsAmount}</td>

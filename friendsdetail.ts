@@ -15,11 +15,11 @@ export async function getFriendsDetail(req: Request, res: Response) {
         // console.log(`Session: ${JSON.stringify(req.session,null,2)}`);
         const userInfo = await client.query(`SELECT nickname FROM users WHERE id = $1`, [
             userID
-        ]);
+        ]); 
        
         const usersRecordsReq = await client.query(
             `SELECT 
-            records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
+            events.id, events.name, events.date, records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted, users.id, users.nickname, users.image
             FROM
             records INNER JOIN users ON records.receiver_id = users.id 
             WHERE
