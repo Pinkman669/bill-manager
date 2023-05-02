@@ -6,19 +6,21 @@ export interface User {
 	nickname: string;
 }
 
-export interface UserHistory{
+export interface UserHistory {
 	nickname: string;
 	image: string;
 	history: History[];
 }
 
-export interface History{
+export interface History {
 	user_id: number;
 	nickname: string;
 	amount: number;
 	event_id: number;
+	record_id: number;
 	name: string;
 	date: Date;
 	type: string;
-	due: boolean | null
+	due: boolean | null;
+	accepted: boolean | null;
 }

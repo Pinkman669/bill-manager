@@ -1,63 +1,73 @@
 @import url('sign.css');
 
-
-.main-block{
-    justify-content: flex-start;
+.main-block {
+	justify-content: flex-start;
 }
 
-.container-fluid.member{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.container-fluid.member {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
 
-.member-profile{
-    display: flex;
-    align-items: flex-end;
+.member-profile {
+	display: flex;
+	align-items: flex-end;
 }
 
-.greet-div{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+.greet-div {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 }
 
-.member-pic-div{
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    border: 3px solid black;
-    overflow: hidden;
-    background-color: white;
+.member-pic-div {
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	border: 3px solid black;
+	overflow: hidden;
+	background-color: white;
 }
 
-
-@media screen and (max-width: 500px){
-    div.member-pic-div{
-        width: 80px;
-        height: 80px;
-    }
-    div.main-block{
-        padding: 20px;
-    }
+.userdata-div {
+	padding: 20px 100px;
 }
 
-.userdata-div{
-    padding: 20px 100px;
+.userdata-div > h4 {
+	margin: 15px 0;
 }
 
-.userdata-div > h4{
-    margin: 15px 0;
+.table a {
+	color: black;
 }
 
-.table a{
-    color: black;
+.users-pic {
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	display: inline-block;
 }
 
-.users-pic{
-    height: 30px;
-    width: 30px;
-    border-radius: 50%;
-    display: inline-block;
+@media screen and (max-width: 500px) {
+	div.member-pic-div {
+		width: 80px;
+		height: 80px;
+	}
+	div.main-block {
+		padding: 20px;
+	}
+	div.userdata-div{
+		padding: 0 10px;
+	}
+}
+
+.table th{
+	width: 50%;
+}
+
+.load-btn-div{
+	display: flex;
+	justify-content: center;
 }

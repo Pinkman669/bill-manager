@@ -70,7 +70,7 @@
 	margin: 5px 0;
 }
 
-#res-msg{
+#res-msg {
 	margin-top: 15px;
 	width: 300px;
 	text-align: center;
@@ -78,6 +78,6 @@
 }
 
 /* visible class for js */
-.invisible{
-	display: hidden;
+.invisible {
+	display: none;
 }

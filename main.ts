@@ -6,8 +6,8 @@ import pg from 'pg';
 import formidable from 'formidable';
 import fs from 'fs';
 import { loginRoutes } from './loginRoutes';
-import path from 'path'
-import {memberRoutes} from './memberRoutes'
+import path from 'path';
+import { memberRoutes } from './memberRoutes';
 import { isLoggedIn } from './loginRoutes';
 import { friendsRoutes } from './friendsRoutes';
 import grant from 'grant';
@@ -19,7 +19,7 @@ declare module 'express-session' {
 		user?: string;
 		userID?: number;
 		image?: string;
-		nickname?: string;		
+		nickname?: string;
 	}
 }
 
@@ -44,23 +44,22 @@ app.use(
 		saveUninitialized: true
 	})
 );
-// google login 
+// google login
 const grantExpress = grant.express({
 	defaults: {
-		origin: "http://localhost:8080",
-		transport: "session",
-		state: true,
-	  },
-	  google: {
-		key: process.env.GOOGLE_CLIENT_ID || "",
-		secret: process.env.GOOGLE_CLIENT_SECRET || "",
-		scope: ["profile", "email", "openid"],
-		callback: "/login/google",
-	  },
-	});
-	
-	app.use(grantExpress as express.RequestHandler);
+		origin: 'http://localhost:8080',
+		transport: 'session',
+		state: true
+	},
+	google: {
+		key: process.env.GOOGLE_CLIENT_ID || '',
+		secret: process.env.GOOGLE_CLIENT_SECRET || '',
+		scope: ['profile', 'email', 'openid'],
+		callback: '/login/google'
+	}
+});
 
+app.use(grantExpress as express.RequestHandler);
 
 // Configure formidable
 const uploadDir = 'public/uploads';
@@ -76,21 +75,25 @@ export const form = formidable({
 
 // Start
 app.use(express.static('public'));
-app.use('/'
-// ,(req, res, next)=>{ // temp use only
-// 	req.session.userID = 30 
-// 	req.session.image = 'cffedf62bdd20668651f5e700.jpg'
-// 	req.session.nickname = 'james2@gmail.com'
-// 	next()} 
-,loginRoutes); // Login and sign up routes
+app.use(
+	'/',
+	// (req, res, next) => {
+	// 	// temp use only
+	// 	req.session.userID = 30;
+	// 	req.session.image = 'cffedf62bdd20668651f5e700.jpg';
+	// 	req.session.nickname = 'james2@gmail.com';
+	// 	next();
+	// },
+	loginRoutes
+); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page
 
-app.use('/friends',friendsRoutes); // routes for all friends record
+app.use('/friends', friendsRoutes); // routes for all friends record
 app.use('/friendsdetail',friendsDetail); // routes for detail friends record
 
 // admin.html should be inside protected
-app.use(isLoggedIn, express.static("protected"));
+app.use(isLoggedIn, express.static('protected'));
 
 // Redirecting
 app.use((req: express.Request, res: express.Response) => {
