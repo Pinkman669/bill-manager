@@ -35,11 +35,12 @@ export async function createGroup(req: Request, res: Response) {
     try{
         const userID = req.session.userID;
         const {groupName ,friendsID} = req.body;
-        const checkGroupName = await client.query(`SELECT * FROM groups WHERE name = $1 AND creator_id = $2`,[
-            groupName,
-            userID
+        const checkisExist = await client.query(`SELECT groups.name, groups.id FROM user_group INNER JOIN groups ON user_group.group_id = groups.id 
+        INNER JOIN users ON users.id = user_group.user_id WHERE users.id = $1 AND groups.name = $2`,[
+            userID,
+            groupName
         ])
-        if (checkGroupName.rowCount){
+        if (checkisExist.rowCount){
             res.json({success: false, msg: 'Group name existed'})
             return
         }
