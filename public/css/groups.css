@@ -1,0 +1,91 @@
+@import url('home.css');
+
+@media screen and (max-width: 500px){
+    form#create-group-form{
+        flex-direction: column;
+    }
+}
+
+.modal-footer{
+    justify-content: space-between;
+}
+
+.member-profile{
+    justify-content: space-between;
+}
+
+.groups-btns-div{
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+}
+
+.groups-btns-div > button{
+    margin: 0 5px;
+}
+
+.groups-btns-div > button{
+    border: none;
+}
+
+#create-group-btn, #create-activities-btn{
+    background-color: #FFE7A2;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px black;
+}
+
+#create-group-btn{
+    font-size: 20px;
+    padding: 5px;
+}
+
+#create-activities-btn{
+    color: black;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+#create-activities-btn > i{
+    font-size: 20px;
+}
+
+#selected-user{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#create-group-form{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.friend-name-div{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.friend-name{
+    border: 2px solid black;
+    text-align: center;
+    margin:5px;
+    border-radius: 20px;
+    padding: 5px;
+    width: 200px;
+    display: block;
+}
+
+.friend-input{
+    display: none;
+}
+
+.friend-input:checked + span{
+    background-color: orange;
+}
+
+.hidden{
+    visibility: hidden;
+}

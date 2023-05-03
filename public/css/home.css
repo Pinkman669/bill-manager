@@ -10,6 +10,11 @@
 	justify-content: space-between;
 }
 
+nav .container-fluid{
+	border-bottom: 3px black double;
+	border-top: 3px black double;
+}
+
 .member-profile {
 	display: flex;
 	align-items: flex-end;
@@ -29,6 +34,25 @@
 	border: 3px solid black;
 	overflow: hidden;
 	background-color: white;
+}
+
+h3{
+	font-family: 'Anton', sans-serif;
+}
+
+h2#greet{
+	font-family: 'Poltawski Nowy', sans-serif;
+	font-style: italic;
+}
+
+h2#greet-user{
+	font-family: 'Poltawski Nowy', sans-serif;
+	font-weight: bold;
+}
+
+h4{
+	font-family: 'Jost';
+	font-weight: 600;
 }
 
 .userdata-div {
@@ -56,7 +80,7 @@
 		height: 80px;
 	}
 	div.main-block {
-		padding: 20px;
+		padding: 10px 5px;
 	}
 	div.userdata-div{
 		padding: 0 10px;

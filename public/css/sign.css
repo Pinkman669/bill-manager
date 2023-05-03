@@ -1,3 +1,5 @@
+
+
 .container-fluid {
 	max-width: 1240px;
 }
@@ -11,9 +13,12 @@
 	padding: 50px;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 500px) {
 	div.main-block {
 		height: 250px;
+	}
+	.navbar .container-fluid{
+		justify-content: center;
 	}
 }
 
@@ -75,6 +80,10 @@
 	width: 300px;
 	text-align: center;
 	font-weight: bold;
+}
+
+li.nav-item > a{
+	color: black;
 }
 
 /* visible class for js */
