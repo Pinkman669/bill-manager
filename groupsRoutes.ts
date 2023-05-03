@@ -35,6 +35,14 @@ export async function createGroup(req: Request, res: Response) {
     try{
         const userID = req.session.userID;
         const {groupName ,friendsID} = req.body;
+        const checkGroupName = await client.query(`SELECT * FROM groups WHERE name = $1 AND creator_id = $2`,[
+            groupName,
+            userID
+        ])
+        if (checkGroupName.rowCount){
+            res.json({success: false, msg: 'Group name existed'})
+            return
+        }
         await client.query(`INSERT INTO groups (name, creator_id) VALUES ($1, $2)`,[
             groupName,
             userID

@@ -74,6 +74,9 @@ async function createGroup(){
                 form.reset()
                 document.querySelector('.btn-close').click()
                 await loadGroup() // refresh load group
+            } else{
+                resMsg.classList.remove('hidden')
+                resMsg.textContent = result.msg
             }
         } else{
             resMsg.classList.remove('hidden')
