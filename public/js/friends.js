@@ -17,7 +17,9 @@ async function loadFriends() {
 			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
-                                    <a href="#" userID="${
+                                    <a href="/friendsdetail.html?friendID=${
+										result.friendsRecords[i].friendID
+									}" userID="${
 										result.friendsRecords[i].friendID
 									}">${
 				result.friendsRecords[i].friendsName
@@ -27,11 +29,6 @@ async function loadFriends() {
 											? `uploads/${result.friendsRecords[i].friendsImage}`
 											: `image/default_profile.jpg`
 									}">
-                                    <img src="${
-										result.user[0].image
-											? `uploads/${result.user[0].image}`
-											: `image/default_profile.jpg`
-									}" 
                                   
                                     </th>   
                                     <td> You lent $ ${
@@ -63,6 +60,7 @@ async function loadFriends() {
 		}
 	}
 }
+
 
 // Window onload function
 window.addEventListener('load', async () => {

@@ -90,7 +90,7 @@ app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page
 
 app.use('/friends', friendsRoutes); // routes for all friends record
-app.use('/friendsdetail',friendsDetail); // routes for detail friends record
+app.use('/friendsdetail', friendsDetail); // routes for detail friends record
 
 // admin.html should be inside protected
 app.use(isLoggedIn, express.static('protected'));

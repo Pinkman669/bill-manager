@@ -58,16 +58,16 @@
 	div.main-block {
 		padding: 20px;
 	}
-	div.userdata-div{
+	div.userdata-div {
 		padding: 0 10px;
 	}
 }
 
-.table th{
+.table th {
 	width: 50%;
 }
 
-.load-btn-div{
+.load-btn-div {
 	display: flex;
 	justify-content: center;
 }
