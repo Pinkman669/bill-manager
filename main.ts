@@ -10,6 +10,7 @@ import path from 'path';
 import { memberRoutes } from './memberRoutes';
 import { isLoggedIn } from './loginRoutes';
 import { friendsRoutes } from './friendsRoutes';
+import { activityRoutes } from './activityRoutes'; 
 import grant from 'grant';
 import { historyRoutes } from './historyRoutes';
 import { groupsRoutes } from './groupsRoutes';
@@ -90,6 +91,8 @@ app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page
 app.use('/friends', friendsRoutes); // routes for friends record
 app.use('/groups', groupsRoutes); // routes for groups
+
+app.use('/activity', activityRoutes); // routes for create activity
 
 // admin.html should be inside protected
 app.use(isLoggedIn, express.static('protected'));

@@ -38,25 +38,31 @@
             <div class="main-block">
 				<div class="container-fluid member">
 					<h1 id="page-name">Activity</h1>
+					<div class="add-friends button">
+						<button type="button" id="add-friends">Add Friends</button>
+					</div>
 					<div class="summary-div">
 						<h2 id="summary">Summary</h2>
 						<ul>
-                            <li>Activity: <input type="text" placeholder="describe the activity"> </li>
-                            <li>Date: <input type="date"> </li>
-                            <li>Amount: <input type="number" placeholder="$"> </li>
+                            <li>Activity: <input type="text" id="activity" placeholder="describe the activity"> </li>
+                            <li>Date: <input type="date" id="date"> </li>
+                            <li>Amount: <input type="number" id="amount" placeholder="$"> </li>
                         </ul>
 					</div>
 				</div>
 				
-				<p> Paid by <input type="number" placeholder="how many people"> </p>
+				<p> Paid by <input type="number" id="people" placeholder="how many people"> </p>
 
 				<div class="container-split method"> 
-					<button type="button" class="btn btn-outline-warning">split it equally</button>
-					<button type="button" class="btn btn-outline-warning">split it <input type="number">way</button>
-					<button type="button" class="btn btn-outline-warning">Custom</button>
+					<button type="button" class="btn btn-outline-warning" id="equally">split it equally</button>
+					<button type="button" class="btn btn-outline-warning" id="way">split it <input type="number" id="denominator">way</button>
+					<button type="button" class="btn btn-outline-warning" id="custom">Custom</button>
 				</div>
 
 				<div class="container-distribute">
+					<input type="checkbox">
+
+					<p >Everyone should pay: </p> <p id="averageAmount"> </p>
 					
 				</div>
 			</div>
