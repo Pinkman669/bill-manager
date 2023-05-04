@@ -22,60 +22,41 @@ async function loadHistory(res) {
 
 		events.innerHTML += `<div class="history-detail-div invisible">
                                 <div class="history-events-div">
-                                    <p class="events-date">Date: ${date}</p>
-                                    <p class="events-location">Event Name: <a href="#" event-id="${
-										event.event_id
-									}">${event.name}</a></p>
+                                    <div class="events-date"><span>Date: </span><span>${date}</span></div>
+                                    <div class="events-location"><span>Event Name: </span><a href="#" event-id="${event.event_id}">${event.name}</a></div>
                                 </div>
                                 <div class="events-amount-div">
-                                    <div class="events-info" event_id="${
-										event.event_id
-									}"> 
-                                    ${
-										event.accepted // if user accepted
-											? `<p class="trans-info">[Transaction: ${
-													event.due
-														? `Completed`
-														: `Not yet complete`
-											  }]</p>
-                                                                                        ${
-																							event.type ===
-																							`request`
-																								? `${
-																										event.due
-																											? ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
-																											: ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
-																								  }`
-																								: `${
-																										event.due
-																											? ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}`
-																											: `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
-																								  }`
-																						}`
-											: // if user rejected
-											  `${
-													event.accepted === false
-														? `<p class="trans-info">[Transaction: Cancelled]</p> ${
-																event.type ===
-																`request`
-																	? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request`
-																	: ` <a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`
-														  }`
-														: // if accepted = null = pending
-														  `<p class="trans-info">[Pending]</p> 
-                                            ${
-												event.type === `request`
-													? `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
+                                    <div class="events-info" event_id="${event.event_id}"> 
+                                    ${event.accepted ? // if user accepted
+                                        `<p class="trans-info">[Transaction: ${event.due ? `Completed` : `Not yet complete`}]</p>
+                                                                                        ${event.type === `request` ?
+                                            `<p>${event.due ?
+                                                ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
+                                                ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
+                                            }</p>` :
+                                            `<p>${event.due ?
+                                                ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
+                                                `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
+                                            }</p>`
+                                        }`
+                                    // if user rejected
+                                    : `${event.accepted === false ?
+                                        `<p class="trans-info">[Transaction: Cancelled]</p><p>${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
+                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}</p>`
+                                        // if accepted = null = pending
+                                        : `<p class="trans-info">[Pending]</p> 
+                                            <p>${event.type === `request` ?
+                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
                                                                                             <div class="pending-request" event_id="${event.event_id}">
                                                                                                 <button type="button" id="accept" class="pending-btn">
                                                                                                 <i class="bi bi-check" alt="accept-request"></i></button>
                                                                                                 <button type="button" id="reject" class="pending-btn">
                                                                                                 <i class="bi bi-x" alt="reject-request"></i></button>
-                                                                                            </div>`
-													: `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
-											}`
-											  }`
-									}</div>
+                                                                                            </div>` :
+                                            `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
+                                            }</p>`
+                                        }`
+                                    }</div>
                                 </div>
                                 </div>
                                 <hr class="line invisible">`;

@@ -18,7 +18,7 @@
 .history-detail-div {
 	display: flex;
 	justify-content: space-between;
-	padding: 0 20px;
+	padding: 10px 20px;
 }
 
 .events-amount-div {
@@ -30,8 +30,8 @@
 	margin-top: 5px;
 }
 
-.events-info > a {
-	color: black;
+.events-info > p > a{
+	color: rgb(156, 13, 13);
 }
 
 .events-location > a {
@@ -56,6 +56,7 @@
 
 .trans-info {
 	display: inline-block;
+	margin: 0;
 }
 
 .pending-request {
@@ -72,6 +73,32 @@
 	form.pending-request {
 		display: block;
 	}
+	div.events-info{
+		flex-direction: column;
+	}
+	.events-location{
+		padding-bottom: 13px;
+	}
+}
+
+.events-info{
+	display: flex;
+}
+
+.events-info > p{
+	margin:  0;
+}
+
+.events-info > p:first-child{
+	font-weight: bold;
+}
+
+.events-date > span:first-child{
+	font-weight: bold;
+}
+
+.events-location > span:first-child{
+	font-weight: bold;
 }
 
 .invisible {

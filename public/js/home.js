@@ -64,7 +64,7 @@ async function loadUser() {
 													: `image/default_profile.jpg`
 											}">
                                         </th>
-                                        <td>${
+                                        <td>+${
 											result.friendsRecords[i]
 												.friendsAmount
 										}</td>
