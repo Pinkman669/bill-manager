@@ -10,6 +10,7 @@ export const groupsRoutes = express.Router();
 groupsRoutes.get('/create-group', isLoggedIn, loadFriends); // load friend list
 groupsRoutes.post('/create-group', isLoggedIn, createGroup); // create group
 groupsRoutes.get('/', isLoggedIn, loadGroup) // load user group
+// groupsRoutes.get('/group-detail', isLoggedIn, loadGroupDetail)
 
 export async function loadFriends(req: Request, res: Response){
     try{
@@ -83,3 +84,19 @@ async function loadGroup(req: Request, res: Response) {
         res.status(400).json({success: false, msg: '[Err013]'});
     }
 }
+
+// async function loadGroupDetail(req: Request, res: Response) {
+//     try{
+//         const groupID = req.query.groupID
+//         const groupMemberInfo = await client.query(`SELECT groups.name, groups.id as group_id,user_group.user_id, users.nickname, users.image FROM groups INNER JOIN user_group ON groups.id = user_group.group_id INNER JOIN users ON users.id = user_group.user_id
+//         WHERE groups.id = $1 AND users.id != $2`,[
+//             groupID,
+//             req.session.userID
+//         ])
+//         const groupEventsInfo = await client.query(``)
+//         res.json(groupID)
+//     }catch(e){
+//         logger.error(`[Err014] ${e}`);
+//         res.status(400).json({success: false, msg: '[Err014]'});
+//     }
+// }

@@ -7,14 +7,14 @@ import { UserHistory, History } from './type';
 
 export const historyRoutes = express.Router();
 
-historyRoutes.get('/', isLoggedIn, getHistory); // Get user's history from most recent 3 months
+historyRoutes.get('/recent', isLoggedIn, getRecentHistory); // Get user's history from most recent 3 months
 historyRoutes.get('/lentHistory', isLoggedIn, getLentHistory); // Get user lent history
 historyRoutes.get('/borrowedHistory', isLoggedIn, getBorrowedHistory); // Get user borrowed history
 historyRoutes.get('/allHistory', isLoggedIn, getAllHistory); // Get user's all time history
 historyRoutes.get('/pending', isLoggedIn, getPendingHistory); // Get user's all pending history
 historyRoutes.get('/cancelled-history', isLoggedIn, getCancelledHistory);
 
-export async function getHistory(req: Request, res: Response) {
+export async function getRecentHistory(req: Request, res: Response) {
 	try {
 		const monthToSec = 30 * 24 * 60 * 60 * 1000;
 		const threeMonths = new Date(new Date().getTime() - 3 * monthToSec);

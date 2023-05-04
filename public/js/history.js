@@ -6,7 +6,7 @@ const userPic = document.querySelector('.member-pic-div')
 async function loadPic() {
     const res = await fetch('/home')
     const result = await res.json()
-    userPic.innerHTML += `<img src="${result.image ? `uploads/${result.image}` : `image/default_profile.jpg`}" 
+    userPic.innerHTML += `<img src="${result.userInfo.image ? `uploads/${result.userInfo.image}` : `image/default_profile.jpg`}" 
     alt="profile-image" class="profile-pic" />`
 }
 
@@ -108,16 +108,16 @@ function uppercaseName(name) {
 function changeFilter() {
     document.querySelector('.form-select').addEventListener('change', async (e) => {
         events.innerHTML = ''
-        if (e.target.value === 'recent-history') {
-            const res = await fetch('/history')
+        if (e.target.value === 'recent') {
+            const res = await fetch('/history/recent')
             return await loadHistory(res)
-        } else if (e.target.value === 'lent-history') {
+        } else if (e.target.value === 'lentHistory') {
             const res = await fetch('/history/lentHistory')
             return await loadHistory(res)
-        } else if (e.target.value === 'borrowed-history') {
+        } else if (e.target.value === 'borrowedHistory') {
             const res = await fetch('/history/borrowedHistory')
             return await loadHistory(res)
-        } else if (e.target.value === 'all-history') {
+        } else if (e.target.value === 'allHistory') {
             const res = await fetch('history/allHistory')
             return await loadHistory(res)
         } else if (e.target.value === 'pending') {
@@ -140,7 +140,10 @@ for (let i in changeAcceptBtns) {
 // Windows onload
 window.addEventListener('load', async () => {
     await loadPic()
-    const res = await fetch('/history')
+    const searchParams = new URLSearchParams(location.search);
+	const historyType = searchParams.get('type');
+    document.querySelector('.form-select').value = historyType || 'recent'
+    const res = await fetch(`/history/${document.querySelector('.form-select').value}`)
     await loadHistory(res)
     changeFilter()
 })
