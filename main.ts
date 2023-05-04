@@ -13,6 +13,7 @@ import { friendsRoutes } from './friendsRoutes';
 //import { activityRoutes } from './activityRoutes'; 
 import grant from 'grant';
 import { historyRoutes } from './historyRoutes';
+import { groupsRoutes } from './groupsRoutes';
 
 declare module 'express-session' {
 	interface SessionData {
@@ -88,8 +89,8 @@ app.use(
 ); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page
-
 app.use('/friends', friendsRoutes); // routes for friends record
+app.use('/groups', groupsRoutes); // routes for groups
 
 //app.use('/activity', activityRoutes); // routes for create activity
 
