@@ -65,11 +65,12 @@ function submitActivity(){
     document.querySelector('#form-submit-btn').addEventListener('click', async (e)=>{
         e.preventDefault()
         // Reject paid by not selected
-        for (let option of requestorBtn){
-            if (option.selected && option.disabled){
-                return
-            }
-        }
+        // for (let option of requestorBtn){
+        //     if (option.selected && option.disabled){
+        //         return
+        //     }
+        // }
+
         // Reject split method not selected
         const splitMethodBtns = [...document.querySelectorAll('.split-method')]
         let methodChecked = false
@@ -91,6 +92,8 @@ function submitActivity(){
             }
         })
         if (!methodChecked){
+            resMsg.classList.replace('alert-success', 'alert-warning')
+            resMsg.classList.remove('invisible')
             resMsg.textContent = 'Please fill out the form'
             return
         }
@@ -99,6 +102,7 @@ function submitActivity(){
             actName: form['event-name'].value,
             actDate: form['event-date'].value,
             totalAmount: form['total-amount'].value,
+            message: form.message.value,
             receiversInfo: {
                 userID: [],
                 userAmount: [],
@@ -124,7 +128,20 @@ function submitActivity(){
             }
         })
 
-        console.log(formObj)
+        form.reset()
+        const res = await fetch('activity/create-activity',{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formObj)
+        })
+        const result = await res.json();
+        if (result.success){
+            resMsg.classList.replace('alert-warning', 'alert-success')
+        }
+        resMsg.classList.remove('invisible')
+        resMsg.textContent = result.msg
     })
 }
 

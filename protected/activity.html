@@ -60,6 +60,11 @@
 							</label>
 							<input type="number" id="total-amount" placeholder="Enter amount" name="total-amount" required>
 						</div>
+						<div class="event-input-div">
+							<label for="message">Message: 
+							</label>
+							<input type="text" id="message" placeholder="Enter msg (optional)" name="message">
+						</div>
 					</form>
 				</div>
 			</div>
@@ -92,25 +97,19 @@
 					</label>
 				</div>
 			</div>
-			<div class="container-fluid users-amount">
-				<!-- <div class="selected-user-div">
-					<input type="checkbox" id="user-a" name="user-a" checked form="activity-form">
-					<label for="user-a">User-A: $</label>
-					<input type="number" name="user-a-amount" form="activity-form">
+			<div class="container-fluid user-amount-container">
+				<div class="container-fluid users-amount">
+					<!-- <div class="selected-user-div">
+						<input type="checkbox" id="user-a" name="user-a" checked form="activity-form">
+						<label for="user-a">User-A: $</label>
+						<input type="number" name="user-a-amount" form="activity-form">
+					</div> -->
 				</div>
-				<div class="selected-user-div">
-					<input type="checkbox" id="user-b" name="user-b" checked form="activity-form">
-					<label for="user-a">User-B: $</label>
-					<input type="number" name="user-a-amount" form="activity-form">
+				<div class="submit-btn-div">
+					<button id="form-submit-btn" type="submit" class="btn btn-dark" form="activity-form">Submit</button>
 				</div>
-				<div class="selected-user-div">
-					<input type="checkbox" id="user-b" name="user-c" checked form="activity-form">
-					<label for="user-a">User-C: $</label>
-					<input type="number" name="user-a-amount" form="activity-form">
-				</div> -->
 			</div>
-			<button id="form-submit-btn" type="submit" class="btn btn-dark" form="activity-form">Submit</button>
-			<div class="alert alert-warning resMsg"></div>
+			<div class="alert alert-warning resMsg invisible"></div>
 		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
