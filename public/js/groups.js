@@ -97,7 +97,7 @@ async function loadGroup(){
     groupsBox.innerHTML = ''
     
     result.forEach((data)=>{
-        groupsBox.innerHTML += `<div groupID="${data.id}"><a href="#">${data.name}</a><div/>`
+        groupsBox.innerHTML += `<div groupID="${data.id}"><a href="group-detail.html?groupID=${data.id}">${data.name}</a><div/>`
     })
 }
 

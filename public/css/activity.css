@@ -1,14 +1,122 @@
-@import url('sign.css');
+@import url('home.css');
 
-.container-fluid {
-	max-width: 1240px;
+@media screen and (max-width: 500px){
+	div.event-input-div{
+		width:100%;
+	}
+	#activity-form div.event-input-div > label{
+		font-size: 14px;
+	}
+	div.container-fluid.split{
+		padding: 10px 0;
+	}
 }
 
-.main-block {
-	background-color: #ffcd29;
-	width: 100%;
-	height: 400px;
+#add-friends-div{
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.summary-div{
+	height: 100%;
+}
+
+#activity-form{
 	display: flex;
 	flex-direction: column;
-	padding: 50px;
+	align-items: center;
+	justify-content: space-evenly;
+	height: 100%
+}
+
+#activity-form div >input{
+	width: 200px;
+	padding: 5px;
+	border: none;
+	border-bottom: solid 2px black;
+	background-color: inherit;
+}
+
+#activity-form div > label{
+	font-size: 25px;
+	padding-right: 5px;
+	font-weight: bold;
+}
+
+.event-input-div{
+	width: 400px;
+	display: flex;
+	justify-content: flex-end;
+	align-items: baseline;
+}
+
+.container-fluid.split{
+	padding: 20px;
+}
+
+#paid-by-div{
+	display: flex;
+	justify-content: center;
+	padding-bottom: 10px;
+	align-items: baseline;
+}
+
+.container-split-method{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap:wrap;
+}
+
+.split-method-div{
+	margin: 0 5px;
+}
+
+.split-method{
+	display: none;
+}
+
+.container-fluid.users-amount{
+	margin-top: 15px;
+	border: 3px solid orange;
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+}
+
+.selected-user-div{
+	display: flex;
+	justify-content: center;
+	padding: 30px 20px;
+	align-items: baseline;
+}
+
+.method-btn{
+	border: 1px solid orange;
+	padding: 8px;
+	border-radius: 20px;
+}
+
+.method-btn:hover{
+	background-color:orange;
+	color: white;
+}
+
+.split-method:checked + span{
+	background-color:orange;
+	color: white;
+	box-shadow: inset 0px 0px 2px black;
+}
+
+#denominator{
+	border: none;
+	border-bottom: 2px solid black;
+	width: 50px;
+}
+
+.form-select{
+	width: 130px;
+	margin-left: 10px;
 }

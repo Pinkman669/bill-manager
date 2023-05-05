@@ -1,4 +1,3 @@
-
 //const eventName = document.getElementById('activity')
 //const eventDate = document.getElementById('date')
 const totalAmount = document.getElementById('amount')

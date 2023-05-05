@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="css/home.css" />
 	<link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Poltawski Nowy|Anton|Jost">
-	<title>Member main page</title>
+	<title>Group detail page</title>
 </head>
 
 <body>
@@ -52,47 +52,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="userdata-div">
-			<h4 id="user-owe">Owe (-): (From most recent date)</h4>
-			<div id="user-owe-div">
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">Users</th>
-							<th scope="col">Amount($)</th>
-						</tr>
-					</thead>
-					<tbody id="user-owe-detail"></tbody>
-				</table>
-				<div class="load-btn-div">
-					<button type="button" state="load" load="owe" class="btn btn-dark loadMore-Btn">
-						<a href="/history.html?type=borrowedHistory" id="borrowed">See more</a>
-					</button>
-				</div>
-			</div>
-			<h4 id="user-credit">Credit (+): (From most recent date)</h4>
-			<div id="user-credit-div">
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">Users</th>
-							<th scope="col">Amount($)</th>
-						</tr>
-					</thead>
-					<tbody id="user-credit-detail">
-					</tbody>
-				</table>
-				<div class="load-btn-div">
-					<button type="button" state="load" load="credit" class="btn btn-dark loadMore-Btn">
-						<a href="/history.html?type=lentHistory" id="lent">See more</a>
-					</button>
-				</div>
-			</div>
-		</div>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
 			crossorigin="anonymous"></script>
-		<script src="js/home.js" type="module"></script>
+		<script src="js/group-detail.js" type="module"></script>
 </body>
 
 </html>
