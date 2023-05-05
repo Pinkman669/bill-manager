@@ -48,17 +48,17 @@
 						<div class="event-input-div">
 							<label for="event-name">Activity Name:
 							</label>
-							<input type="text" id="event-name" placeholder="Describe the activity" name="event-name">
+							<input type="text" id="event-name" placeholder="Describe the activity" name="event-name" required>
 						</div>
 						<div class="event-input-div">
 							<label for="event-date">Date:
 							</label>
-							<input type="date" id="event-date" name="event-date">
+							<input type="date" id="event-date" name="event-date" required>
 						</div>
 						<div class="event-input-div">
 							<label for="total-amount">Total Amount: $
 							</label>
-							<input type="number" id="total-amount" placeholder="Enter amount" name="total-amount">
+							<input type="number" id="total-amount" placeholder="Enter amount" name="total-amount" required>
 						</div>
 					</form>
 				</div>
@@ -67,20 +67,19 @@
 		<div class="container-fluid split">
 			<div id="paid-by-div">
 				<p>Paid By</p>
-				<select id="requestor" class="form-select" aria-label="Default select example">
-					<option selected disabled>Select user</option>
+				<select id="requestor" class="form-select" aria-label="Default select example" required>
 				</select> 
 			</div>
 			<div class="container-split-method">
 				<div class="split-method-div">
 					<label for="equally">
-						<input type="radio" class="split-method" id="equally" name="split-method" form="activity-form"><span
+						<input type="radio" value="evenly" class="split-method" id="equally" name="split-method" form="activity-form"><span
 							class="method-btn">split it equally</span>
 					</label>
 				</div>
 				<div class="split-method-div">
 					<label for="way">
-						<input type="radio" id="way" name="split-method" class="split-method" form="activity-form">
+						<input type="radio" value="shares" id="way" name="split-method" class="split-method" form="activity-form">
 						<span class="method-btn">Split it
 							<input type="number" id="denominator" name="denominator"> way
 						</span>
@@ -88,13 +87,13 @@
 				</div>
 				<div class="split-method-div">
 					<label for="custom">
-						<input type="radio" id="custom" class="split-method" name="split-method" form="activity-form"><span
+						<input type="radio" value="custom" id="custom" class="split-method" name="split-method" form="activity-form"><span
 							class="method-btn">Custom</span>
 					</label>
 				</div>
 			</div>
 			<div class="container-fluid users-amount">
-				<div class="selected-user-div">
+				<!-- <div class="selected-user-div">
 					<input type="checkbox" id="user-a" name="user-a" checked form="activity-form">
 					<label for="user-a">User-A: $</label>
 					<input type="number" name="user-a-amount" form="activity-form">
@@ -108,9 +107,10 @@
 					<input type="checkbox" id="user-b" name="user-c" checked form="activity-form">
 					<label for="user-a">User-C: $</label>
 					<input type="number" name="user-a-amount" form="activity-form">
-				</div>
+				</div> -->
 			</div>
-			<button type="submit" class="btn btn-dark" form="activity-form">Submit</button>
+			<button id="form-submit-btn" type="submit" class="btn btn-dark" form="activity-form">Submit</button>
+			<div class="alert alert-warning resMsg"></div>
 		</div>
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
