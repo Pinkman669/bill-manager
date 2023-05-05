@@ -1,6 +1,4 @@
 // Declare variable
-// const totalAmount = document.getElementById('amount')
-// const numOfPeople = document.getElementById('people')
 const dividedBy = document.getElementById('denominator')
 const requestorBtn = document.querySelector('#requestor')
 const resMsg = document.querySelector('.resMsg')
@@ -31,7 +29,7 @@ async function LoadFriendsInput(method){
     userAmountBox.innerHTML = ''
     const selectedFriends = [...document.querySelectorAll('.selected-friend')]
     userAmountBox.innerHTML += `<div class="selected-user-div">
-                                    <input class="usersCheckBox" type="checkbox" value="${result.userInfo.userID}" name="${result.userInfo.userName}" checked form="activity-form" ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``}>
+                                    <input class="usersCheckBox" type="checkbox" value="${result.userInfo.userID}" name="${result.userInfo.userName}" form="activity-form" ${requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`}>
                                     <label for="${result.userInfo.userID}">You ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
                                     <input class="usersAmountInput" type="number" name="${result.userInfo.userName}-amount" form="activity-form" required ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``}>
                                 </div>`
@@ -39,14 +37,14 @@ async function LoadFriendsInput(method){
         const friendName = friend.getAttribute('userName')
         const friendID = friend.getAttribute('userID')
         userAmountBox.innerHTML += `<div class="selected-user-div">
-                                        <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" checked form="activity-form" ${requestorBtn.value == friendID ? `disabled`: ``}>
+                                        <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${requestorBtn.value == friendID ? `disabled`: `checked`}>
                                         <label for="${friendID}">${friendName}: ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
                                         <input class="usersAmountInput" type="number" name="${friendName}-amount" form="activity-form" required ${requestorBtn.value == friendID ? `disabled`: ``}>
 				                    </div>`
     })
 }
 
-// Split-method function
+// Rendering payment input depends on split-method
 function splitMethod(){
     const splitMethodBtns = [...document.querySelectorAll('.split-method')]
     splitMethodBtns.forEach((method)=>{
@@ -105,7 +103,7 @@ function submitActivity(){
                 userID: [],
                 userAmount: [],
             },
-            requestorInfo: {}
+            requestorID: requestorBtn.value
         }
         const splitMethod = [...document.querySelectorAll('.split-method')]
         splitMethod.forEach((method)=>{
@@ -125,6 +123,7 @@ function submitActivity(){
                 formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
             }
         })
+
         console.log(formObj)
     })
 }
