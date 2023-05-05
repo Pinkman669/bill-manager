@@ -1,0 +1,10 @@
+.event-detail {
+	display: flex;
+	justify-content: space-between;
+	padding: 10px 20px;
+}
+
+.event-payment-detail {
+	display: flex;
+	align-items: flex-end;
+}

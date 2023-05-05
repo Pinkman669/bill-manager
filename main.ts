@@ -14,6 +14,7 @@ import grant from 'grant';
 import { historyRoutes } from './historyRoutes';
 import { groupsRoutes } from './groupsRoutes';
 import { friendsDetail } from './friendsdetail';
+// import { group } from 'console';
 
 declare module 'express-session' {
 	interface SessionData {
@@ -89,8 +90,9 @@ app.use(
 ); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page
-
+app.use('/friendsdetail',friendsDetail); //routes about history page
 app.use('/friends', friendsRoutes); // routes for friends record
+app.use('/groups', groupsRoutes);// routes for groups page
 
 // admin.html should be inside protected
 app.use(isLoggedIn, express.static('protected'));

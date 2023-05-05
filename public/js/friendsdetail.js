@@ -1,24 +1,58 @@
+const searchParams = new URLSearchParams(location.search);
+const id = searchParams.get("friendID");
+
 async function loadFriendsDetail() {
-
-		
-		const searchParams = new URLSearchParams(location.search);
-		const id = searchParams.get("friendID");
-	  
-
-
 	const res = await fetch(`/friendsdetail/${id}`);
 	const result = await res.json();
-	const username = document.querySelector('#username');
+	const friendName = document.querySelector('#friends_nickname');
 	const balance = document.querySelector('#balance_btw_friends');
-	const individual = document.querySelector('#individual');
+	const individual = document.querySelector('#individual_table');
 	const group = document.querySelector('#group_table');
+	const friendIcon = document.querySelector(`.member-profile`);
+	const fdNickname=result.friend[0].nickname;
 
-	let totalBalance = result.totalBalance;
-	// const balance = document.querySelector('#user-balance')
-	username.textContent = result.user[0].nickname;
+	friendName.textContent = fdNickname
+	balance.textContent = result.totalAmount; // the btw-friends balance; 
+	friendIcon.innerHTML= `<img class="users-pic" src="${
+		result.friend.image
+			? `uploads/${result.friendsRecords[i].friendsImage}`
+			: `image/default_profile.jpg`
+	}">`
 
-	balanceTag.textContent = balance;
+	// individual history 
+	individual.innerHTML =""; //clear 
+
+	for (let i of result.history) {
+		const date = new Date(i.date).toDateString();
+		individual.innerHTML += `<div class="event-detail">
+									<div class="event-info-detail">
+										<div class="date">Date:${date}</div>
+										<a href="/eventdetail" user-id="${i.event_id}"class="event-name">Event Name:${i.name}</a>
+									</div>
+									<div class="event-payment-detail">
+										<div id="settled">${i.due ? `Settled` : ``}</div>
+										<div>${i.requestor_id === id ?
+											`You borrowed ${i.amount} from ${fdNickname}` :
+											`You lent ${i.amount} to ${fdNickname}`
+										}</div>
+									</div>
+								</div>
+								<hr>`
+	}					
 }
+
+const settleBtn = document.querySelector(`#settle-btn`);
+
+settleBtn.addEventListener('click', async (event) => {
+	const res = await fetch('/friendsdetail/settle', {
+		method: 'PUT',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({friendId:id})
+	});
+	loadFriendsDetail();
+})
 
 // Window onload function
 window.addEventListener('load', async () => {

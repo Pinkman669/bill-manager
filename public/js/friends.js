@@ -13,7 +13,7 @@ async function loadFriends() {
 
 	for (let i in result.friendsRecords) {
 		if (result.friendsRecords[i].friendsAmount > 0) {
-			console.log(`+ amount`);
+			// console.log(`+ amount`);
 			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
@@ -37,13 +37,15 @@ async function loadFriends() {
                                 </tr>
                                 `;
 		} else if (result.friendsRecords[i].friendsAmount < 0) {
-			console.log(`- amount`);
+			// console.log(`- amount`);
 			let ownAmount = result.friendsRecords[i].friendsAmount;
 			let amount = ownAmount * -1;
 			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
-                                    <a href="/friendsdetail.html" userID="${
+                                    <a href="/friendsdetail.html?friendID=${
+										result.friendsRecords[i].friendID
+									}" userID="${
 										result.friendsRecords[i].friendID
 									}">${
 				result.friendsRecords[i].friendsName

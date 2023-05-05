@@ -2,11 +2,33 @@ import express from 'express';
 import { Request, Response } from 'express';
 import { client } from './main';
 import { logger } from './logger';
+import { isLoggedIn } from './loginRoutes';
 // import { isLoggedIn } from './loginRoutes';
 
 export const friendsDetail = express.Router();
 
-friendsDetail.get('/:friendID', getFriendsDetail);
+friendsDetail.get('/:friendID', isLoggedIn, getFriendsDetail);
+friendsDetail.put('/settle', isLoggedIn, settleBalance);
+
+export async function settleBalance(req: Request, res: Response) {
+	try {
+		const userID = req.session.userID;
+		const friendID = req.body.friendId;
+	console.log(`userid:${userID},friendid:${friendID}`)
+
+		await client.query(
+			`UPDATE records SET due = true 
+			WHERE
+			((requestor_id = $1 AND receiver_id = $2) OR (requestor_id = $2  AND receiver_id = $1 )) AND due = false AND accepted = true`,
+			[userID,friendID]
+		)
+		res.json({success: true})
+
+	} catch (e) {
+		logger.error('[Err005] Settle Balance not Found ' + e);
+		res.json({ success: false, msg: '[ERR005]' });
+	}};
+
 
 export async function getFriendsDetail(req: Request, res: Response) {
 	try {
@@ -33,18 +55,48 @@ export async function getFriendsDetail(req: Request, res: Response) {
             events.date`,
 			[userID,friendID]
 		);
-			console.log(`This is friend history${friendHistory}`);
-		
+		const fdRecordsReq = await client.query(
+			`SELECT 
+            records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted
+            FROM
+            records 
+            WHERE
+            records.requestor_id = $1  AND records.receiver_id = $2 AND records.due = false AND records.accepted = true
+            ORDER BY 
+            records.id`,
+			[userID,friendID]
+		);
 
-		
+		const fdRecordsRes = await client.query(
+			`SELECT 
+            records.id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted
+            FROM
+            records 
+            WHERE
+            records.requestor_id = $2  AND records.receiver_id = $1 AND records.due = false AND records.accepted = true
+            ORDER BY 
+            records.id`,
+			[userID,friendID]
+		);
 
+		let totalAmount: number = 0;
 
-	
+		// get the total req amount:
+		for (let i of fdRecordsReq.rows) {
+			totalAmount += i.amount;
+		}
+		// get the total res amount:
+		for (let i of fdRecordsRes.rows) {
+			totalAmount -= i.amount;
+		}
 
 		res.json({
-			user: userInfo.rows, friends: friendInfo.rows, history:friendHistory.rows
+			user: userInfo.rows, friend: friendInfo.rows,totalAmount, history:friendHistory.rows
 		});
-		// console.log( res.json({ user: userInfo.rows,totalBalance: totalAmount}))
+		// console.log({
+		// 	user: userInfo.rows, friend: friendInfo.rows, history:friendHistory.rows
+		// })
+	
 	} catch (e) {
 		logger.error('[Err004] History detail not found ' + e);
 		res.json({ success: false, msg: '[ERR004]' });
