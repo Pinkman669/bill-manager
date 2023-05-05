@@ -1,12 +1,14 @@
 
 
 
-//import express from 'express'
-//import {Request, Response} from 'express'
+import express from 'express'
+import {Request, Response} from 'express'
 import { client } from './main';
-//import { isLoggedIn } from './loginRoutes';
+import { loadFriends } from './groupsRoutes';
 
-//export const activityRoutes = express.Router();
+//import { isLoggedIn } from './loginRoutes';
+export const activityRoutes = express.Router();
+
 
 //get the friends list
 activityRoutes.get('/', async (req: Request, res: Response) => {
@@ -18,8 +20,8 @@ activityRoutes.get('/', async (req: Request, res: Response) => {
 async function getFriends(userID: number) {
     const friendsList = await client.query(
         `SELECT user1_id, user2_id FROM friends
-        INNER JOIN users
-        ON friends.id =$1`, [userID]);
+        INNER JOIN users ON users.id = friends.user1_id OR users.id = friends.user2_id
+        WHERE friends.users1_id = $1 OR friends.user2_id = $1`, [userID]);
         return friendsList.rows;
 
 }
