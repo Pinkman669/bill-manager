@@ -54,23 +54,23 @@
 	color: red;
 }
 
-.trans-info{
+.trans-info {
 	display: inline-block;
 	margin: 0;
 }
 
-.pending-request{
+.pending-request {
 	display: inline-block;
 }
 
-@media screen and (max-width: 800px){
-	div.history-detail-div{
+@media screen and (max-width: 800px) {
+	div.history-detail-div {
 		flex-direction: column;
 	}
-	p.trans-info{
+	p.trans-info {
 		display: block;
 	}
-	form.pending-request{
+	form.pending-request {
 		display: block;
 	}
 	div.events-info{
@@ -101,6 +101,6 @@
 	font-weight: bold;
 }
 
-.invisible{
+.invisible {
 	display: none;
 }

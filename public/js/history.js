@@ -1,6 +1,6 @@
 // Declare variable
-const events = document.querySelector('.history-div')
-const userPic = document.querySelector('.member-pic-div')
+const events = document.querySelector('.history-div');
+const userPic = document.querySelector('.member-pic-div');
 
 // Load user pic
 async function loadPic() {
@@ -12,13 +12,13 @@ async function loadPic() {
 
 // Load user's history info in most recent 3 months
 async function loadHistory(res) {
-    const result = await res.json()
-    for (let i in result.history) {
-        const event = result.history[i]
-        const nickname = uppercaseName(event.nickname)
-        const date = new Date(result.history[i].date).toDateString()
+	const result = await res.json();
+	for (let i in result.history) {
+		const event = result.history[i];
+		const nickname = uppercaseName(event.nickname);
+		const date = new Date(result.history[i].date).toDateString();
 
-        events.innerHTML += `<div class="history-detail-div invisible">
+		events.innerHTML += `<div class="history-detail-div invisible">
                                 <div class="history-events-div">
                                     <div class="events-date"><span>Date: </span><span>${date}</span></div>
                                     <div class="events-location"><span>Event Name: </span><a href="#" event-id="${event.event_id}">${event.name}</a></div>
@@ -57,51 +57,57 @@ async function loadHistory(res) {
                                     }</div>
                                 </div>
                                 </div>
-                                <hr class="line invisible">`
-    }
-    // Animation delay effect
-    const detailDivs = [...document.querySelectorAll('.history-detail-div')]
-    const hrLines = [...document.querySelectorAll('.line')]
-    for (let j in detailDivs){
-        setTimeout(()=>{
-            animateCSS(detailDivs[j], 'animate__fadeIn')
-            detailDivs[j].classList.remove('invisible')
-            hrLines[j].classList.remove('invisible')
-        }, 0 + Number(j)*50)
-    }
-    // change accept value 
-    const changeAcceptDivs = [...document.querySelectorAll('.pending-request')]
-    for (let i in changeAcceptDivs) {
-        const form = changeAcceptDivs[i]
-        const eventID = form.getAttribute('event_id')
-        const pendingBtns = [...form.querySelectorAll('.pending-btn')]
-        for (let j in pendingBtns){
-            pendingBtns[j].addEventListener('click', async (e)=>{
-                const acceptance = e.currentTarget.id === "accept" ? true : false
-                const res = await fetch(`/home/accept`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({eventID, acceptance})
-                })
-                const result = await res.json()
-                console.log(result)
-                if (result.success){
-                    form.innerHTML = ""
-                    const newP = document.createElement("div")
-                    newP.appendChild(document.createTextNode(`<Requested ${acceptance? `accepted`:`rejected`}>`))
-                    form.appendChild(newP)
-                }
-            })
-
-        }
-    }
+                                <hr class="line invisible">`;
+	}
+	// Animation delay effect
+	const detailDivs = [...document.querySelectorAll('.history-detail-div')];
+	const hrLines = [...document.querySelectorAll('.line')];
+	for (let j in detailDivs) {
+		setTimeout(() => {
+			animateCSS(detailDivs[j], 'animate__fadeIn');
+			detailDivs[j].classList.remove('invisible');
+			hrLines[j].classList.remove('invisible');
+		}, 0 + Number(j) * 50);
+	}
+	// change accept value
+	const changeAcceptDivs = [...document.querySelectorAll('.pending-request')];
+	for (let i in changeAcceptDivs) {
+		const form = changeAcceptDivs[i];
+		const eventID = form.getAttribute('event_id');
+		const pendingBtns = [...form.querySelectorAll('.pending-btn')];
+		for (let j in pendingBtns) {
+			pendingBtns[j].addEventListener('click', async (e) => {
+				const acceptance =
+					e.currentTarget.id === 'accept' ? true : false;
+				const res = await fetch(`/home/accept`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ eventID, acceptance })
+				});
+				const result = await res.json();
+				console.log(result);
+				if (result.success) {
+					form.innerHTML = '';
+					const newP = document.createElement('div');
+					newP.appendChild(
+						document.createTextNode(
+							`<Requested ${
+								acceptance ? `accepted` : `rejected`
+							}>`
+						)
+					);
+					form.appendChild(newP);
+				}
+			});
+		}
+	}
 }
 
 // UpperCase all username
 function uppercaseName(name) {
-    return name.slice(0, 1).toUpperCase() + name.slice(1, name.length)
+	return name.slice(0, 1).toUpperCase() + name.slice(1, name.length);
 }
 
 // filter function
@@ -131,10 +137,10 @@ function changeFilter() {
 }
 
 // change acceptance value
-const changeAcceptBtns = [...document.querySelectorAll('.pending-request')]
+const changeAcceptBtns = [...document.querySelectorAll('.pending-request')];
 for (let i in changeAcceptBtns) {
-    const changeAcceptBtn = changeAcceptBtns[i]
-    changeAcceptBtn.querySelector('#accept').value = "null"
+	const changeAcceptBtn = changeAcceptBtns[i];
+	changeAcceptBtn.querySelector('#accept').value = 'null';
 }
 
 // Windows onload
@@ -149,14 +155,14 @@ window.addEventListener('load', async () => {
 })
 
 // Animated function
-function animateCSS(node, animation){
-        node.classList.add('animate__animated')
-        node.classList.add(animation)
+function animateCSS(node, animation) {
+	node.classList.add('animate__animated');
+	node.classList.add(animation);
 
-        function handleAnimationEnd(e){
-            e.stopPropagation()
-            node.classList.remove(`animate__animated`)
-            node.classList.remove(animation)
-        }
-        node.addEventListener('animationend', handleAnimationEnd)
+	function handleAnimationEnd(e) {
+		e.stopPropagation();
+		node.classList.remove(`animate__animated`);
+		node.classList.remove(animation);
+	}
+	node.addEventListener('animationend', handleAnimationEnd);
 }

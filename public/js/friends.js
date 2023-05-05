@@ -13,11 +13,13 @@ async function loadFriends() {
 
 	for (let i in result.friendsRecords) {
 		if (result.friendsRecords[i].friendsAmount > 0) {
-			console.log(`+ amount`);
+			// console.log(`+ amount`);
 			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
-                                    <a href="#" userID="${
+                                    <a href="/friendsdetail.html?friendID=${
+										result.friendsRecords[i].friendID
+									}" userID="${
 										result.friendsRecords[i].friendID
 									}">${
 				result.friendsRecords[i].friendsName
@@ -27,11 +29,6 @@ async function loadFriends() {
 											? `uploads/${result.friendsRecords[i].friendsImage}`
 											: `image/default_profile.jpg`
 									}">
-                                    <img src="${
-										result.user[0].image
-											? `uploads/${result.user[0].image}`
-											: `image/default_profile.jpg`
-									}" 
                                   
                                     </th>   
                                     <td> You lent $ ${
@@ -40,13 +37,15 @@ async function loadFriends() {
                                 </tr>
                                 `;
 		} else if (result.friendsRecords[i].friendsAmount < 0) {
-			console.log(`- amount`);
+			// console.log(`- amount`);
 			let ownAmount = result.friendsRecords[i].friendsAmount;
 			let amount = ownAmount * -1;
 			friendTable.innerHTML += `
                                 <tr>
                                 <th scope="row">
-                                    <a href="#" userID="${
+                                    <a href="/friendsdetail.html?friendID=${
+										result.friendsRecords[i].friendID
+									}" userID="${
 										result.friendsRecords[i].friendID
 									}">${
 				result.friendsRecords[i].friendsName
@@ -63,6 +62,7 @@ async function loadFriends() {
 		}
 	}
 }
+
 
 // Window onload function
 window.addEventListener('load', async () => {
