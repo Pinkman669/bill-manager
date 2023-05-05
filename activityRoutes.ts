@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 
 
 
@@ -10,14 +9,6 @@ import { loadFriends } from './groupsRoutes';
 //import { isLoggedIn } from './loginRoutes';
 export const activityRoutes = express.Router();
 
-=======
-import express from 'express'
-import {Request, Response} from 'express'
-import { client } from './main';
-// import { isLoggedIn } from './loginRoutes';
-
-export const activityRoutes = express.Router();
->>>>>>> dfbe9fffc9109fad598c05f6bf0bcc4717fb9a22
 
 //get the friends list
 activityRoutes.get('/', async (req: Request, res: Response) => {
