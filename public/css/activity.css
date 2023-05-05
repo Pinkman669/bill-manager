@@ -1,4 +1,5 @@
-@import url('home.css');
+
+@import url('groups.css');
 
 @media screen and (max-width: 500px){
 	div.event-input-div{
@@ -135,4 +136,13 @@
 
 .user-amount-container{
 	padding: 0 150px;
+}
+
+#add-friends-modal-div{
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.modal-footer.add-friend-page{
+	justify-content: flex-end;
 }
