@@ -4,12 +4,10 @@ const userPic = document.querySelector('.member-pic-div');
 
 // Load user pic
 async function loadPic() {
-	const res = await fetch('/home');
-	const result = await res.json();
-	userPic.innerHTML += `<img src="${
-		result.image ? `uploads/${result.image}` : `image/default_profile.jpg`
-	}" 
-    alt="profile-image" class="profile-pic" />`;
+    const res = await fetch('/home')
+    const result = await res.json()
+    userPic.innerHTML += `<img src="${result.userInfo.image ? `uploads/${result.userInfo.image}` : `image/default_profile.jpg`}" 
+    alt="profile-image" class="profile-pic" />`
 }
 
 // Load user's history info in most recent 3 months
@@ -114,30 +112,28 @@ function uppercaseName(name) {
 
 // filter function
 function changeFilter() {
-	document
-		.querySelector('.form-select')
-		.addEventListener('change', async (e) => {
-			events.innerHTML = '';
-			if (e.target.value === 'recent-history') {
-				const res = await fetch('/history');
-				return await loadHistory(res);
-			} else if (e.target.value === 'lent-history') {
-				const res = await fetch('/history/lentHistory');
-				return await loadHistory(res);
-			} else if (e.target.value === 'borrowed-history') {
-				const res = await fetch('/history/borrowedHistory');
-				return await loadHistory(res);
-			} else if (e.target.value === 'all-history') {
-				const res = await fetch('history/allHistory');
-				return await loadHistory(res);
-			} else if (e.target.value === 'pending') {
-				const res = await fetch('history/pending');
-				return await loadHistory(res);
-			} else if (e.target.value === 'cancelled-history') {
-				const res = await fetch('history/cancelled-history');
-				return await loadHistory(res);
-			}
-		});
+    document.querySelector('.form-select').addEventListener('change', async (e) => {
+        events.innerHTML = ''
+        if (e.target.value === 'recent') {
+            const res = await fetch('/history/recent')
+            return await loadHistory(res)
+        } else if (e.target.value === 'lentHistory') {
+            const res = await fetch('/history/lentHistory')
+            return await loadHistory(res)
+        } else if (e.target.value === 'borrowedHistory') {
+            const res = await fetch('/history/borrowedHistory')
+            return await loadHistory(res)
+        } else if (e.target.value === 'allHistory') {
+            const res = await fetch('history/allHistory')
+            return await loadHistory(res)
+        } else if (e.target.value === 'pending') {
+            const res = await fetch('history/pending')
+            return await loadHistory(res)
+        } else if (e.target.value === 'cancelled-history') {
+            const res = await fetch('history/cancelled-history')
+            return await loadHistory(res)
+        }
+    })
 }
 
 // change acceptance value
@@ -149,11 +145,14 @@ for (let i in changeAcceptBtns) {
 
 // Windows onload
 window.addEventListener('load', async () => {
-	await loadPic();
-	const res = await fetch('/history');
-	await loadHistory(res);
-	changeFilter();
-});
+    await loadPic()
+    const searchParams = new URLSearchParams(location.search);
+	const historyType = searchParams.get('type');
+    document.querySelector('.form-select').value = historyType || 'recent'
+    const res = await fetch(`/history/${document.querySelector('.form-select').value}`)
+    await loadHistory(res)
+    changeFilter()
+})
 
 // Animated function
 function animateCSS(node, animation) {

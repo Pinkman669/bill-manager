@@ -95,3 +95,8 @@ h4{
 	display: flex;
 	justify-content: center;
 }
+
+.loadMore-Btn > a{
+	text-decoration: none;
+	color: white;
+}
