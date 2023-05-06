@@ -42,6 +42,7 @@ async function createActivity(req: Request, res: Response) {
             res.json({success: false, msg: 'Amount not match'})
             return
         }
+        // Insert events
         await client.query(`INSERT INTO events (user_id, msg, name, date, method, amount) VALUES ($1, $2, $3, $4, $5, $6)`,[
             Number(actInfo.requestorID),
             actInfo.message,
@@ -50,6 +51,22 @@ async function createActivity(req: Request, res: Response) {
             actInfo.method,
             Number(actInfo.totalAmount)
         ])
+        const eventID = await client.query(`SELECT id FROM events WHERE user_id = $1 AND name = $2 AND date = $3 AND method = $4 AND amount =$5`,[
+            Number(actInfo.requestorID),
+            actInfo.actName,
+            actInfo.actDate,
+            actInfo.method,
+            Number(actInfo.totalAmount)
+        ])
+        // Insert records
+        for (let i in actInfo.receiversInfo.userID){
+            await client.query(`INSERT INTO records (requestor_id, receiver_id, event_id, amount) VALUES ($1,$2,$3,$4)`,[
+                Number(actInfo.requestorID),
+                Number(actInfo.receiversInfo.userID[i]),
+                eventID.rows[0].id,
+                Number(actInfo.receiversInfo.userAmount[i])
+            ])
+        }
         res.json({success: true, msg: 'Activity created successfully!'})
     } catch(e){
         logger.error(`[Err013] ${e}`)
