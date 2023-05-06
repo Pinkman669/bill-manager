@@ -28,7 +28,7 @@
     border: none;
 }
 
-#create-group-btn, #create-activities-btn{
+#create-group-btn, .create-activities-btn{
     background-color: #FFE7A2;
     border-radius: 10px;
     box-shadow: 1px 1px 1px black;
@@ -39,13 +39,13 @@
     padding: 5px;
 }
 
-#create-activities-btn{
+.create-activities-btn{
     color: black;
     cursor: pointer;
     padding: 5px 10px;
 }
 
-#create-activities-btn > i{
+.create-activities-btn > i{
     font-size: 20px;
 }
 
