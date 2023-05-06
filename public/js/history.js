@@ -21,7 +21,7 @@ async function loadHistory(res) {
 		events.innerHTML += `<div class="history-detail-div invisible">
                                 <div class="history-events-div">
                                     <div class="events-date"><span>Date: </span><span>${date}</span></div>
-                                    <div class="events-location"><span>Event Name: </span><a href="#" event-id="${event.event_id}">${event.name}</a></div>
+                                    <div class="events-location"><span>Event Name: </span><a href="/event-detail.html?recordId=${i.record_id}" event-id="${event.event_id}">${event.name}</a></div>
                                 </div>
                                 <div class="events-amount-div">
                                     <div class="events-info" event_id="${event.event_id}"> 
@@ -40,7 +40,7 @@ async function loadHistory(res) {
                                     // if user rejected
                                     : `${event.accepted === false ?
                                         `<p class="trans-info">[Transaction: Cancelled]</p><p>${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
-                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}</p>`
+                                            `<a href="/event-detail.html?recordId=${i.record_id}" user-id="${event.user_id}">${nickname}</a> rejected your request`}</p>`
                                         // if accepted = null = pending
                                         : `<p class="trans-info">[Pending]</p> 
                                             <p>${event.type === `request` ?

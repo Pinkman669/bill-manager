@@ -14,7 +14,7 @@ export async function settleBalance(req: Request, res: Response) {
 	try {
 		const userID = req.session.userID;
 		const friendID = req.body.friendId;
-	console.log(`userid:${userID},friendid:${friendID}`)
+	// console.log(`userid:${userID},friendid:${friendID}`)
 
 		await client.query(
 			`UPDATE records SET due = true 
