@@ -11,6 +11,14 @@
 	div.container-fluid.split{
 		padding: 10px 0;
 	}
+	div#friendList-div{
+		flex-direction: column;
+		align-items: center;
+	}
+	div.selected-user-div{
+		flex-direction: column;
+		align-items: center;
+	}
 }
 
 @media screen and (max-width: 768px){
@@ -19,9 +27,10 @@
 	}
 }
 
-#add-friends-div{
+#added-friends-div{
 	padding: 10px;
 	display: flex;
+	align-items: baseline;
 	justify-content: space-between;
 }
 
@@ -109,12 +118,13 @@
 .method-btn:hover{
 	background-color:orange;
 	color: white;
+	box-shadow: inset -1px -1px 3px black;
 }
 
 .split-method:checked + span{
 	background-color:orange;
 	color: white;
-	box-shadow: inset 0px 0px 2px black;
+	box-shadow: inset 1px 1px 3px black;
 }
 
 #denominator{
@@ -138,11 +148,60 @@
 	padding: 0 150px;
 }
 
-#add-friends-modal-div{
+#friendList-div{
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.modal-footer.add-friend-page{
-	justify-content: flex-end;
+#selected-friends-div{
+	padding: 10px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.selected-name{
+	padding: 3px 8px;
+	margin: 3px;
+	box-shadow: inset 0px 0px 1px blue;
+	border-radius: 30px;
+	color: white;
+	background-color: rgb(47, 135, 150);
+}
+
+.selected-group{
+	padding: 3px 8px;
+	margin: 3px;
+	box-shadow: inset 0px 0px 1px blue;
+	border-radius: 30px;
+	color: white;
+	background-color: rgb(8, 121, 57);
+}
+
+#add-friends{
+	font-size: 20px;
+	color: black;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.selected-input-div{
+	display: flex;
+}
+
+.user-input, .group-input{
+    display: none;
+}
+
+.user-input:checked + span, .group-input:checked + span{
+    background-color: orange;
+}
+
+.user-name, .group-name{
+	border: 2px solid black;
+    text-align: center;
+    margin: 5px;
+    border-radius: 20px;
+    padding: 5px;
+    width: 200px;
+    display: block;
 }
