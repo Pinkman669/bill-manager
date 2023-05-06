@@ -11,3 +11,23 @@
 	border-radius: 50%;
 	display: inline-block;
 }
+
+.create-event-div{  
+	height: 100%;
+    display: flex;
+    align-items: flex-start;
+	justify-content: flex-end;
+}
+
+
+
+.create-btn{
+	background-color: #FFE7A2;
+	color: black;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px black;
+	padding: 2px 2px;
+}
+.create-btn > i{
+font-size: 20px;
+}

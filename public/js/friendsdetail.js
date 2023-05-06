@@ -27,7 +27,7 @@ async function loadFriendsDetail() {
 		individual.innerHTML += `<div class="event-detail">
 									<div class="event-info-detail">
 										<div class="date">Date:${date}</div>
-										<a href="/eventdetail" user-id="${i.event_id}"class="event-name">Event Name:${i.name}</a>
+										<a href="/event-detail.html?recordId=${i.record_id}" user-id="${i.event_id}"class="event-name">Event Name:${i.name}</a>
 									</div>
 									<div class="event-payment-detail">
 										<div id="settled">${i.due ? `Settled` : ``}</div>
