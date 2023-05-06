@@ -11,3 +11,12 @@
     font-size: 25px;
     padding-right: 5px;
 }
+
+.container-fluid.event-detail{
+	margin-top: 15px;
+	border: 2px solid orange;
+	border-radius: 10px;
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+}
