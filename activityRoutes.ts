@@ -1,7 +1,7 @@
 import express from 'express'
 import {Request, Response} from 'express'
 import { client } from './main';
-import { loadFriends } from './groupsRoutes';
+import { loadFriends, loadGroup } from './groupsRoutes';
 import { isLoggedIn } from './loginRoutes';
 import {logger} from './logger'
 
@@ -11,6 +11,9 @@ export const activityRoutes = express.Router();
 //get the friends list
 activityRoutes.get('/', isLoggedIn, loadFriends);
 activityRoutes.post('/create-activity', isLoggedIn, createActivity)
+activityRoutes.get('/searchUsers/:nameInput', isLoggedIn, searchUsers)
+activityRoutes.post('/addFriend', isLoggedIn, addFriend)
+activityRoutes.get('/loadGroups', isLoggedIn, loadGroup)
 
 async function createActivity(req: Request, res: Response) {
     try{
@@ -50,7 +53,43 @@ async function createActivity(req: Request, res: Response) {
         res.json({success: true, msg: 'Activity created successfully!'})
     } catch(e){
         logger.error(`[Err013] ${e}`)
-        res.json({success: false, msg: '[Err013]Failed create activity'})
+        res.json({success: false, msg: '[Err013]Failed to create activity'})
+    }
+}
+
+async function searchUsers(req: Request, res: Response) {
+    try{
+        const searchName = req.params.nameInput
+        const userID = req.session.userID
+    
+        const notFriendList = await client.query(`SELECT users.id, users.email FROM users 
+        WHERE users.nickname LIKE $2 AND users.id != $1 AND users.id NOT IN (SELECT users.id FROM friends 
+        INNER JOIN users ON users.id = user1_id AND users.id != $1 
+        OR users.id = user2_id AND users.id != $1 
+        WHERE user1_id = $1 OR user2_id = $1)`,[
+            userID,
+            `${searchName}%`
+        ])
+        res.json({success: true, usersList: notFriendList.rows})
+    }catch(e){
+        logger.error(`[Err014] ${e}`)
+        res.json({success: false, msg: '[Err014] Failed to retrieve users'})
+    }
+}
+
+async function addFriend(req: Request, res: Response) {
+    try{
+        const userID = req.session.userID
+        const userNameInput = req.body.userNameInput
+        const userIDInput = await client.query(`SELECT id FROM users WHERE email = $1`,[userNameInput])
+        await client.query(`INSERT INTO friends (user1_id, user2_id) VALUES($1,$2)`,[
+            userIDInput.rows[0].id,
+            userID
+        ])
+        res.json({success: true, msg: 'Friend added!'})
+    }catch(e){
+        logger.error(`[Err015] ${e}`)
+        res.json({success: false, msg: '[Err015] Failed to add friend'})
     }
 }
 

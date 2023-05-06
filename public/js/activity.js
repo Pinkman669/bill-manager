@@ -1,51 +1,12 @@
+import { searchUsers, addFriend, loadFriend, loadGroups, selectType } from './addFriend.js'
+
 // Declare variable
 const dividedBy = document.getElementById('denominator')
 const requestorBtn = document.querySelector('#requestor')
 const resMsg = document.querySelector('.resMsg')
 
-// Load friend list and add friend
-async function addFriend(){
-    const modalDiv = document.querySelector('#add-friends-modal-div')
-        const res = await fetch('/activity')
-        const result = await res.json()
-        if (result.success){
-            modalDiv.innerHTML = ''
-            for (let i in result.friendList){
-                const friend = result.friendList[i];
-                modalDiv.innerHTML += `<div class="friend-name-div">
-                                            <label for="${friend.user_id}">
-                                                <input type="checkbox" class="friend-input" value="${friend.user_id}" id="${friend.user_id}" friend-name="${friend.nickname}">
-                                                <span class="friend-name">${friend.nickname}</span>
-                                            </label>
-                                        </div>`
-            }
-        }
-        // Display friend name
-        const selectedUsersDiv = document.querySelector('#selected-friends-div')
-        const friendBoxes = [...document.querySelectorAll('.friend-input')]
-        friendBoxes.forEach((friendBox)=>{
-            friendBox.addEventListener('change', (e)=>{
-                if (friendBox.checked){
-                    const friendName = friendBox.getAttribute('friend-name')
-                    const newP = document.createElement('p')
-                    newP.classList.add('selected-name')
-                    newP.setAttribute('friend-name', friendName)
-                    const newContent = document.createTextNode(friendName)
-                    newP.appendChild(newContent)
-                    selectedUsersDiv.appendChild(newP)
-                }
-                if (!friendBox.checked){
-                    const selectedUsers = [...document.querySelectorAll('.selected-name')]
-                    selectedUsers.forEach((user)=>{
-                        if (user.getAttribute('friend-name') === friendBox.getAttribute('friend-name')){
-                            selectedUsersDiv.removeChild(user)
-                        }
-                    })
-                }
-            })
-        })
-}
-
+// Modal btns DOM //
+// Close btn
 document.querySelector('#add-friend-modal').addEventListener('hidden.bs.modal', async (e)=>{
     await LoadSelector()
     const splitMethodBtns = [...document.querySelectorAll('.split-method')]
@@ -54,6 +15,16 @@ document.querySelector('#add-friend-modal').addEventListener('hidden.bs.modal', 
             await LoadFriendsInput(method.value)
         }
     })
+})
+// Search users name
+document.querySelector('#searchUser').addEventListener('input', async (e)=>{
+    await searchUsers()
+})
+
+// Add friend btn
+document.querySelector('#add-friend-btn').addEventListener('click', async(e)=>{
+    e.preventDefault()
+    await addFriend()
 })
 
 // Render paid by select option
@@ -84,8 +55,10 @@ async function LoadFriendsInput(method){
     userAmountBox.innerHTML = ''
     const selectedFriends = [...document.querySelectorAll('.friend-input')]
     userAmountBox.innerHTML += `<div class="selected-user-div">
-                                    <input class="usersCheckBox" type="checkbox" value="${result.userInfo.userID}" name="${result.userInfo.userName}" form="activity-form" ${requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`}>
-                                    <label for="${result.userInfo.userID}">You ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
+                                    <div class="selected-input-div">
+                                        <input class="usersCheckBox" type="checkbox" value="${result.userInfo.userID}" name="${result.userInfo.userName}" form="activity-form" ${requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`}>
+                                        <label for="${result.userInfo.userID}">You ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
+                                    </div>
                                     <input class="usersAmountInput" type="number" name="${result.userInfo.userName}-amount" form="activity-form" required ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``}>
                                 </div>`
     selectedFriends.forEach((friend)=>{
@@ -93,8 +66,10 @@ async function LoadFriendsInput(method){
             const friendName = friend.getAttribute('friend-name')
             const friendID = friend.value
             userAmountBox.innerHTML += `<div class="selected-user-div">
-                                            <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${requestorBtn.value == friendID ? `disabled`: `checked`}>
-                                            <label for="${friendID}">${friendName}: ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
+                                            <div class="selected-input-div">
+                                                <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${requestorBtn.value == friendID ? `disabled`: `checked`}>
+                                                <label for="${friendID}">${friendName}: ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
+                                            </div>
                                             <input class="usersAmountInput" type="number" name="${friendName}-amount" form="activity-form" required ${requestorBtn.value == friendID ? `disabled`: ``}>
                                         </div>`
         }
@@ -196,6 +171,8 @@ function submitActivity(){
         const result = await res.json();
         if (result.success){
             resMsg.classList.replace('alert-warning', 'alert-success')
+            document.querySelector('.container-fluid.users-amount').innerHTML = ''
+
         }
         resMsg.classList.remove('invisible')
         resMsg.textContent = result.msg
@@ -220,10 +197,12 @@ requestorBtn.addEventListener('change', (e)=>{
 })
 
 window.addEventListener('load', async()=>{
-    await addFriend()
+    await loadFriend()
     await LoadSelector()
+    await loadGroups()
     submitActivity()
     splitMethod()
+    selectType()
 })
 
 

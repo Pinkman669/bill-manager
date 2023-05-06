@@ -70,14 +70,38 @@ export async function createGroup(req: Request, res: Response) {
     }
 }
 
-async function loadGroup(req: Request, res: Response) {
+export async function loadGroup(req: Request, res: Response) {
     try{
         const userID = req.session.userID;
-        const userGroup = await client.query(`SELECT groups.name, groups.id FROM user_group INNER JOIN groups ON user_group.group_id = groups.id 
+        const userGroups = await client.query(`SELECT groups.name, groups.id FROM user_group INNER JOIN groups ON user_group.group_id = groups.id 
         INNER JOIN users ON users.id = user_group.user_id WHERE users.id = $1`,[
             userID
         ])
-        res.json(userGroup.rows)
+
+        const groupsInfo = new Map()
+
+        for (let row of userGroups.rows){
+            const groupInfo = await client.query(`SELECT users.id, users.nickname FROM users 
+            INNER JOIN user_group ON users.id = user_group.user_id 
+            WHERE users.id != $1 AND user_group.group_id = $2`,[
+                userID,
+                row.id
+            ])
+
+            groupInfo.rows.forEach((info)=>{
+                const groupMate = {
+                    userID: info.id,
+                    userName: info.nickname,
+                    groupName: row.name
+                }
+                if (groupsInfo.has(row.id)){
+                    groupsInfo.get(row.id).push(groupMate)
+                } else{
+                    groupsInfo.set(row.id, [groupMate])
+                }
+            })
+        }
+        res.json({success: true, userGroup: userGroups.rows, groupsInfo: Object.fromEntries(groupsInfo)})
 
     }catch(e){
         logger.error(`[Err013] ${e}`);
