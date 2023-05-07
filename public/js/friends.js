@@ -15,26 +15,26 @@ async function loadFriends() {
 		if (result.friendsRecords[i].friendsAmount > 0) {
 			// console.log(`+ amount`);
 			friendTable.innerHTML += `
-                                <tr>
-                                <th scope="row">
+                                <div class="friends-div">
+								<div>
                                     <a href="/friendsdetail.html?friendID=${
 										result.friendsRecords[i].friendID
 									}" userID="${
 										result.friendsRecords[i].friendID
 									}">${
-				result.friendsRecords[i].friendsName
-			}</a>
+										result.friendsRecords[i].friendsName
+										}</a>
                                     <img class="users-pic" src="${
 										result.friendsRecords[i].friendsImage
 											? `uploads/${result.friendsRecords[i].friendsImage}`
 											: `image/default_profile.jpg`
 									}">
-                                  
-                                    </th>   
-                                    <td> You lent $ ${
+                                </div>
+                                    </div>   
+                                    <div class="amount-div"> You lent $ ${
 										result.friendsRecords[i].friendsAmount
-									}</td>
-                                </tr>
+									}</div>
+                                </div>
                                 `;
 		} else if (result.friendsRecords[i].friendsAmount < 0) {
 			// console.log(`- amount`);
