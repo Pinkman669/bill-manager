@@ -73,6 +73,7 @@ export async function searchUsers() {
 }
 
 export async function addFriend() {
+    
     const form = document.querySelector('#add-friends-form')
     const userNameInput = document.querySelector('#searchUser').value
     form.reset()
@@ -88,6 +89,10 @@ export async function addFriend() {
         const selectedFriendDiv = document.querySelector('#selected-friends-div')
         selectedFriendDiv.innerHTML = ''
         await loadFriend()
+    } else{
+        const resMsgBox = document.querySelector('#addFriend-resMsg')
+        resMsgBox.querySelector('.resMsg').textContent = result.msg
+        resMsgBox.classList.replace('collapse', 'show')
     }
 }
 

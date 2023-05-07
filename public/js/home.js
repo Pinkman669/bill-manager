@@ -10,7 +10,6 @@ async function loadUser() {
 	const creditTable = document.querySelector('#user-credit-detail');
 	const balanceTag = document.querySelector('#user-balance');
 	const maxDisplay = window.innerWidth > 390 ? 5 : 3;
-	console.log(result.requestorInfo.length)
 	balanceTag.textContent = result.totalBalance;
 	username.textContent = result.userInfo.userName;
 	userPic.innerHTML += `<img src="${
@@ -20,21 +19,21 @@ async function loadUser() {
 	}" 
     alt="profile-image" class="profile-pic" />`;
 
-	for (let i = 0; i < maxDisplay; i++) {
+	for (let i = 0; i < result.requestorInfo.length; i++) {
 		const requestorInfo = result.requestorInfo[i]
 			oweTable.innerHTML += `<tr class="animate__animated ${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
-                                        <th scope="row">
-                                            <a href="#" userID="${
+										<th scope="row">
+											<a href="#" userID="${
 												requestorInfo.id
 											}">${requestorInfo.nickname}</a>
-                                            <img class="users-pic" src="${
+											<img class="users-pic" src="${
 												requestorInfo.image
 													? `uploads/${requestorInfo.image}`
 													: `image/default_profile.jpg`}">
-                                        </th>
-                                        <td>-${requestorInfo.amount}</td>
-                                    </tr>`;
-		}
+										</th>
+										<td>-${requestorInfo.amount}</td>
+									</tr>`;
+	}
 	for (let i = 0; i < result.receiverInfo.length; i++){
 		const receiverInfo = result.receiverInfo[i]
 		creditTable.innerHTML += `<tr class="${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">

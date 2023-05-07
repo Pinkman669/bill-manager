@@ -1,12 +1,31 @@
 import { searchUsers, addFriend, loadFriend, loadGroups, selectType } from './addFriend.js'
+import { animateCSS } from './exportFn.js'
 
 // Declare variable
 const dividedBy = document.getElementById('denominator')
 const requestorBtn = document.querySelector('#requestor')
-const resMsg = document.querySelector('.resMsg')
+const resMsgBox = document.querySelector('.alert')
 
 // Modal btns DOM //
-// Close btn
+// Select types display/hidden modal
+document.querySelectorAll('.select-type').forEach((typeBtn)=>{
+    const groupDiv = document.querySelector('#selection-type-group')
+    const friendDiv = document.querySelector('#selection-type-person')
+    typeBtn.addEventListener('change', (e)=>{
+        if (typeBtn.checked && typeBtn.value === 'group'){
+            groupDiv.classList.remove('invisible')
+            friendDiv.classList.add('invisible')
+            animateCSS(groupDiv, 'animate__fadeInRight')
+        }
+        if (typeBtn.checked && typeBtn.value === 'person'){
+            friendDiv.classList.remove('invisible')
+            groupDiv.classList.add('invisible')
+            animateCSS(friendDiv, 'animate__fadeInLeft')
+        }
+    })
+})
+
+// Modal close btn
 document.querySelector('#add-friend-modal').addEventListener('hidden.bs.modal', async (e)=>{
     await LoadSelector()
     const splitMethodBtns = [...document.querySelectorAll('.split-method')]
@@ -16,6 +35,14 @@ document.querySelector('#add-friend-modal').addEventListener('hidden.bs.modal', 
         }
     })
 })
+
+// resMsg close btn
+document.querySelectorAll('.alert').forEach((msg)=>{
+    msg.querySelector('.btn-close').addEventListener('click', (e)=>{
+        msg.classList.replace('show', 'collapse')
+    })
+})
+
 // Search users name
 document.querySelector('#searchUser').addEventListener('input', async (e)=>{
     await searchUsers()
@@ -57,9 +84,9 @@ async function LoadFriendsInput(method){
     userAmountBox.innerHTML += `<div class="selected-user-div">
                                     <div class="selected-input-div">
                                         <input class="usersCheckBox" type="checkbox" value="${result.userInfo.userID}" name="${result.userInfo.userName}" form="activity-form" ${requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`}>
-                                        <label for="${result.userInfo.userID}">You ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
+                                        <label >You ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
                                     </div>
-                                    <input class="usersAmountInput" type="number" name="${result.userInfo.userName}-amount" form="activity-form" required ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``}>
+                                    <input input-type="amount" class="usersAmountInput" type="number" name="${result.userInfo.userName}-amount" form="activity-form" required ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``} min="1">
                                 </div>`
     selectedFriends.forEach((friend)=>{
         if (friend.checked){
@@ -68,12 +95,13 @@ async function LoadFriendsInput(method){
             userAmountBox.innerHTML += `<div class="selected-user-div">
                                             <div class="selected-input-div">
                                                 <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${requestorBtn.value == friendID ? `disabled`: `checked`}>
-                                                <label for="${friendID}">${friendName}: ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
+                                                <label >${friendName}: ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
                                             </div>
-                                            <input class="usersAmountInput" type="number" name="${friendName}-amount" form="activity-form" required ${requestorBtn.value == friendID ? `disabled`: ``}>
+                                            <input input-type="amount" class="usersAmountInput" type="number" name="${friendID}-amount" form="activity-form" required ${requestorBtn.value == friendID ? `disabled`: ``} min="1">
                                         </div>`
         }
     })
+    userCheckBoxChange()
 }
 
 // Rendering payment input depends on split-method
@@ -96,12 +124,6 @@ function splitMethod(){
 function submitActivity(){
     document.querySelector('#form-submit-btn').addEventListener('click', async (e)=>{
         e.preventDefault()
-        // Reject paid by not selected
-        // for (let option of requestorBtn){
-        //     if (option.selected && option.disabled){
-        //         return
-        //     }
-        // }
 
         // Reject split method not selected
         const splitMethodBtns = [...document.querySelectorAll('.split-method')]
@@ -118,15 +140,21 @@ function submitActivity(){
             }
         }
         const inputFields = [...document.querySelectorAll('input')]
-        inputFields.forEach((input)=>{
-            if (!input.checkValidity()){
+        for (let inputField of inputFields){
+            if (inputField.getAttribute('input-type') === 'amount' && inputField.value <= 0 && !inputField.disabled){
+                resMsgBox.classList.replace('alert-success', 'alert-warning')
+                resMsgBox.classList.replace('collapse', 'show')
+                resMsgBox.querySelector('.resMsg').textContent = 'Amount cannot be 0 or below'
+                return
+            }
+            if (!inputField.checkValidity()){
                 methodChecked = false
             }
-        })
+        }
         if (!methodChecked){
-            resMsg.classList.replace('alert-success', 'alert-warning')
-            resMsg.classList.remove('invisible')
-            resMsg.textContent = 'Please fill out the form'
+            resMsgBox.classList.replace('alert-success', 'alert-warning')
+            resMsgBox.classList.replace('collapse', 'show')
+            resMsgBox.querySelector('.resMsg').textContent = 'Please fill out the form'
             return
         }
         const form = document.querySelector('#activity-form')
@@ -155,12 +183,14 @@ function submitActivity(){
         const receiversAmount = [...document.querySelectorAll('.usersAmountInput')]
         receiversID.forEach((receiver, i)=>{
             if (receiver.checked){
-                formObj.receiversInfo.userID.push(receiver.value)
-                formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
+                if (receiversAmount[i].value > 0){
+                    formObj.receiversInfo.userID.push(receiver.value)
+                    formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
+                }
             }
         })
 
-        form.reset()
+        // form.reset()
         const res = await fetch('activity/create-activity',{
             method: "POST",
             headers: {
@@ -170,12 +200,15 @@ function submitActivity(){
         })
         const result = await res.json();
         if (result.success){
-            resMsg.classList.replace('alert-warning', 'alert-success')
+            form.reset()
+            resMsgBox.classList.replace('alert-warning', 'alert-success')
             document.querySelector('.container-fluid.users-amount').innerHTML = ''
 
+        } else{
+            resMsgBox.classList.replace('alert-success', 'alert-warning')
         }
-        resMsg.classList.remove('invisible')
-        resMsg.textContent = result.msg
+        resMsgBox.classList.replace('collapse', 'show')
+        resMsgBox.querySelector('.resMsg').textContent = result.msg
     })
 }
 
@@ -195,6 +228,21 @@ requestorBtn.addEventListener('change', (e)=>{
         }
     })
 })
+
+// user amount checkbox on change
+function userCheckBoxChange(){
+    document.querySelectorAll('.usersCheckBox').forEach((userCheckBox, i)=>{
+        const usersAmountInput = [...document.querySelectorAll('.usersAmountInput')]
+        userCheckBox.addEventListener('change', (e)=>{
+            if (!e.target.checked){
+                usersAmountInput[i].disabled = true
+            }
+            if (e.target.checked){
+                usersAmountInput[i].disabled = false
+            }
+        })
+    })
+}
 
 window.addEventListener('load', async()=>{
     await loadFriend()

@@ -1,3 +1,4 @@
+import { animateCSS } from "./exportFn.js";
 // Declare variable
 const events = document.querySelector('.history-div');
 const userPic = document.querySelector('.member-pic-div');
@@ -21,7 +22,7 @@ async function loadHistory(res) {
 		events.innerHTML += `<div class="history-detail-div invisible">
                                 <div class="history-events-div">
                                     <div class="events-date"><span>Date: </span><span>${date}</span></div>
-                                    <div class="events-location"><span>Event Name: </span><a href="/event-detail.html?recordId=${i.record_id}" event-id="${event.event_id}">${event.name}</a></div>
+                                    <div class="events-location"><span>Event Name: </span><a href="/event-detail.html?recordId=${event.record_id}" event-id="${event.event_id}">${event.name}</a></div>
                                 </div>
                                 <div class="events-amount-div">
                                     <div class="events-info" event_id="${event.event_id}"> 
@@ -153,16 +154,3 @@ window.addEventListener('load', async () => {
     await loadHistory(res)
     changeFilter()
 })
-
-// Animated function
-function animateCSS(node, animation) {
-	node.classList.add('animate__animated');
-	node.classList.add(animation);
-
-	function handleAnimationEnd(e) {
-		e.stopPropagation();
-		node.classList.remove(`animate__animated`);
-		node.classList.remove(animation);
-	}
-	node.addEventListener('animationend', handleAnimationEnd);
-}
