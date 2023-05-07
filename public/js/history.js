@@ -30,29 +30,43 @@ async function loadHistory(res) {
                                         `<p class="trans-info">[Transaction: ${event.due ? `Completed` : `Not yet complete`}]</p>
                                                                                         ${event.type === `request` ?
                                             `<p>${event.due ?
-                                                ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
-                                                ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
+                                                ` You paid <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
+                                                ` Waiting to pay <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
                                             }</p>` :
                                             `<p>${event.due ?
-                                                ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
-                                                `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
+                                                ` <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
+                                                `Waiting <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
                                             }</p>`
                                         }`
                                     // if user rejected
                                     : `${event.accepted === false ?
-                                        `<p class="trans-info">[Transaction: Cancelled]</p><p>${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
+                                        `<p class="trans-info">[Transaction: Cancelled]</p><p>${event.type === `request` ? ` You rejected <a href="/friendsdetail.html?friendID=${
+                                            event.user_id
+                                        }" user-id="${event.user_id}">${nickname}</a> request` :
                                             `<a href="/event-detail.html?recordId=${i.record_id}" user-id="${event.user_id}">${nickname}</a> rejected your request`}</p>`
                                         // if accepted = null = pending
                                         : `<p class="trans-info">[Pending]</p> 
                                             <p>${event.type === `request` ?
-                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
+                                            `<a href="/friendsdetail.html?friendID=${
+                                                event.user_id
+                                            }" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
                                                                                             <div class="pending-request" event_id="${event.event_id}">
                                                                                                 <button type="button" id="accept" class="pending-btn">
                                                                                                 <i class="bi bi-check" alt="accept-request"></i></button>
                                                                                                 <button type="button" id="reject" class="pending-btn">
                                                                                                 <i class="bi bi-x" alt="reject-request"></i></button>
                                                                                             </div>` :
-                                            `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
+                                            `You requested <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
                                             }</p>`
                                         }`
                                     }</div>
