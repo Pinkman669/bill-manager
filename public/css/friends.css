@@ -36,15 +36,17 @@ font-size: 20px;
 	font: 34;
 	font-weight: bold;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
 	padding: 20px;
 	max-width: 1240px;
 	margin: 20px 150px;
 
 }
-.friends-div{
+.friends-detail-div{
 	display: flex;
 	justify-content: flex-start;
+	padding: 5px;
 }
 .amount-div{
 	display: flex;

@@ -13,7 +13,7 @@ async function loadFriendsDetail() {
 
 	friendName.textContent = fdNickname
 	balance.textContent = result.totalAmount; // the btw-friends balance; 
-	friendIcon.innerHTML= `<img class="users-pic" src="${
+	friendIcon.innerHTML= `<img class="profile-pic" src="${
 		result.friend.image
 			? `uploads/${result.friendsRecords[i].friendsImage}`
 			: `image/default_profile.jpg`

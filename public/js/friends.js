@@ -15,7 +15,8 @@ async function loadFriends() {
 		if (result.friendsRecords[i].friendsAmount > 0) {
 			// console.log(`+ amount`);
 			friendTable.innerHTML += `
-                                <div class="friends-div">
+								<div class="friends-div>
+                                <div class="friends-detail-div">
 								<div>
                                     <a href="/friendsdetail.html?friendID=${
 										result.friendsRecords[i].friendID
@@ -35,30 +36,34 @@ async function loadFriends() {
 										result.friendsRecords[i].friendsAmount
 									}</div>
                                 </div>
+								</div>
                                 `;
 		} else if (result.friendsRecords[i].friendsAmount < 0) {
 			// console.log(`- amount`);
 			let ownAmount = result.friendsRecords[i].friendsAmount;
 			let amount = ownAmount * -1;
 			friendTable.innerHTML += `
-                                <tr>
-                                <th scope="row">
-                                    <a href="/friendsdetail.html?friendID=${
-										result.friendsRecords[i].friendID
-									}" userID="${
-										result.friendsRecords[i].friendID
-									}">${
-				result.friendsRecords[i].friendsName
-			}</a>
-                                    <img class="users-pic" src="${
-										result.friendsRecords[i].image
-											? `uploads/${result.friendsRecords[i].friendsImage}`
-											: `image/default_profile.jpg`
-									}">
-                                </th>   
-                                    <td> You borrowed $ ${amount}</td>
-                                </tr>
-                                `;
+			<div class="friends-div>
+				<div class="friends-detail-div">
+					<div>
+						<a href="/friendsdetail.html?friendID=${
+							result.friendsRecords[i].friendID
+						}" userID="${
+							result.friendsRecords[i].friendID
+						}">${
+							result.friendsRecords[i].friendsName
+							}</a>
+						<img class="users-pic" src="${
+							result.friendsRecords[i].friendsImage
+								? `uploads/${result.friendsRecords[i].friendsImage}`
+								: `image/default_profile.jpg`
+						}">
+					</div>
+				</div>   
+					<div class="amount-div"> You borrowed $ ${amount}</div>
+				</div>
+			</div>
+			`;
 		}
 	}
 }
