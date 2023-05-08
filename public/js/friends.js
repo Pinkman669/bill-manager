@@ -16,8 +16,8 @@ async function loadFriends() {
 			// console.log(`+ amount`);
 			friendTable.innerHTML += `
 								<div class="friends-div>
-                                <div class="friends-detail-div">
-								<div>
+                                <div class="friends-detail-div"> 
+								<div class="group-name">
                                     <a href="/friendsdetail.html?friendID=${
 										result.friendsRecords[i].friendID
 									}" userID="${
@@ -32,11 +32,12 @@ async function loadFriends() {
 									}">
                                 </div>
                                     </div>   
-                                    <div class="amount-div"> You lent $ ${
+                                    <div class="amount-div group-amount"> You lent $ ${
 										result.friendsRecords[i].friendsAmount
 									}</div>
                                 </div>
 								</div>
+								<hr>
                                 `;
 		} else if (result.friendsRecords[i].friendsAmount < 0) {
 			// console.log(`- amount`);
@@ -63,6 +64,7 @@ async function loadFriends() {
 					<div class="amount-div"> You borrowed $ ${amount}</div>
 				</div>
 			</div>
+			<hr>
 			`;
 		}
 	}

@@ -78,7 +78,7 @@ export async function userTotalAmount(req: Request, res: Response) {
 				(obj) => obj.friendID === i.receiver_id
 			);
 			if (friend) {
-				friend.friendsAmount -= i.amount;
+				friend.friendsAmount += i.amount;
 				console.log(
 					`friendAmountReq: + ${
 						i.amount
@@ -111,29 +111,29 @@ export async function userTotalAmount(req: Request, res: Response) {
 			);
 			if (friend) {
 				friend.friendsAmount -= i.amount;
-				console.log(
-					`friendAmountRes: - ${
-						i.amount
-					} allFriendsDetail: ${JSON.stringify(
-						allFriendsDetail,
-						null,
-						2
-					)}`
-				);
+				// console.log(
+				// 	`friendAmountRes: - ${
+				// 		i.amount
+				// 	} allFriendsDetail: ${JSON.stringify(
+				// 		allFriendsDetail,
+				// 		null,
+				// 		2
+				// 	)}`
+				// );
 			} else {
 				allFriendsDetail.push({
 					friendID: i.requestor_id,
 					friendsName: i.nickname,
 					friendsImage: i.image,
-					friendsAmount: -i.amount
+					friendsAmount: -(i.amount)
 				});
-				console.log(
-					`NEWreq: - ${i.amount} allFriendsDetail:${JSON.stringify(
-						allFriendsDetail,
-						null,
-						2
-					)}`
-				);
+				// console.log(
+				// 	`NEWreq: - ${i.amount} allFriendsDetail:${JSON.stringify(
+				// 		allFriendsDetail,
+				// 		null,
+				// 		2
+				// 	)}`
+				// );
 			}
 		}
 

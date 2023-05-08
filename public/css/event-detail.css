@@ -9,14 +9,35 @@
 .event-input-div{
     color: black;
     font-size: 25px;
-    padding-right: 5px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: baseline;
+	
 }
 
 .container-fluid.event-detail{
 	margin-top: 15px;
 	border: 2px solid orange;
 	border-radius: 10px;
-	width: 100%;
 	height: 100%;
 	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-evenly;
+}
+.events{
+	position: relative;
+}
+
+#settle-div{
+	margin-top: 15px;
+	font-size: 20px;
+	border: 2px solid rgb(0, 0, 0);
+	background-color: antiquewhite;
+	border-radius: 10px;
+	position: absolute;
+	right:10px;
+	top: 10px;
+	white-space: nowrap;
 }
