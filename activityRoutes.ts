@@ -15,15 +15,7 @@ activityRoutes.get('/searchUsers/:nameInput', isLoggedIn, searchUsers)
 activityRoutes.post('/addFriend', isLoggedIn, addFriend)
 activityRoutes.get('/loadGroups', isLoggedIn, loadGroup)
 
-<<<<<<< HEAD
-//async function getFriends(userID: number) {
-    //const friendsList = await client.query(
-        //`SELECT user1_id, user2_id FROM friends
-       // INNER JOIN users ON users.id = friends.user1_id OR users.id = friends.user2_id
-        //WHERE friends.users1_id = $1 OR friends.user2_id = $1`, [userID]);
-        //return friendsList.rows;
-//}
-=======
+
 async function createActivity(req: Request, res: Response) {
     try{
         const actInfo = req.body
