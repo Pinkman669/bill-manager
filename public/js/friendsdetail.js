@@ -31,13 +31,14 @@ async function loadFriendsDetail() {
 									</div>
 									<div class="event-payment-detail">
 										<div id="settled">${i.due ? `Settled` : ``}</div>
-										<div>${i.requestor_id === id ?
+										<div>${i.requestor_id === Number(id) ?
 											`You borrowed ${i.amount} from ${fdNickname}` :
 											`You lent ${i.amount} to ${fdNickname}`
 										}</div>
 									</div>
 								</div>
 								<hr>`
+	console.log(`-----------------${i.requestor_id},${id}----------------------------`)
 	}					
 }
 

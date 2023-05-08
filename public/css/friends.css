@@ -1,13 +1,14 @@
 @import url('sign.css');
 @import url('home.css');
-#friends-balance{
+@import url('group.css');
+/* #friends-balance{
 	display: flex;
-	/* justify-content: space-between;
-	padding: 50px; */
+	justify-content: space-between;
+	padding: 50px;
 	margin: 10px 100px;
 	width: 100%;
 
-}
+} */
 .users-pic {
 	height: 30px;
 	width: 30px;

@@ -11,15 +11,23 @@ async function loadEventDetail() {
 	const friendsInvolved = document.querySelector('#friends-involved');
 	const billTotal = document.querySelector('#bill-total-amount');
 	const message = document.querySelector('#message');
+	const settle = document.querySelector('#settle');
 
 	
 	eventName.textContent = result.eventInfo[0].name;
 	eventDate.textContent = new Date(result.eventInfo[0].date).toDateString();
 	ownAmount.textContent = result.eventInfo[0].record_amount;
-	splitMethod.textContent = result.eventInfo[0].Method;
-	friendsInvolved.textContent = `${result.req[0].nickname}+ +${result.res[0].nickname}`;
+	friendsInvolved.textContent = `${result.req[0].nickname}, ${result.res[0].nickname}`;
 	billTotal.textContent = result.eventInfo[0].total_amount;
 	message.textContent = result.eventInfo[0].message;
+	settle.textContent = (result.eventInfo[0].due?"Settled":"Unsettle")
+	if (result.eventInfo[0].method === "evenly"){
+		splitMethod.textContent = 'Split evenly'
+	}else if (result.eventInfo[0].method === "custom"){
+		splitMethod.textContent = 'custom';
+	}else {
+		splitMethod.textContent = `Split in ${result.eventInfo[0].method} ways`;
+	}
 
 }
 
