@@ -13,12 +13,13 @@ async function loadEventDetail() {
 	const message = document.querySelector('#message');
 	const settle = document.querySelector('#settle');
 
+
 	
 	eventName.textContent = result.eventInfo[0].name;
 	eventDate.textContent = new Date(result.eventInfo[0].date).toDateString();
 	ownAmount.textContent = result.eventInfo[0].record_amount;
 	friendsInvolved.textContent = `${result.req[0].nickname}, ${result.res[0].nickname}`;
-	billTotal.textContent = result.eventInfo[0].total_amount;
+	billTotal.textContent =  result.eventInfo[0].total_amount;
 	message.textContent = result.eventInfo[0].message;
 	settle.textContent = (result.eventInfo[0].due?"Settled":"Unsettle")
 	if (result.eventInfo[0].method === "evenly"){

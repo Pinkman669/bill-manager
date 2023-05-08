@@ -31,13 +31,17 @@
 }
 
 #settle-div{
-	margin-top: 15px;
-	font-size: 20px;
-	border: 2px solid rgb(0, 0, 0);
-	background-color: antiquewhite;
-	border-radius: 10px;
 	position: absolute;
+	height: 30px;
 	right:10px;
 	top: 10px;
-	white-space: nowrap;
+	font-weight: bold;
+    bottom: 5px;
+    right: 10px;
+    padding: 2px 5px;
+    box-shadow: 0 0 2px black;
+    border-radius: 10px;
+    border: 1px dashed black;
+    background-color: rgba(128, 128, 128, 0.573);
+    text-align: center;
 }
