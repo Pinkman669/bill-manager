@@ -79,15 +79,15 @@ export async function userTotalAmount(req: Request, res: Response) {
 			);
 			if (friend) {
 				friend.friendsAmount += i.amount;
-				console.log(
-					`friendAmountReq: + ${
-						i.amount
-					} allFriendsDetail: ${JSON.stringify(
-						allFriendsDetail,
-						null,
-						2
-					)}`
-				);
+				// console.log(
+				// 	`friendAmountReq: + ${
+				// 		i.amount
+				// 	} allFriendsDetail: ${JSON.stringify(
+				// 		allFriendsDetail,
+				// 		null,
+				// 		2
+				// 	)}`
+				// );
 			} else {
 				allFriendsDetail.push({
 					friendID: i.receiver_id,
@@ -95,13 +95,13 @@ export async function userTotalAmount(req: Request, res: Response) {
 					friendsImage: i.image,
 					friendsAmount: i.amount
 				});
-				console.log(
-					`NEWreq: + ${i.amount} allFriendsDetail:${JSON.stringify(
-						allFriendsDetail,
-						null,
-						2
-					)}`
-				);
+				// console.log(
+				// 	`NEWreq: + ${i.amount} allFriendsDetail:${JSON.stringify(
+				// 		allFriendsDetail,
+				// 		null,
+				// 		2
+				// 	)}`
+				// );
 			}
 		}
 

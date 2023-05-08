@@ -50,7 +50,7 @@ export async function getFriendsDetail(req: Request, res: Response) {
             FROM
             events INNER JOIN records ON events.id = records.event_id
             WHERE
-            ((records.requestor_id = $1 AND records.receiver_id = $2) OR (records.requestor_id = $2  AND records.receiver_id = $1 )) AND records.due = false AND records.accepted = true 
+            ((records.requestor_id = $1 AND records.receiver_id = $2) OR (records.requestor_id = $2  AND records.receiver_id = $1 )) AND records.accepted = true 
             ORDER BY 
             events.date`,
 			[userID,friendID]

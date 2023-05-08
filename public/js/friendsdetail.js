@@ -24,21 +24,20 @@ async function loadFriendsDetail() {
 
 	for (let i of result.history) {
 		const date = new Date(i.date).toDateString();
-		individual.innerHTML += `<div class="event-detail">
+		individual.innerHTML += `<div class="event-detail ${i.due ? `settle`:`not-settle`}">
 									<div class="event-info-detail">
 										<div class="date">Date:${date}</div>
 										<a href="/event-detail.html?recordId=${i.record_id}" user-id="${i.event_id}"class="event-name">Event Name:${i.name}</a>
 									</div>
 									<div class="event-payment-detail">
-										<div id="settled">${i.due ? `Settled` : ``}</div>
+										<div id="settled">${i.due ? `Settle` : `Not Settle`}</div>
 										<div>${i.requestor_id === Number(id) ?
 											`You borrowed ${i.amount} from ${fdNickname}` :
 											`You lent ${i.amount} to ${fdNickname}`
 										}</div>
 									</div>
-								</div>
-								<hr>`
-	console.log(`-----------------${i.requestor_id},${id}----------------------------`)
+								</div>`
+	// console.log(`-----------------${i.requestor_id},${id}----------------------------`)
 	}					
 }
 
