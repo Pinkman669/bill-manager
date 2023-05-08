@@ -74,7 +74,7 @@ async function LoadSelector(){
     })
 }
 
-// Render users in payment input section
+// Render users in payment input section (evenly disabled)
 async function LoadFriendsInput(method){
     const res = await fetch('/home')
     const result = await res.json()
@@ -86,7 +86,7 @@ async function LoadFriendsInput(method){
                                         <input class="usersCheckBox" type="checkbox" value="${result.userInfo.userID}" name="${result.userInfo.userName}" form="activity-form" ${requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`}>
                                         <label >You ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
                                     </div>
-                                    <input input-type="amount" class="usersAmountInput" type="number" name="${result.userInfo.userName}-amount" form="activity-form" required ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``} min="1">
+                                    <input input-type="amount" class="usersAmountInput" type="number" name="${result.userInfo.userName}-amount" form="activity-form" ${method === 'evenly' ? `disabled` : `required`} ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``} min="1">
                                 </div>`
     selectedFriends.forEach((friend)=>{
         if (friend.checked){
@@ -97,7 +97,7 @@ async function LoadFriendsInput(method){
                                                 <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${requestorBtn.value == friendID ? `disabled`: `checked`}>
                                                 <label >${friendName}: ${method === 'evenly'|| method === 'custom' ? `$` : `shares`}</label>
                                             </div>
-                                            <input input-type="amount" class="usersAmountInput" type="number" name="${friendID}-amount" form="activity-form" required ${requestorBtn.value == friendID ? `disabled`: ``} min="1">
+                                            <input input-type="amount" class="usersAmountInput" type="number" name="${friendID}-amount" form="activity-form" ${method === 'evenly' ? `disabled` : `required`} ${requestorBtn.value == friendID ? `disabled`: ``} min="1">
                                         </div>`
         }
     })
@@ -187,6 +187,11 @@ function splitMethod(){
                 if (receiversAmount[i].value > 0){
                     formObj.receiversInfo.userID.push(receiver.value)
                     formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
+                } else if (formObj.method === 'evenly') {
+                    formObj.receiversInfo.userID.push(receiver.value)
+                    formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
+                    
+                    
                 }
             }
         })
@@ -255,22 +260,3 @@ window.addEventListener('load', async()=>{
 
 
 
-
-// const billSplitter = () => {
-//     let amount = parseInt(totalAmount);
-//     let people = parseInt(numOfPeople);
-//     let result = document.getElementById('averageAmount');
-
-//     if (true) {
-//         let denominator = parseInt(dividedBy);
-//         const averagePayment = (totalAmount /denominator);
-//         console.log(averagePayment);
-//         result.innerHTML = averagePayment;
-        
-//     }
-// }
-
-//const splitStarter = document.querySelector('equally')
-//splitStarter.addEventListener('click', (event) => {
-    //result.innerHTML = event.target.value;
-//})
