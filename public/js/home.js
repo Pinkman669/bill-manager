@@ -23,7 +23,7 @@ async function loadUser() {
 		const requestorInfo = result.requestorInfo[i]
 			oweTable.innerHTML += `<tr class="animate__animated ${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
 										<th scope="row">
-											<a href="#" userID="${
+											<a href="/friendsdetail.html?friendID=${requestorInfo.id}" userID="${
 												requestorInfo.id
 											}">${requestorInfo.nickname}</a>
 											<img class="users-pic" src="${
@@ -38,7 +38,7 @@ async function loadUser() {
 		const receiverInfo = result.receiverInfo[i]
 		creditTable.innerHTML += `<tr class="${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
 									<th scope="row">
-										<a href="#" userID="${
+										<a href="/friendsdetail.html?friendID=${receiverInfo.id}" userID="${
 											receiverInfo.id
 										}">${receiverInfo.nickname}</a>
 										<img class="users-pic" src="${
