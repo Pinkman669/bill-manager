@@ -19,17 +19,10 @@ activityRoutes.get('/loadGroups', isLoggedIn, loadGroup)
 async function createActivity(req: Request, res: Response) {
     try{
         const actInfo = req.body
-
-        
         
         // Calculate shares to amount
         if (actInfo.method instanceof Object){
-            if (actInfo.method === 'evenly') {
-                const numOfReceivers = actInfo.receiversInfo.userID.length;
-                const averageAmount = Number(actInfo.totalAmount) / numOfReceivers;
-                
-                actInfo.receiversInfo.userAmount = Array(numOfReceivers).fill(Math.round(averageAmount));
-            } else {
+            console.log(actInfo.method)
             if (actInfo.receiversInfo.userAmount.reduce((acc:number, curr:string)=>{
                 return acc += Number(curr)
             },0) !== Number(actInfo.method.shares)){
@@ -40,18 +33,16 @@ async function createActivity(req: Request, res: Response) {
             actInfo.receiversInfo.userAmount = actInfo.receiversInfo.userAmount.map((amount: string)=>{
                 return Math.round(Number(amount) * (Number(actInfo.totalAmount) / Number(actInfo.method.shares)))
             })
-        }}
+        }
         console.log(actInfo.receiversInfo.userAmount)
         console.log(actInfo)
-        
-        
         // Reject if amount not match
         let checkAmount = 0;
         actInfo.receiversInfo.userAmount.forEach((amount: string)=>{
             checkAmount+=Number(amount)
         })
         console.log(checkAmount)
-        if (actInfo.method !== 'evenly' && Number(actInfo.totalAmount) !== checkAmount){
+        if (Number(actInfo.totalAmount) !== checkAmount){
             res.json({success: false, msg: 'Amount not match'})
             return
         }

@@ -189,9 +189,8 @@ function splitMethod(){
                     formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
                 } else if (formObj.method === 'evenly') {
                     formObj.receiversInfo.userID.push(receiver.value)
-                    formObj.receiversInfo.userAmount.push(receiversAmount[i].value)
-                    
-                    
+                    const place = 1;
+                    formObj.receiversInfo.userAmount.push(1)
                 }
             }
         })
