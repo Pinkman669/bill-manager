@@ -10,16 +10,15 @@ export const activityRoutes = express.Router();
 
 
 //get the friends list
-
 activityRoutes.get('/', isLoggedIn, loadFriends);
 
-async function getFriends(userID: number) {
-    const friendsList = await client.query(
-        `SELECT user1_id, user2_id FROM friends
-        INNER JOIN users ON users.id = friends.user1_id OR users.id = friends.user2_id
-        WHERE friends.users1_id = $1 OR friends.user2_id = $1`, [userID]);
-        return friendsList.rows;
-}
+//async function getFriends(userID: number) {
+    //const friendsList = await client.query(
+        //`SELECT user1_id, user2_id FROM friends
+       // INNER JOIN users ON users.id = friends.user1_id OR users.id = friends.user2_id
+        //WHERE friends.users1_id = $1 OR friends.user2_id = $1`, [userID]);
+        //return friendsList.rows;
+//}
 
 // function calculateSplitAmount(totalAmount: number, selectedFriends: Array<number>) {
 //     const numberOfFriends = selectedFriends.length;
