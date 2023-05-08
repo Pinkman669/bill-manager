@@ -225,12 +225,11 @@ requestorBtn.addEventListener('change', (e)=>{
             user.checked = false
             user.disabled = true
             usersAmountInput[i].disabled = true
-        } else{
+        } else if (!document.querySelector("#equally").checked) {
             user.checked = true
             user.disabled = false
             usersAmountInput[i].disabled = false
-        }
-    })
+    }})
 })
 
 // user amount checkbox on change
