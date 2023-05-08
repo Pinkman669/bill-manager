@@ -53,13 +53,15 @@ export async function getMember(req: Request, res: Response) {
 
 export async function putAccepted(req: Request, res: Response) {
 	try {
-		const {eventID, acceptance} = req.body
+		const { eventID, acceptance } = req.body;
 
 		await client.query(
 			`UPDATE records SET accepted = $1 WHERE event_id = $2`,
 			[acceptance, eventID]
 		);
-		logger.info(`Events: ${eventID} accepted value updated as ${acceptance}`);
+		logger.info(
+			`Events: ${eventID} accepted value updated as ${acceptance}`
+		);
 		res.json({ success: true });
 	} catch (e) {
 		logger.error('[Err010] accept value did not change' + e);

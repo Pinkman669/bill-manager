@@ -1,6 +1,7 @@
+import { animateCSS } from "./exportFn.js";
 // Declare variable
-const events = document.querySelector('.history-div')
-const userPic = document.querySelector('.member-pic-div')
+const events = document.querySelector('.history-div');
+const userPic = document.querySelector('.member-pic-div');
 
 // Load user pic
 async function loadPic() {
@@ -12,16 +13,16 @@ async function loadPic() {
 
 // Load user's history info in most recent 3 months
 async function loadHistory(res) {
-    const result = await res.json()
-    for (let i in result.history) {
-        const event = result.history[i]
-        const nickname = uppercaseName(event.nickname)
-        const date = new Date(result.history[i].date).toDateString()
+	const result = await res.json();
+	for (let i in result.history) {
+		const event = result.history[i];
+		const nickname = uppercaseName(event.nickname);
+		const date = new Date(result.history[i].date).toDateString();
 
-        events.innerHTML += `<div class="history-detail-div invisible">
+		events.innerHTML += `<div class="history-detail-div invisible">
                                 <div class="history-events-div">
                                     <div class="events-date"><span>Date: </span><span>${date}</span></div>
-                                    <div class="events-location"><span>Event Name: </span><a href="#" event-id="${event.event_id}">${event.name}</a></div>
+                                    <div class="events-location"><span>Event Name: </span><a href="/event-detail.html?recordId=${event.record_id}" event-id="${event.event_id}">${event.name}</a></div>
                                 </div>
                                 <div class="events-amount-div">
                                     <div class="events-info" event_id="${event.event_id}"> 
@@ -29,79 +30,99 @@ async function loadHistory(res) {
                                         `<p class="trans-info">[Transaction: ${event.due ? `Completed` : `Not yet complete`}]</p>
                                                                                         ${event.type === `request` ?
                                             `<p>${event.due ?
-                                                ` You paid <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
-                                                ` Waiting to pay <a href="#" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
+                                                ` You paid <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> $${event.amount}` :
+                                                ` Waiting to pay <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> $${event.amount}`
                                             }</p>` :
                                             `<p>${event.due ?
-                                                ` <a href="#" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
-                                                `Waiting <a href="#" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
+                                                ` <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> paid you $${event.amount}` :
+                                                `Waiting <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> to pay you $${event.amount}`
                                             }</p>`
                                         }`
                                     // if user rejected
                                     : `${event.accepted === false ?
-                                        `<p class="trans-info">[Transaction: Cancelled]</p><p>${event.type === `request` ? ` You rejected <a href="#" user-id="${event.user_id}">${nickname}</a> request` :
-                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> rejected your request`}</p>`
+                                        `<p class="trans-info">[Transaction: Cancelled]</p><p>${event.type === `request` ? ` You rejected <a href="/friendsdetail.html?friendID=${
+                                            event.user_id
+                                        }" user-id="${event.user_id}">${nickname}</a> request` :
+                                            `<a href="/event-detail.html?recordId=${i.record_id}" user-id="${event.user_id}">${nickname}</a> rejected your request`}</p>`
                                         // if accepted = null = pending
                                         : `<p class="trans-info">[Pending]</p> 
                                             <p>${event.type === `request` ?
-                                            `<a href="#" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
+                                            `<a href="/friendsdetail.html?friendID=${
+                                                event.user_id
+                                            }" user-id="${event.user_id}">${nickname}</a> requested you to pay $${event.amount}
                                                                                             <div class="pending-request" event_id="${event.event_id}">
                                                                                                 <button type="button" id="accept" class="pending-btn">
                                                                                                 <i class="bi bi-check" alt="accept-request"></i></button>
                                                                                                 <button type="button" id="reject" class="pending-btn">
                                                                                                 <i class="bi bi-x" alt="reject-request"></i></button>
                                                                                             </div>` :
-                                            `You requested <a href="#" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
+                                            `You requested <a href="/friendsdetail.html?friendID=${
+                                                    event.user_id
+                                                }" user-id="${event.user_id}">${nickname}</a> to pay $${event.amount}`
                                             }</p>`
                                         }`
                                     }</div>
                                 </div>
                                 </div>
-                                <hr class="line invisible">`
-    }
-    // Animation delay effect
-    const detailDivs = [...document.querySelectorAll('.history-detail-div')]
-    const hrLines = [...document.querySelectorAll('.line')]
-    for (let j in detailDivs){
-        setTimeout(()=>{
-            animateCSS(detailDivs[j], 'animate__fadeIn')
-            detailDivs[j].classList.remove('invisible')
-            hrLines[j].classList.remove('invisible')
-        }, 0 + Number(j)*50)
-    }
-    // change accept value 
-    const changeAcceptDivs = [...document.querySelectorAll('.pending-request')]
-    for (let i in changeAcceptDivs) {
-        const form = changeAcceptDivs[i]
-        const eventID = form.getAttribute('event_id')
-        const pendingBtns = [...form.querySelectorAll('.pending-btn')]
-        for (let j in pendingBtns){
-            pendingBtns[j].addEventListener('click', async (e)=>{
-                const acceptance = e.currentTarget.id === "accept" ? true : false
-                const res = await fetch(`/home/accept`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({eventID, acceptance})
-                })
-                const result = await res.json()
-                console.log(result)
-                if (result.success){
-                    form.innerHTML = ""
-                    const newP = document.createElement("div")
-                    newP.appendChild(document.createTextNode(`<Requested ${acceptance? `accepted`:`rejected`}>`))
-                    form.appendChild(newP)
-                }
-            })
-
-        }
-    }
+                                <hr class="line invisible">`;
+	}
+	// Animation delay effect
+	const detailDivs = [...document.querySelectorAll('.history-detail-div')];
+	const hrLines = [...document.querySelectorAll('.line')];
+	for (let j in detailDivs) {
+		setTimeout(() => {
+			animateCSS(detailDivs[j], 'animate__fadeIn');
+			detailDivs[j].classList.remove('invisible');
+			hrLines[j].classList.remove('invisible');
+		}, 0 + Number(j) * 50);
+	}
+	// change accept value
+	const changeAcceptDivs = [...document.querySelectorAll('.pending-request')];
+	for (let i in changeAcceptDivs) {
+		const form = changeAcceptDivs[i];
+		const eventID = form.getAttribute('event_id');
+		const pendingBtns = [...form.querySelectorAll('.pending-btn')];
+		for (let j in pendingBtns) {
+			pendingBtns[j].addEventListener('click', async (e) => {
+				const acceptance =
+					e.currentTarget.id === 'accept' ? true : false;
+				const res = await fetch(`/home/accept`, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({ eventID, acceptance })
+				});
+				const result = await res.json();
+				console.log(result);
+				if (result.success) {
+					form.innerHTML = '';
+					const newP = document.createElement('div');
+					newP.appendChild(
+						document.createTextNode(
+							`<Requested ${
+								acceptance ? `accepted` : `rejected`
+							}>`
+						)
+					);
+					form.appendChild(newP);
+				}
+			});
+		}
+	}
 }
 
 // UpperCase all username
 function uppercaseName(name) {
-    return name.slice(0, 1).toUpperCase() + name.slice(1, name.length)
+	return name.slice(0, 1).toUpperCase() + name.slice(1, name.length);
 }
 
 // filter function
@@ -131,10 +152,10 @@ function changeFilter() {
 }
 
 // change acceptance value
-const changeAcceptBtns = [...document.querySelectorAll('.pending-request')]
+const changeAcceptBtns = [...document.querySelectorAll('.pending-request')];
 for (let i in changeAcceptBtns) {
-    const changeAcceptBtn = changeAcceptBtns[i]
-    changeAcceptBtn.querySelector('#accept').value = "null"
+	const changeAcceptBtn = changeAcceptBtns[i];
+	changeAcceptBtn.querySelector('#accept').value = 'null';
 }
 
 // Windows onload
@@ -147,16 +168,3 @@ window.addEventListener('load', async () => {
     await loadHistory(res)
     changeFilter()
 })
-
-// Animated function
-function animateCSS(node, animation){
-        node.classList.add('animate__animated')
-        node.classList.add(animation)
-
-        function handleAnimationEnd(e){
-            e.stopPropagation()
-            node.classList.remove(`animate__animated`)
-            node.classList.remove(animation)
-        }
-        node.addEventListener('animationend', handleAnimationEnd)
-}

@@ -38,39 +38,23 @@
 	color: black;
 }
 
-.accept-btn {
-	border: none;
-	background-color: white;
-	padding: 0;
-	margin: 0 5px;
-	font-size: 20px;
-}
-
-#accept:hover {
-	color: green;
-}
-
-#decline:hover {
-	color: red;
-}
-
-.trans-info{
+.trans-info {
 	display: inline-block;
 	margin: 0;
 }
 
-.pending-request{
+.pending-request {
 	display: inline-block;
 }
 
-@media screen and (max-width: 800px){
-	div.history-detail-div{
+@media screen and (max-width: 800px) {
+	div.history-detail-div {
 		flex-direction: column;
 	}
-	p.trans-info{
+	p.trans-info {
 		display: block;
 	}
-	form.pending-request{
+	form.pending-request {
 		display: block;
 	}
 	div.events-info{
@@ -78,6 +62,9 @@
 	}
 	.events-location{
 		padding-bottom: 13px;
+	}
+	button.pending-btn{
+		margin: 2px 0;
 	}
 }
 
@@ -101,6 +88,33 @@
 	font-weight: bold;
 }
 
-.invisible{
+.invisible {
 	display: none;
+}
+
+.pending-btn{
+	border-radius: 50%;
+	border: none;
+	color: white;
+	margin-left: 5px;
+}
+
+#accept:hover {
+	background-color: rgb(6, 183, 100);
+	box-shadow: inset 1px 1px 2px rgb(1, 78, 1);
+}
+
+#reject:hover {
+	background-color: rgb(194, 6, 6);
+	box-shadow: inset 1px 1px 2px brown;
+}
+
+#accept{
+	background-color: rgba(51, 185, 122, 0.781);
+	box-shadow: inset 0px 0px 1px rgb(1, 78, 1);
+}
+
+#reject{
+	background-color: rgba(189, 39, 39, 0.813);
+	box-shadow: inset 0px 0px 1px brown;
 }

@@ -12,3 +12,17 @@
 	flex-direction: column;
 	padding: 50px;
 }
+
+.feature-container1, .feature-container2{
+	margin: 18px;
+	display: flex;
+	align-items: flex-start;
+}
+
+.feature-name {
+	padding: 10px;
+}
+
+.feature-detail {
+	padding: 10px;
+}

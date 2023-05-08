@@ -1,3 +1,4 @@
+import { animateCSS, loadPic } from "./exportFn.js";
 // Declare variable
 const form = document.querySelector('#create-group-form')
 const resMsg = document.querySelector('.resMsg')
@@ -18,30 +19,6 @@ async function loadFriends(){
 								    </div>`
         }
     }
-    // Display selected user
-    // const friendsBox = [...document.querySelectorAll('.friend-input')]
-    // const selectedUsersBox = document.querySelector('#selected-user')
-    // friendsBox.forEach((friendBox) =>{
-    //     friendBox.addEventListener('change', (e)=>{
-    //         if (friendBox.checked){
-    //             const friendName = friendBox.getAttribute('friend-name')
-    //             const newP = document.createElement('p')
-    //             newP.classList.add('selected-name')
-    //             newP.setAttribute('friend-name', friendName)
-    //             const newContent = document.createTextNode(friendName)
-    //             newP.appendChild(newContent)
-    //             selectedUsersBox.appendChild(newP)
-    //         }
-    //         if (!friendBox.checked){
-    //             const selectedUsers = [...document.querySelectorAll('.selected-name')]
-    //             selectedUsers.forEach((user)=>{
-    //                 if (user.getAttribute('friend-name') === friendBox.getAttribute('friend-name')){
-    //                     selectedUsersBox.removeChild(user)
-    //                 }
-    //             })
-    //         }
-    //     })
-    // })
 }
 
 // Create new group
@@ -92,18 +69,41 @@ async function createGroup(){
 async function loadGroup(){
     const res = await fetch('/groups')
     const result = await res.json()
-    console.log(result)
-    const groupsBox = document.querySelector('.container-fluid.groups')
-    groupsBox.innerHTML = ''
+    const groupsBox = document.querySelector('.group-div')
     
-    result.forEach((data)=>{
-        groupsBox.innerHTML += `<div groupID="${data.id}"><a href="group-detail.html?groupID=${data.id}">${data.name}</a><div/>`
-    })
+    if (result.success){
+        groupsBox.innerHTML = ''
+        result.userGroup.forEach(async (data, i)=>{
+            const res = await fetch(`/groups/group-detail?groupID=${data.id}`)
+            const groupResult = await res.json()
+            groupsBox.innerHTML += `<div class="group-summary-div invisible ${groupResult.groupBalance >= 0 ? 'settle': 'not-settle'}">
+                                        <div class="group-name">
+                                            <div>Group: </div>
+                                            <a href="group-detail.html?groupID=${data.id}">${data.name}</a>
+                                        </div>
+                                        <div class="group-balance">
+                                            <div class="group-amount-type">
+                                                ${groupResult.groupBalance >= 0 ? 'Your Lent: ' : 'You Borrowed: '}
+                                            </div>
+                                            <div class="group-amount">
+                                                ${groupResult.groupBalance}
+                                            </div>
+                                        </div>
+                    </div>`
+                    const groupSummaryDiv = [...document.querySelectorAll('.group-summary-div')]
+                    groupSummaryDiv.forEach((groupDiv, j)=>{
+                        setTimeout(()=>{
+                            animateCSS(groupDiv, 'animate__bounceInLeft')
+                            groupDiv.classList.remove('invisible')
+                        }, 0 + Number(j) * 50)
+                    })
+        })
+    }
 }
-
 
 // window onload
 window.addEventListener('load', async ()=>{
     await loadFriends();
     await loadGroup();
+    await loadPic()
 })

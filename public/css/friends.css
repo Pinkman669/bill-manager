@@ -1,13 +1,55 @@
 @import url('sign.css');
-.container-fluid.member {
+@import url('home.css');
+#friends-balance{
 	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-}
+	/* justify-content: space-between;
+	padding: 50px; */
+	margin: 10px 100px;
+	width: 100%;
 
+}
 .users-pic {
 	height: 30px;
 	width: 30px;
 	border-radius: 50%;
 	display: inline-block;
 }
+.create-event-div{  
+	height: 100%;
+    display: flex;
+    align-items: flex-start;
+	justify-content: flex-end;
+}
+
+.create-btn{
+	background-color: #FFE7A2;
+	color: black;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px black;
+	padding: 2px 2px;
+}
+.create-btn > i{
+font-size: 20px;
+}
+
+#friends-table{
+	font: 34;
+	font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: 20px;
+	max-width: 1240px;
+	margin: 20px 150px;
+
+}
+.friends-detail-div{
+	display: flex;
+	justify-content: flex-start;
+	padding: 5px;
+}
+.amount-div{
+	display: flex;
+	justify-content: flex-end;
+}
+

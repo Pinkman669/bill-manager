@@ -21,7 +21,15 @@ nav .container-fluid{
 }
 
 .greet-div {
+	height: 100%;
 	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	justify-content: space-between;
+}
+
+#greet-box{
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -82,16 +90,16 @@ h4{
 	div.main-block {
 		padding: 10px 5px;
 	}
-	div.userdata-div{
+	div.userdata-div {
 		padding: 0 10px;
 	}
 }
 
-.table th{
+.table th {
 	width: 50%;
 }
 
-.load-btn-div{
+.load-btn-div {
 	display: flex;
 	justify-content: center;
 }
@@ -99,4 +107,17 @@ h4{
 .loadMore-Btn > a{
 	text-decoration: none;
 	color: white;
+}
+
+.create-activities-btn{
+	background-color: #FFE7A2;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px black;
+	color: black;
+    cursor: pointer;
+    padding: 5px 10px;
+}
+
+.create-activities-btn > i{
+	font-size: 20px;
 }

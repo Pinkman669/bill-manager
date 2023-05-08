@@ -7,7 +7,6 @@ import { isLoggedIn } from './loginRoutes';
 export const friendsRoutes = express.Router();
 
 friendsRoutes.get('/', isLoggedIn, userTotalAmount);
-// friendsRoutes.get('/', isLoggedIn,btwFriendsAmount);
 
 export async function userTotalAmount(req: Request, res: Response) {
 	try {
@@ -50,19 +49,19 @@ export async function userTotalAmount(req: Request, res: Response) {
 		// get the total req amount:
 		for (let i of usersRecordsReq.rows) {
 			totalAmount += i.amount;
-			console.log(
-				`totalAmount: + ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},fd_id${i.id},name:${i.nickname}`
-			);
+			// console.log(
+			// 	`totalAmount: + ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},fd_id${i.id},name:${i.nickname}`
+			// );
 		}
 		// get the total res amount:
 		for (let i of usersRecordsRes.rows) {
 			totalAmount -= i.amount;
-			console.log(
-				`totalAmount: - ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},fd_id${i.id},name:${i.nickname}`
-			);
+			// console.log(
+			// 	`totalAmount: - ${i.amount} = ${totalAmount},req:${i.requestor_id} ,res:${i.receiver_id},fd_id${i.id},name:${i.nickname}`
+			// );
 		}
 
-		console.log(`total amount: ${totalAmount}`);
+		// console.log(`total amount: ${totalAmount}`);
 
 		// friends amount ===================================================================
 
