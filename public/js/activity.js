@@ -109,6 +109,13 @@ function splitMethod(){
     const splitMethodBtns = [...document.querySelectorAll('.split-method')]
     splitMethodBtns.forEach((method)=>{
         method.addEventListener('change', async (e)=>{
+             if (document.querySelectorAll('.selection').length < 1){
+                e.target.checked = false
+                return resMsgTrigger(false, 'Please select users')
+            } else if (document.querySelector('#total-amount').value < 1){
+                e.target.checked = false
+                return resMsgTrigger(false, 'Please enter total amount')
+            }
             if (e.target.value === 'evenly'){
                 return await LoadFriendsInput('evenly')
             } else if (e.target.value === 'shares'){
@@ -225,12 +232,11 @@ requestorBtn.addEventListener('change', (e)=>{
             user.checked = false
             user.disabled = true
             usersAmountInput[i].disabled = true
-        } else{
+        } else if (!document.querySelector("#equally").checked) {
             user.checked = true
             user.disabled = false
             usersAmountInput[i].disabled = false
-        }
-    })
+    }})
 })
 
 // user amount checkbox on change
@@ -248,11 +254,22 @@ function userCheckBoxChange(){
     })
 }
 
+// resMsg trigger Fn
+function resMsgTrigger(msgType, msgContent){
+    const resMsgBox = document.querySelector('.alert')
+    if (msgType){
+        resMsgBox.classList.replace('alert-warning', 'alert-success')
+    } else{
+        resMsgBox.classList.replace('alert-success', 'alert-warning')
+    }
+    resMsgBox.classList.replace('collapse', 'show')
+    resMsgBox.querySelector('.resMsg').textContent = msgContent
+}
+
 window.addEventListener('load', async()=>{
     await loadFriend()
     await LoadSelector()
     await loadGroups()
-    // submitActivity()
     splitMethod()
     selectType()
 })

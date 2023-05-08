@@ -29,10 +29,10 @@ export async function getRecentHistory(req: Request, res: Response) {
 		);
 
 		const receiverInfo = await client.query(
-			`SELECT DISTINCT users.id as user_id, records.accepted,records.id as record_id, users.nickname, events.date, records.amount, records.event_id as event_id,events.name, records.due 
-        FROM events INNER JOIN records ON records.requestor_id = events.user_id 
-        INNER JOIN users ON records.receiver_id = users.id 
-        WHERE events.user_id = $1 AND events.date >= $2 ORDER BY events.date DESC`,
+			`SELECT events.date, records.accepted, records.id as record_id, records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
+			FROM records INNER JOIN events ON records.event_id = events.id
+			INNER JOIN users ON users.id = records.receiver_id
+			WHERE records.requestor_id = $1 AND events.date >= $2 ORDER BY events.date DESC`,
 			[userID, threeMonths]
 		);
 
@@ -57,10 +57,10 @@ export async function getLentHistory(req: Request, res: Response) {
 		const userID = req.session.userID;
 
 		const receiverInfo = await client.query(
-			`SELECT DISTINCT users.id as user_id, records.accepted,records.id as record_id,users.nickname, events.date, records.amount, records.event_id as event_id,events.name, records.due 
-            FROM events INNER JOIN records ON records.requestor_id = events.user_id 
-            INNER JOIN users ON records.receiver_id = users.id 
-            WHERE events.user_id = $1 AND records.accepted IS NOT false ORDER BY events.date DESC`,
+			`SELECT events.date, records.accepted, records.id as record_id, records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
+			FROM records INNER JOIN events ON records.event_id = events.id
+			INNER JOIN users ON users.id = records.receiver_id
+			WHERE records.requestor_id = $1 AND records.accepted IS NOT false ORDER BY events.date DESC`,
 			[userID]
 		);
 
@@ -114,10 +114,10 @@ export async function getAllHistory(req: Request, res: Response) {
 		);
 
 		const receiverInfo = await client.query(
-			`SELECT DISTINCT users.id as user_id, records.accepted, records.id as record_id, users.nickname, events.date, records.amount, records.event_id as event_id,events.name, records.due 
-        FROM events INNER JOIN records ON records.requestor_id = events.user_id 
-        INNER JOIN users ON records.receiver_id = users.id 
-        WHERE events.user_id = $1 ORDER BY events.date DESC`,
+			`SELECT events.date, records.accepted, records.id as record_id, records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
+			FROM records INNER JOIN events ON records.event_id = events.id
+			INNER JOIN users ON users.id = records.receiver_id
+			WHERE records.requestor_id = $1 ORDER BY events.date DESC`,
 			[userID]
 		);
 
@@ -150,10 +150,10 @@ export async function getPendingHistory(req: Request, res: Response) {
 		);
 
 		const receiverInfo = await client.query(
-			`SELECT DISTINCT users.id as user_id, records.accepted, records.id as record_id, users.nickname, events.date, records.amount, records.event_id as event_id,events.name, records.due 
-        FROM events INNER JOIN records ON records.requestor_id = events.user_id 
-        INNER JOIN users ON records.receiver_id = users.id 
-        WHERE events.user_id = $1 AND records.accepted IS null ORDER BY events.date DESC`,
+			`SELECT events.date, records.accepted, records.id as record_id, records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
+			FROM records INNER JOIN events ON records.event_id = events.id
+			INNER JOIN users ON users.id = records.receiver_id
+			WHERE records.requestor_id = $1 AND records.accepted IS null ORDER BY events.date DESC`,
 			[userID]
 		);
 
@@ -185,10 +185,10 @@ export async function getCancelledHistory(req: Request, res: Response) {
 		);
 
 		const receiverInfo = await client.query(
-			`SELECT DISTINCT users.id as user_id, records.accepted, records.id as record_id, users.nickname, events.date, records.amount, records.event_id as event_id,events.name, records.due 
-        FROM events INNER JOIN records ON records.requestor_id = events.user_id 
-        INNER JOIN users ON records.receiver_id = users.id 
-        WHERE events.user_id = $1 AND records.accepted IS false ORDER BY events.date DESC`,
+			`SELECT events.date, records.accepted, records.id as record_id, records.event_id as event_id, events.name, records.amount, users.nickname, users.id as user_id, records.due 
+			FROM records INNER JOIN events ON records.event_id = events.id
+			INNER JOIN users ON users.id = records.receiver_id
+			WHERE records.requestor_id = $1 AND records.accepted IS false ORDER BY events.date DESC`,
 			[userID]
 		);
 
