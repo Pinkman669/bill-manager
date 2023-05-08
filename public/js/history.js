@@ -2,7 +2,8 @@ import { animateCSS } from "./exportFn.js";
 // Declare variable
 const events = document.querySelector('.history-div');
 const userPic = document.querySelector('.member-pic-div');
-
+let startDisplay = 0;
+let maxDisplay = 20;
 // Load user pic
 async function loadPic() {
     const res = await fetch('/home')
@@ -11,11 +12,24 @@ async function loadPic() {
     alt="profile-image" class="profile-pic" />`
 }
 
+// Load more history btn
+document.querySelector('#load-more-btn').addEventListener('click', async ()=>{
+    const res = await fetch(`/history/${document.querySelector('.form-select').value}`)
+    maxDisplay += 20
+    startDisplay += 20
+    console.log('start: '+ startDisplay)
+    await loadHistory(res, maxDisplay, startDisplay)
+})
+
 // Load user's history info in most recent 3 months
-async function loadHistory(res) {
+async function loadHistory(res, maxDisplay = 20, startDisplay = 0) {
 	const result = await res.json();
-	for (let i in result.history) {
+    if (maxDisplay >= result.history.length){
+        maxDisplay = result.history.length
+    }
+	for (let i = startDisplay; i < maxDisplay; i++) {
 		const event = result.history[i];
+        console.log(event.event_id)
 		const nickname = uppercaseName(event.nickname);
 		const date = new Date(result.history[i].date).toDateString();
 
@@ -77,13 +91,11 @@ async function loadHistory(res) {
 	// Animation delay effect
 	const detailDivs = [...document.querySelectorAll('.history-detail-div')];
 	const hrLines = [...document.querySelectorAll('.line')];
-	for (let j in detailDivs) {
-		setTimeout(() => {
-			animateCSS(detailDivs[j], 'animate__fadeIn');
-			detailDivs[j].classList.remove('invisible');
-			hrLines[j].classList.remove('invisible');
-		}, 0 + Number(j) * 50);
-	}
+    for (let j = startDisplay; j < maxDisplay;j++){
+        animateCSS(detailDivs[j], 'animate__fadeIn');
+        detailDivs[j].classList.remove('invisible');
+        hrLines[j].classList.remove('invisible');
+    }
 	// change accept value
 	const changeAcceptDivs = [...document.querySelectorAll('.pending-request')];
 	for (let i in changeAcceptDivs) {
@@ -128,6 +140,8 @@ function uppercaseName(name) {
 // filter function
 function changeFilter() {
     document.querySelector('.form-select').addEventListener('change', async (e) => {
+        startDisplay = 0
+        maxDisplay = 20
         events.innerHTML = ''
         if (e.target.value === 'recent') {
             const res = await fetch('/history/recent')
