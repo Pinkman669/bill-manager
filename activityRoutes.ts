@@ -105,7 +105,10 @@ async function addFriend(req: Request, res: Response) {
         const userID = req.session.userID
         const userNameInput = req.body.userNameInput
         const userIDInput = await client.query(`SELECT id FROM users WHERE email = $1`,[userNameInput])
-        const friendisExisted = await client.query(`SELECT * FROM friends WHERE user1_id = $1 OR user2_id = $1`,[userIDInput.rows[0].id])
+        const friendisExisted = await client.query(`SELECT * FROM friends WHERE user1_id = $1 AND user2_id = $2 OR user1_id = $2 AND user2_id = $1`,[
+            userIDInput.rows[0].id,
+            userID
+        ])
         if (friendisExisted.rowCount){
             res.json({success: false, msg: 'Friend existed'})
             return

@@ -121,9 +121,10 @@ function splitMethod(){
 }
 
 // Submit form
-function submitActivity(){
-    document.querySelector('#form-submit-btn').addEventListener('click', async (e)=>{
-        e.preventDefault()
+// function submitActivity(){
+    document.querySelector('#form-submit-btn').addEventListener('click',async (e)=>{
+        console.log(e.target)
+        e.preventDefault();
 
         // Reject split method not selected
         const splitMethodBtns = [...document.querySelectorAll('.split-method')]
@@ -155,7 +156,7 @@ function submitActivity(){
             resMsgBox.classList.replace('alert-success', 'alert-warning')
             resMsgBox.classList.replace('collapse', 'show')
             resMsgBox.querySelector('.resMsg').textContent = 'Please fill out the form'
-            return
+            return 
         }
         const form = document.querySelector('#activity-form')
         const formObj = {
@@ -194,7 +195,6 @@ function submitActivity(){
             }
         })
 
-        // form.reset()
         const res = await fetch('activity/create-activity',{
             method: "POST",
             headers: {
@@ -204,7 +204,7 @@ function submitActivity(){
         })
         const result = await res.json();
         if (result.success){
-            form.reset()
+            // form.reset()
             resMsgBox.classList.replace('alert-warning', 'alert-success')
             document.querySelector('.container-fluid.users-amount').innerHTML = ''
 
@@ -213,8 +213,8 @@ function submitActivity(){
         }
         resMsgBox.classList.replace('collapse', 'show')
         resMsgBox.querySelector('.resMsg').textContent = result.msg
-    })
-}
+    }, '#activity-form')
+// }
 
 // input option on change select
 requestorBtn.addEventListener('change', (e)=>{
@@ -252,7 +252,7 @@ window.addEventListener('load', async()=>{
     await loadFriend()
     await LoadSelector()
     await loadGroups()
-    submitActivity()
+    // submitActivity()
     splitMethod()
     selectType()
 })
