@@ -29,7 +29,6 @@ async function loadHistory(res, maxDisplay = 20, startDisplay = 0) {
     }
 	for (let i = startDisplay; i < maxDisplay; i++) {
 		const event = result.history[i];
-        console.log(event.event_id)
 		const nickname = uppercaseName(event.nickname);
 		const date = new Date(result.history[i].date).toDateString();
 

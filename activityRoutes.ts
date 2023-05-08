@@ -22,7 +22,6 @@ async function createActivity(req: Request, res: Response) {
         
         // Calculate shares to amount
         if (actInfo.method instanceof Object){
-            console.log(actInfo.method)
             if (actInfo.receiversInfo.userAmount.reduce((acc:number, curr:string)=>{
                 return acc += Number(curr)
             },0) !== Number(actInfo.method.shares)){
