@@ -19,6 +19,13 @@ activityRoutes.get('/loadGroups', isLoggedIn, loadGroup)
 async function createActivity(req: Request, res: Response) {
     try{
         const actInfo = req.body
+
+        if (typeof actInfo.method === 'string' && actInfo.method === 'evenly') {
+            console.log(actInfo.method)
+            actInfo.receiversInfo.userAmount = actInfo.receiversInfo.userAmount.map((amount: string) => {
+                return Math.round(Number(amount)* (Number(actInfo.totalAmount) / actInfo.receiversInfo.userAmount.length))
+            });
+        }
         
         // Calculate shares to amount
         if (actInfo.method instanceof Object){
