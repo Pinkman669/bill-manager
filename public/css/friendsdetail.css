@@ -32,9 +32,11 @@
 .settle{
     background-color: rgba(168, 214, 198, 0.806);
     box-shadow: 0 0 5px rgb(4, 117, 15);
+    margin: 20px;
 }
 
 .not-settle{
     background-color: rgba(199, 145, 145, 0.831);
     box-shadow: 0 0 5px rgb(167, 29, 29);
+    margin: 20px;
 }

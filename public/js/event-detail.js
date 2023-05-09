@@ -21,6 +21,7 @@ async function loadEventDetail() {
 	ownAmount.textContent = result.eventInfo[0].record_amount;
 	friendsInvolved.textContent = `${result.req[0].nickname}, ${result.res[0].nickname}`;
 	billTotal.textContent =  result.eventInfo[0].total_amount;
+	
 	message.textContent = result.eventInfo[0].message;
 	settle.textContent = (result.eventInfo[0].due?"Settled":"Unsettle")
 	if (result.eventInfo[0].method === "evenly"){
@@ -29,7 +30,7 @@ async function loadEventDetail() {
 		splitMethod.textContent = 'custom';
 	}else {
 		const shares = JSON. parse(result.eventInfo[0].method).shares
-		console.log(shares);
+		// console.log(shares);
 		splitMethod.textContent = `Split in ${shares} ways`;
 	}
 

@@ -10,12 +10,13 @@ async function loadFriendsDetail() {
 	const group = document.querySelector('#group_table');
 	const friendIcon = document.querySelector(`.member-profile`);
 	const fdNickname=result.friend[0].nickname;
+	const icon = result.friend[0].image;
 
 	friendName.textContent = fdNickname
 	balance.textContent = result.totalAmount; // the btw-friends balance; 
-	friendIcon.innerHTML= `<img class="profile-pic" src="${
-		result.friend.image
-			? `uploads/${result.friendsRecords[i].friendsImage}`
+	friendIcon.innerHTML = `<img class="profile-pic " src="${
+		result.friend[0].image
+			? `uploads/${icon}`
 			: `image/default_profile.jpg`
 	}">`
 

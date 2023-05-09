@@ -40,7 +40,7 @@ export async function getFriendsDetail(req: Request, res: Response) {
 			[userID]
 		);
 		const friendInfo = await client.query(
-			`SELECT nickname FROM users WHERE id = $1`,
+			`SELECT nickname, image FROM users WHERE id = $1`,
 			[friendID]
 		);
 
