@@ -1,3 +1,4 @@
+import { animateCSS, loadPic } from "./exportFn.js";
 async function loadFriends() {
 	const res = await fetch('/friends');
 	const result = await res.json();
@@ -74,4 +75,5 @@ async function loadFriends() {
 // Window onload function
 window.addEventListener('load', async () => {
 	loadFriends();
+	await loadPic();
 });
