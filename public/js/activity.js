@@ -1,3 +1,19 @@
+// state :
+// friendlist
+// totalAmount
+// msg
+// ...
+
+
+// loadfdlist(input) {
+// 	// 
+// }
+
+
+
+
+
+
 import {
 	searchUsers,
 	addFriend,
@@ -6,11 +22,12 @@ import {
 	selectType
 } from './addFriend.js';
 import { animateCSS } from './exportFn.js';
-
 // Declare variable
 const dividedBy = document.getElementById('denominator');
 const requestorBtn = document.querySelector('#requestor');
 const resMsgBox = document.querySelector('.alert');
+
+const selectedFriends = [];
 
 // Modal btns DOM //
 // Select types display/hidden modal
@@ -93,21 +110,17 @@ async function LoadFriendsInput(method) {
 	);
 	userAmountBox.innerHTML = '';
 	const selectedFriends = [...document.querySelectorAll('.friend-input')];
+
+	const unit = method === 'evenly' || method === 'custom' ? `$` : `shares`;
+
 	userAmountBox.innerHTML += `<div class="selected-user-div">
                                     <div class="selected-input-div">
-                                        <input class="usersCheckBox" type="checkbox" value="${
-											result.userInfo.userID
-										}" name="${
-		result.userInfo.userName
-	}" form="activity-form" ${
-		requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`
-	}>
-                                        <label >You ${
-											method === 'evenly' ||
-											method === 'custom'
-												? `$`
-												: `shares`
-										}</label>
+                                        <input class="usersCheckBox" type="checkbox" 
+										value="${result.userInfo.userID}" 
+										name="${result.userInfo.userName}" 
+										form="activity-form" 
+										${requestorBtn.value == result.userInfo.userID ? `disabled` : `checked`}>
+                                        <label >You ${unit}</label>
                                     </div>
                                     <input input-type="amount" class="usersAmountInput" type="number" name="${
 										result.userInfo.userName
@@ -115,10 +128,14 @@ async function LoadFriendsInput(method) {
 		method === 'evenly' ? `disabled` : `required`
 	} ${requestorBtn.value == result.userInfo.userID ? `disabled` : ``} min="1">
                                 </div>`;
+
+	// method state : evenly
+	// DOM data (selectedFriends) ->  js loop
 	selectedFriends.forEach((friend) => {
 		if (friend.checked) {
 			const friendName = friend.getAttribute('friend-name');
 			const friendID = friend.value;
+			const totalAmount = Number(document.querySelector('#total-amount').value);
 			userAmountBox.innerHTML += `<div class="selected-user-div">
                                             <div class="selected-input-div">
                                                 <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${
@@ -128,14 +145,19 @@ async function LoadFriendsInput(method) {
 				method === 'evenly' || method === 'custom' ? `$` : `shares`
 			}</label>
                                             </div>
-                                            <input input-type="amount" class="usersAmountInput" type="number" name="${friendID}-amount" form="activity-form" ${
-				method === 'evenly' ? `disabled` : `required`
-			} ${requestorBtn.value == friendID ? `disabled` : ``} min="1">
+                                            <input input-type="amount" class="usersAmountInput" type="number" name="${friendID}-amount" 
+											form="activity-form" ${method === 'evenly' ? `disabled` : `required`} 
+											${requestorBtn.value == friendID ? `disabled` : ``} 
+											min="1"
+											value="${method === 'evenly' ? totalAmount / selectedFriends.length : undefined}"
+											>
                                         </div>`;
 		}
 	});
 	userCheckBoxChange();
 }
+
+// state  1. method: evenly 2. load friend list
 
 // Rendering payment input depends on split-method
 function splitMethod() {

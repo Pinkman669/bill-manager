@@ -14,7 +14,6 @@ export async function settleBalance(req: Request, res: Response) {
 	try {
 		const userID = req.session.userID;
 		const friendID = req.body.friendId;
-		// console.log(`userid:${userID},friendid:${friendID}`)
 
 		await client.query(
 			`UPDATE records SET due = true 
@@ -43,15 +42,16 @@ export async function getFriendsDetail(req: Request, res: Response) {
 			[friendID]
 		);
 
-		const friendHistory = await client.query(
-			`SELECT 
-            events.id as event_id, events.name, events.date, records.id as record_id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted
-            FROM
-            events INNER JOIN records ON events.id = records.event_id
-            WHERE
-            ((records.requestor_id = $1 AND records.receiver_id = $2) OR (records.requestor_id = $2  AND records.receiver_id = $1 )) AND records.accepted = true 
-            ORDER BY 
-            events.date`,
+		const friendHistory = await client.query(`
+				SELECT
+				events.id as event_id, events.name, events.date, records.id as record_id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted
+				FROM
+				events INNER JOIN records ON events.id = records.event_id
+				WHERE
+				((records.requestor_id = $1 AND records.receiver_id = $2) OR (records.requestor_id = $2  AND records.receiver_id = $1 )) AND records.accepted = true 
+				ORDER BY 
+				events.date
+			`,
 			[userID, friendID]
 		);
 		const fdRecordsReq = await client.query(
@@ -95,9 +95,6 @@ export async function getFriendsDetail(req: Request, res: Response) {
 			totalAmount,
 			history: friendHistory.rows
 		});
-		// console.log({
-		// 	user: userInfo.rows, friend: friendInfo.rows, history:friendHistory.rows
-		// })
 	} catch (e) {
 		logger.error('[Err004] History detail not found ' + e);
 		res.json({ success: false, msg: '[ERR004]' });

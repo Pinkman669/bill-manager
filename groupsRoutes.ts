@@ -7,7 +7,7 @@ import { isLoggedIn } from './loginRoutes';
 
 export const groupsRoutes = express.Router();
 
-groupsRoutes.get('/create-group', isLoggedIn, loadFriends); // load friend list
+groupsRoutes.get('/friends', isLoggedIn, loadFriends); // load friend list
 groupsRoutes.post('/create-group', isLoggedIn, createGroup); // create group
 groupsRoutes.get('/', isLoggedIn, loadGroup); // load user group
 groupsRoutes.get('/group-detail', isLoggedIn, loadGroupDetail);

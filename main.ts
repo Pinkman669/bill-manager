@@ -16,7 +16,6 @@ import { historyRoutes } from './historyRoutes';
 import { groupsRoutes } from './groupsRoutes';
 import { friendsDetail } from './friendsdetail';
 import { eventDetail } from './eventDetail';
-// import { group } from 'console';
 
 declare module 'express-session' {
 	interface SessionData {

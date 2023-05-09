@@ -5,7 +5,7 @@ const resMsg = document.querySelector('.resMsg');
 
 // Load friend list in create group window
 async function loadFriends() {
-	const res = await fetch('/groups/create-group');
+	const res = await fetch('/groups/friends');
 	const result = await res.json();
 
 	if (result.success) {

@@ -8,13 +8,12 @@ async function loadFriends() {
 
 	let balance = result.totalBalance;
 	// const balance = document.querySelector('#user-balance')
-	username.textContent = result.user[0].nickname;
+	username.textContent = result.user.nickname;
 
 	balanceTag.textContent = balance;
 
 	for (let i in result.friendsRecords) {
 		if (result.friendsRecords[i].friendsAmount > 0) {
-			// console.log(`+ amount`);
 			friendTable.innerHTML += `
 								<div class="friends-div>
                                 <div class="friends-detail-div"> 

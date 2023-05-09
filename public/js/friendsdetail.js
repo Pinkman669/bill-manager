@@ -41,7 +41,6 @@ async function loadFriendsDetail() {
 										}</div>
 									</div>
 								</div>`;
-		// console.log(`-----------------${i.requestor_id},${id}----------------------------`)
 	}
 }
 

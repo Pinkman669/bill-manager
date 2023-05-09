@@ -59,40 +59,6 @@ async function loadUser() {
 									<td>+${receiverInfo.amount}</td>
 								</tr>`;
 	}
-	// oweDiv.innerHTML += `<div class="load-btn-div"><button type="button" state="load" load="owe" class="btn btn-dark loadMore-Btn">Load more</button></div>`
-	// creditDiv.innerHTML += `<div class="load-btn-div"><button type="button" state="load" load="credit" class="btn btn-dark loadMore-Btn">Load more</button></div>`
-
-	// load/collapse user detail
-	// const loadMoreBtns = [...document.querySelectorAll('.loadMore-Btn')]
-	// for (let i in loadMoreBtns){
-	// 	loadMoreBtns[i].addEventListener('click', (e)=>{
-	// 		const btnState = loadMoreBtns[i].getAttribute('state')
-	// 		if (btnState === 'load'){
-	// 			const hidedRows = loadMoreBtns[i].getAttribute('load') === "owe" ? oweDiv.querySelectorAll('.hide')
-	// 							: creditDiv.querySelectorAll('.hide')
-	// 			for (let j = 0; j < hidedRows.length; j++){
-	// 				hidedRows[j].classList.remove('invisible')
-	// 				if (hidedRows[j].classList.contains('animate__bounceOut')){
-	// 					hidedRows[j].classList.remove('animate__bounceOut')
-	// 				}
-	// 				hidedRows[j].classList.add('animate__bounceIn')
-	// 			}
-	// 			loadMoreBtns[i].textContent = 'Collapse'
-	// 			loadMoreBtns[i].setAttribute('state', 'collapse')
-	// 		} else if (btnState === 'collapse'){
-	// 			const showedRows = loadMoreBtns[i].getAttribute('load') === "owe" ? oweDiv.querySelectorAll('.hide')
-	// 							: creditDiv.querySelectorAll('.hide')
-	// 			for (let j = 0; j < showedRows.length; j++){
-	// 				showedRows[j].classList.replace('animate__bounceIn', 'animate__bounceOut')
-	// 				setTimeout(()=>{
-	// 					showedRows[j].classList.add('invisible')
-	// 				},700)
-	// 			}
-	// 			loadMoreBtns[i].textContent = 'Load More'
-	// 			loadMoreBtns[i].setAttribute('state', 'load')
-	// 		}
-	// 	})
-	// }
 }
 
 // Window onload function

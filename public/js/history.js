@@ -28,6 +28,7 @@ document.querySelector('#load-more-btn').addEventListener('click', async () => {
 });
 
 // Load user's history info in most recent 3 months
+// TODO: make res to history type
 async function loadHistory(res, maxDisplay = 20, startDisplay = 0) {
 	const result = await res.json();
 	if (maxDisplay >= result.history.length) {
@@ -150,34 +151,31 @@ function uppercaseName(name) {
 }
 
 // filter function
-function changeFilter() {
-	document
-		.querySelector('.form-select')
-		.addEventListener('change', async (e) => {
-			startDisplay = 0;
-			maxDisplay = 20;
-			events.innerHTML = '';
-			if (e.target.value === 'recent') {
-				const res = await fetch('/history/recent');
-				return await loadHistory(res);
-			} else if (e.target.value === 'lentHistory') {
-				const res = await fetch('/history/lentHistory');
-				return await loadHistory(res);
-			} else if (e.target.value === 'borrowedHistory') {
-				const res = await fetch('/history/borrowedHistory');
-				return await loadHistory(res);
-			} else if (e.target.value === 'allHistory') {
-				const res = await fetch('history/allHistory');
-				return await loadHistory(res);
-			} else if (e.target.value === 'pending') {
-				const res = await fetch('history/pending');
-				return await loadHistory(res);
-			} else if (e.target.value === 'cancelled-history') {
-				const res = await fetch('history/cancelled-history');
-				return await loadHistory(res);
-			}
-		});
-}
+
+document.querySelector('.form-select').addEventListener('change', async (e) => {
+	startDisplay = 0;
+	maxDisplay = 20;
+	events.innerHTML = '';
+	if (e.target.value === 'recent') {
+		const res = await fetch('/history/recent');
+		return await loadHistory(res);
+	} else if (e.target.value === 'lentHistory') {
+		const res = await fetch('/history/lentHistory');
+		return await loadHistory(res);
+	} else if (e.target.value === 'borrowedHistory') {
+		const res = await fetch('/history/borrowedHistory');
+		return await loadHistory(res);
+	} else if (e.target.value === 'allHistory') {
+		const res = await fetch('history/allHistory');
+		return await loadHistory(res);
+	} else if (e.target.value === 'pending') {
+		const res = await fetch('history/pending');
+		return await loadHistory(res);
+	} else if (e.target.value === 'cancelled-history') {
+		const res = await fetch('history/cancelled-history');
+		return await loadHistory(res);
+	}
+});
 
 // change acceptance value
 const changeAcceptBtns = [...document.querySelectorAll('.pending-request')];
@@ -190,11 +188,8 @@ for (let i in changeAcceptBtns) {
 window.addEventListener('load', async () => {
 	await loadPic();
 	const searchParams = new URLSearchParams(location.search);
-	const historyType = searchParams.get('type');
-	document.querySelector('.form-select').value = historyType || 'recent';
-	const res = await fetch(
-		`/history/${document.querySelector('.form-select').value}`
-	);
+	const historyType = searchParams.get('type') || 'recent';
+	document.querySelector('.form-select').value = historyType;
+	const res = await fetch(`/history/${historyType}`);
 	await loadHistory(res);
-	changeFilter();
 });

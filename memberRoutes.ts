@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { client } from './main';
 import { logger } from './logger';
 import { isLoggedIn } from './loginRoutes';
+import errorCode from './error-code.json'
 // import { UserHistory, History } from './type'
 
 export const memberRoutes = express.Router();
@@ -21,17 +22,17 @@ export async function getMember(req: Request, res: Response) {
 		const requestorInfo = await client.query(
 			`SELECT records.id as record_id, users.id, records.amount, users.nickname, users.image, events.date
 		FROM records INNER JOIN users ON records.requestor_id = users.id INNER JOIN events ON events.id = records.event_id
-		WHERE records.receiver_id = $1 AND records.due = $2 AND records.accepted = $3
+		WHERE records.receiver_id = $1 AND records.due = false AND records.accepted = true
 		ORDER BY events.date DESC`,
-			[userInfo.userID, false, true]
+			[userInfo.userID]
 		);
 
 		const receiverInfo = await client.query(
 			`SELECT records.id as record_id, users.id, records.amount, users.nickname, users.image, events.date
 		FROM records INNER JOIN users ON records.receiver_id = users.id INNER JOIN events ON events.id = records.event_id
-		WHERE records.requestor_id = $1  AND records.due = $2 AND records.accepted = $3
+		WHERE records.requestor_id = $1  AND records.due = false AND records.accepted = true
 		ORDER BY events.date DESC`,
-			[userInfo.userID, false, true]
+			[userInfo.userID]
 		);
 
 		let totalBalance = 0;
@@ -49,7 +50,7 @@ export async function getMember(req: Request, res: Response) {
 			totalBalance: totalBalance
 		});
 	} catch (e) {
-		logger.error('[Err002] User not found ' + e);
+		logger.error(`[Err002] ${errorCode.Err002}` + e);
 		res.json({ success: false, msg: '[ERR002]' });
 	}
 }
@@ -57,7 +58,6 @@ export async function getMember(req: Request, res: Response) {
 export async function putAccepted(req: Request, res: Response) {
 	try {
 		const { eventID, acceptance } = req.body;
-
 		await client.query(
 			`UPDATE records SET accepted = $1 WHERE event_id = $2`,
 			[acceptance, eventID]
