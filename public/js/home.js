@@ -4,9 +4,9 @@ async function loadUser() {
 	const result = await res.json();
 	const username = document.querySelector('#greet-user');
 	const userPic = document.querySelector('.member-pic-div');
-	const oweLoadBtn = document.querySelector('#borrowed')
+	const oweLoadBtn = document.querySelector('#borrowed');
 	const oweTable = document.querySelector('#user-owe-detail');
-	const creditLoadBtn = document.querySelector('#lent')
+	const creditLoadBtn = document.querySelector('#lent');
 	const creditTable = document.querySelector('#user-credit-detail');
 	const balanceTag = document.querySelector('#user-balance');
 	const maxDisplay = window.innerWidth > 390 ? 5 : 3;
@@ -20,35 +20,43 @@ async function loadUser() {
     alt="profile-image" class="profile-pic" />`;
 
 	for (let i = 0; i < result.requestorInfo.length; i++) {
-		const requestorInfo = result.requestorInfo[i]
-			oweTable.innerHTML += `<tr class="animate__animated ${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
+		const requestorInfo = result.requestorInfo[i];
+		oweTable.innerHTML += `<tr class="animate__animated ${
+			i >= maxDisplay
+				? `invisible hide`
+				: `animate__animated animate__bounceIn`
+		}">
 										<th scope="row">
 											<a href="/friendsdetail.html?friendID=${requestorInfo.id}" userID="${
-												requestorInfo.id
-											}">${requestorInfo.nickname}</a>
+			requestorInfo.id
+		}">${requestorInfo.nickname}</a>
 											<img class="users-pic" src="${
 												requestorInfo.image
 													? `uploads/${requestorInfo.image}`
-													: `image/default_profile.jpg`}">
+													: `image/default_profile.jpg`
+											}">
 										</th>
 										<td>-${requestorInfo.amount}</td>
 									</tr>`;
 	}
-	for (let i = 0; i < result.receiverInfo.length; i++){
-		const receiverInfo = result.receiverInfo[i]
-		creditTable.innerHTML += `<tr class="${i >= maxDisplay ? `invisible hide` : `animate__animated animate__bounceIn`}">
+	for (let i = 0; i < result.receiverInfo.length; i++) {
+		const receiverInfo = result.receiverInfo[i];
+		creditTable.innerHTML += `<tr class="${
+			i >= maxDisplay
+				? `invisible hide`
+				: `animate__animated animate__bounceIn`
+		}">
 									<th scope="row">
 										<a href="/friendsdetail.html?friendID=${receiverInfo.id}" userID="${
-											receiverInfo.id
-										}">${receiverInfo.nickname}</a>
+			receiverInfo.id
+		}">${receiverInfo.nickname}</a>
 										<img class="users-pic" src="${
 											receiverInfo.image
 												? `uploads/${receiverInfo.image}`
 												: `image/default_profile.jpg`
 										}">
 									</th>
-									<td>+${
-										receiverInfo.amount}</td>
+									<td>+${receiverInfo.amount}</td>
 								</tr>`;
 	}
 	// oweDiv.innerHTML += `<div class="load-btn-div"><button type="button" state="load" load="owe" class="btn btn-dark loadMore-Btn">Load more</button></div>`
@@ -60,7 +68,7 @@ async function loadUser() {
 	// 	loadMoreBtns[i].addEventListener('click', (e)=>{
 	// 		const btnState = loadMoreBtns[i].getAttribute('state')
 	// 		if (btnState === 'load'){
-	// 			const hidedRows = loadMoreBtns[i].getAttribute('load') === "owe" ? oweDiv.querySelectorAll('.hide') 
+	// 			const hidedRows = loadMoreBtns[i].getAttribute('load') === "owe" ? oweDiv.querySelectorAll('.hide')
 	// 							: creditDiv.querySelectorAll('.hide')
 	// 			for (let j = 0; j < hidedRows.length; j++){
 	// 				hidedRows[j].classList.remove('invisible')
@@ -72,7 +80,7 @@ async function loadUser() {
 	// 			loadMoreBtns[i].textContent = 'Collapse'
 	// 			loadMoreBtns[i].setAttribute('state', 'collapse')
 	// 		} else if (btnState === 'collapse'){
-	// 			const showedRows = loadMoreBtns[i].getAttribute('load') === "owe" ? oweDiv.querySelectorAll('.hide') 
+	// 			const showedRows = loadMoreBtns[i].getAttribute('load') === "owe" ? oweDiv.querySelectorAll('.hide')
 	// 							: creditDiv.querySelectorAll('.hide')
 	// 			for (let j = 0; j < showedRows.length; j++){
 	// 				showedRows[j].classList.replace('animate__bounceIn', 'animate__bounceOut')

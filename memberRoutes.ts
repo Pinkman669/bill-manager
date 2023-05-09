@@ -18,33 +18,36 @@ export async function getMember(req: Request, res: Response) {
 			image: req.session.image
 		};
 
-		const requestorInfo = await client.query(`SELECT records.id as record_id, users.id, records.amount, users.nickname, users.image, events.date
+		const requestorInfo = await client.query(
+			`SELECT records.id as record_id, users.id, records.amount, users.nickname, users.image, events.date
 		FROM records INNER JOIN users ON records.requestor_id = users.id INNER JOIN events ON events.id = records.event_id
 		WHERE records.receiver_id = $1 AND records.due = $2 AND records.accepted = $3
-		ORDER BY events.date DESC`,[
-			userInfo.userID,
-			false,
-			true
-		])
+		ORDER BY events.date DESC`,
+			[userInfo.userID, false, true]
+		);
 
-		const receiverInfo = await client.query(`SELECT records.id as record_id, users.id, records.amount, users.nickname, users.image, events.date
+		const receiverInfo = await client.query(
+			`SELECT records.id as record_id, users.id, records.amount, users.nickname, users.image, events.date
 		FROM records INNER JOIN users ON records.receiver_id = users.id INNER JOIN events ON events.id = records.event_id
 		WHERE records.requestor_id = $1  AND records.due = $2 AND records.accepted = $3
-		ORDER BY events.date DESC`,[
-			userInfo.userID,
-			false,
-			true
-		])
+		ORDER BY events.date DESC`,
+			[userInfo.userID, false, true]
+		);
 
 		let totalBalance = 0;
-		requestorInfo.rows.forEach((requestor)=>{
-			totalBalance -= requestor.amount
-		})
-		receiverInfo.rows.forEach((receiver)=>{
-			totalBalance += receiver.amount
-		})
+		requestorInfo.rows.forEach((requestor) => {
+			totalBalance -= requestor.amount;
+		});
+		receiverInfo.rows.forEach((receiver) => {
+			totalBalance += receiver.amount;
+		});
 
-		res.json({userInfo: userInfo, receiverInfo: receiverInfo.rows, requestorInfo: requestorInfo.rows, totalBalance: totalBalance});
+		res.json({
+			userInfo: userInfo,
+			receiverInfo: receiverInfo.rows,
+			requestorInfo: requestorInfo.rows,
+			totalBalance: totalBalance
+		});
 	} catch (e) {
 		logger.error('[Err002] User not found ' + e);
 		res.json({ success: false, msg: '[ERR002]' });

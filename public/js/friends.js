@@ -1,4 +1,4 @@
-import { animateCSS, loadPic } from "./exportFn.js";
+import { animateCSS, loadPic } from './exportFn.js';
 async function loadFriends() {
 	const res = await fetch('/friends');
 	const result = await res.json();
@@ -22,10 +22,8 @@ async function loadFriends() {
                                     <a href="/friendsdetail.html?friendID=${
 										result.friendsRecords[i].friendID
 									}" userID="${
-										result.friendsRecords[i].friendID
-									}">${
-										result.friendsRecords[i].friendsName
-										}</a>
+				result.friendsRecords[i].friendID
+			}">${result.friendsRecords[i].friendsName}</a>
                                     <img class="users-pic" src="${
 										result.friendsRecords[i].friendsImage
 											? `uploads/${result.friendsRecords[i].friendsImage}`
@@ -50,11 +48,9 @@ async function loadFriends() {
 					<div>
 						<a href="/friendsdetail.html?friendID=${
 							result.friendsRecords[i].friendID
-						}" userID="${
-							result.friendsRecords[i].friendID
-						}">${
-							result.friendsRecords[i].friendsName
-							}</a>
+						}" userID="${result.friendsRecords[i].friendID}">${
+				result.friendsRecords[i].friendsName
+			}</a>
 						<img class="users-pic" src="${
 							result.friendsRecords[i].friendsImage
 								? `uploads/${result.friendsRecords[i].friendsImage}`
@@ -70,7 +66,6 @@ async function loadFriends() {
 		}
 	}
 }
-
 
 // Window onload function
 window.addEventListener('load', async () => {

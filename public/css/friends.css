@@ -15,43 +15,41 @@
 	border-radius: 50%;
 	display: inline-block;
 }
-.create-event-div{  
+.create-event-div {
 	height: 50%;
-    display: flex;
-    align-items: flex-start;
+	display: flex;
+	align-items: flex-start;
 	justify-content: flex-end;
 	max-width: fit-content;
-	position:absolute;
-	right: 200px
+	position: absolute;
+	right: 200px;
 }
 
-.create-btn{
-	background-color: #FFE7A2;
+.create-btn {
+	background-color: #ffe7a2;
 	color: black;
 	border-radius: 10px;
 	box-shadow: 1px 1px 1px black;
 	padding: 2px 2px;
 }
-.create-btn > i{
-font-size: 20px;
+.create-btn > i {
+	font-size: 20px;
 }
 
-#friends-table{
+#friends-table {
 	font-weight: bold;
 	display: flex;
 	flex-direction: column;
 	padding: 20px;
 	max-width: 1240px;
 	margin: 20px 150px;
-	
-
 }
-.friends-detail-div{
+.friends-detail-div {
 	display: flex;
 	justify-content: flex-start;
 	padding: 5px;
 }
-.amount-div{
+.amount-div {
 	display: flex;
 	justify-content: flex-end;
 }

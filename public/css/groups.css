@@ -1,129 +1,130 @@
 @import url('home.css');
 
-@media screen and (max-width: 500px){
-    form#create-group-form{
-        flex-direction: column;
-    }
+@media screen and (max-width: 500px) {
+	form#create-group-form {
+		flex-direction: column;
+	}
 }
 
-.modal-footer{
-    justify-content: space-between;
+.modal-footer {
+	justify-content: space-between;
 }
 
-.member-profile{
-    justify-content: space-between;
+.member-profile {
+	justify-content: space-between;
 }
 
-.groups-btns-div{
-    height: 100%;
-    display: flex;
-    align-items: flex-start;
+.groups-btns-div {
+	height: 100%;
+	display: flex;
+	align-items: flex-start;
 }
 
-.groups-btns-div > button{
-    margin: 0 5px;
+.groups-btns-div > button {
+	margin: 0 5px;
 }
 
-.groups-btns-div > button{
-    border: none;
+.groups-btns-div > button {
+	border: none;
 }
 
-#create-group-btn, .create-activities-btn{
-    background-color: #FFE7A2;
-    border-radius: 10px;
-    box-shadow: 1px 1px 1px black;
+#create-group-btn,
+.create-activities-btn {
+	background-color: #ffe7a2;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px black;
 }
 
-#create-group-btn{
-    font-size: 20px;
-    padding: 5px;
+#create-group-btn {
+	font-size: 20px;
+	padding: 5px;
 }
 
-.create-activities-btn{
-    color: black;
-    cursor: pointer;
-    padding: 5px 10px;
+.create-activities-btn {
+	color: black;
+	cursor: pointer;
+	padding: 5px 10px;
 }
 
-.create-activities-btn > i{
-    font-size: 20px;
+.create-activities-btn > i {
+	font-size: 20px;
 }
 
-#selected-user{
-    display: flex;
-    flex-wrap: wrap;
+#selected-user {
+	display: flex;
+	flex-wrap: wrap;
 }
 
-#create-group-form{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
+#create-group-form {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
-.friend-name-div{
-    width: 50%;
-    display: flex;
-    justify-content: center;
+.friend-name-div {
+	width: 50%;
+	display: flex;
+	justify-content: center;
 }
 
-.friend-name{
-    border: 2px solid black;
-    text-align: center;
-    margin:5px;
-    border-radius: 20px;
-    padding: 5px;
-    width: 200px;
-    display: block;
+.friend-name {
+	border: 2px solid black;
+	text-align: center;
+	margin: 5px;
+	border-radius: 20px;
+	padding: 5px;
+	width: 200px;
+	display: block;
 }
 
-.friend-input{
-    display: none;
+.friend-input {
+	display: none;
 }
 
-.friend-input:checked + span{
-    background-color: orange;
+.friend-input:checked + span {
+	background-color: orange;
 }
 
-.hidden{
-    visibility: hidden;
+.hidden {
+	visibility: hidden;
 }
 
-.group-summary-div{
-    margin: 10px 0;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
+.group-summary-div {
+	margin: 10px 0;
+	padding: 20px;
+	display: flex;
+	justify-content: space-between;
 }
 
-.settle{
-    background-color: rgba(168, 214, 198, 0.806);
-    box-shadow: 0 0 5px rgb(4, 117, 15);
+.settle {
+	background-color: rgba(168, 214, 198, 0.806);
+	box-shadow: 0 0 5px rgb(4, 117, 15);
 }
 
-.not-settle{
-    background-color: rgba(199, 145, 145, 0.831);
-    box-shadow: 0 0 5px rgb(167, 29, 29);
+.not-settle {
+	background-color: rgba(199, 145, 145, 0.831);
+	box-shadow: 0 0 5px rgb(167, 29, 29);
 }
 
-.group-name{
-    display: flex;
-    align-items: center;
+.group-name {
+	display: flex;
+	align-items: center;
 }
 
-.group-name > div{
-    font-weight: bold;
-    padding-right: 5px;
+.group-name > div {
+	font-weight: bold;
+	padding-right: 5px;
 }
 
-.group-name > a{
-    color: black;
+.group-name > a {
+	color: black;
 }
 
-.group-balance{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    font-weight: bold;
+.group-balance {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	font-weight: bold;
 }

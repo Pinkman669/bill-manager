@@ -1,56 +1,55 @@
-
 @import url('groups.css');
 
-@media screen and (max-width: 500px){
-	div.event-input-div{
-		width:100%;
+@media screen and (max-width: 500px) {
+	div.event-input-div {
+		width: 100%;
 	}
-	#activity-form div.event-input-div > label{
+	#activity-form div.event-input-div > label {
 		font-size: 14px;
 	}
-	div.container-fluid.split{
+	div.container-fluid.split {
 		padding: 10px 0;
 	}
-	div#friendList-div{
+	div#friendList-div {
 		flex-direction: column;
 		align-items: center;
 	}
-	div.selected-user-div{
+	div.selected-user-div {
 		flex-direction: column;
 		align-items: center;
 	}
-	div#groups-div{
+	div#groups-div {
 		flex-direction: column;
 		align-items: center;
 	}
 }
 
-@media screen and (max-width: 768px){
-	div.user-amount-container{
+@media screen and (max-width: 768px) {
+	div.user-amount-container {
 		padding: 0;
 	}
 }
 
-#added-friends-div{
+#added-friends-div {
 	padding: 10px;
 	display: flex;
 	align-items: baseline;
 	justify-content: space-between;
 }
 
-.summary-div{
+.summary-div {
 	height: 100%;
 }
 
-#activity-form{
+#activity-form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-evenly;
-	height: 100%
+	height: 100%;
 }
 
-#activity-form div >input{
+#activity-form div > input {
 	width: 200px;
 	padding: 5px;
 	border: none;
@@ -58,46 +57,46 @@
 	background-color: inherit;
 }
 
-#activity-form div > label{
+#activity-form div > label {
 	font-size: 25px;
 	padding-right: 5px;
 	font-weight: bold;
 }
 
-.event-input-div{
+.event-input-div {
 	width: 400px;
 	display: flex;
 	justify-content: flex-end;
 	align-items: baseline;
 }
 
-.container-fluid.split{
+.container-fluid.split {
 	padding: 20px;
 }
 
-#paid-by-div{
+#paid-by-div {
 	display: flex;
 	justify-content: center;
 	padding-bottom: 10px;
 	align-items: baseline;
 }
 
-.container-split-method{
+.container-split-method {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex-wrap:wrap;
+	flex-wrap: wrap;
 }
 
-.split-method-div{
+.split-method-div {
 	margin: 0 5px;
 }
 
-.split-method{
+.split-method {
 	display: none;
 }
 
-.container-fluid.users-amount{
+.container-fluid.users-amount {
 	margin-top: 15px;
 	border: 2px solid orange;
 	border-radius: 10px;
@@ -106,64 +105,64 @@
 	padding: 20px;
 }
 
-.selected-user-div{
+.selected-user-div {
 	display: flex;
 	justify-content: center;
 	padding: 30px 20px;
 	align-items: baseline;
 }
 
-.method-btn{
+.method-btn {
 	border: 1px solid orange;
 	padding: 8px;
 	border-radius: 20px;
 }
 
-.method-btn:hover{
-	background-color:orange;
+.method-btn:hover {
+	background-color: orange;
 	color: white;
 	box-shadow: inset -1px -1px 3px black;
 }
 
-.split-method:checked + span{
-	background-color:orange;
+.split-method:checked + span {
+	background-color: orange;
 	color: white;
 	box-shadow: inset 1px 1px 3px black;
 }
 
-#denominator{
+#denominator {
 	border: none;
 	border-bottom: 2px solid black;
 	width: 50px;
 }
 
-.form-select{
+.form-select {
 	width: 130px;
 	margin-left: 10px;
 }
 
-.submit-btn-div{
+.submit-btn-div {
 	padding: 20px;
 	display: flex;
 	justify-content: flex-end;
 }
 
-.user-amount-container{
+.user-amount-container {
 	padding: 0 150px;
 }
 
-#friendList-div{
+#friendList-div {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-#selected-friends-div{
+#selected-friends-div {
 	padding: 10px;
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.selected-name{
+.selected-name {
 	padding: 3px 8px;
 	margin: 3px;
 	box-shadow: inset 0px 0px 1px blue;
@@ -172,7 +171,7 @@
 	background-color: rgb(47, 135, 150);
 }
 
-.selected-group{
+.selected-group {
 	padding: 3px 8px;
 	margin: 3px;
 	box-shadow: inset 0px 0px 1px blue;
@@ -181,81 +180,83 @@
 	background-color: rgb(8, 121, 57);
 }
 
-#add-friends{
+#add-friends {
 	font-size: 20px;
 	color: black;
-	background-color: #FFE7A2;
+	background-color: #ffe7a2;
 	border-radius: 10px;
-
 }
 
-.selected-input-div{
+.selected-input-div {
 	display: flex;
 }
 
-.friend-input, .group-input{
-    display: none;
+.friend-input,
+.group-input {
+	display: none;
 }
 
-.friend-name:hover{
+.friend-name:hover {
 	background-color: #308796;
 	box-shadow: inset 1px 1px 3px black;
 }
 
-.group-name:hover{
+.group-name:hover {
 	background-color: #097939;
 	box-shadow: inset 1px 1px 3px black;
 }
 
-.friend-input:checked + span{
+.friend-input:checked + span {
 	background-color: #308796;
 	box-shadow: inset 1px 1px 3px black;
 }
 
-.group-input:checked + span{
+.group-input:checked + span {
 	background-color: #097939;
 	box-shadow: inset 1px 1px 3px black;
 }
 
-.friend-name{
+.friend-name {
 	background-color: #3087968f;
 }
 
-.group-name{
+.group-name {
 	background-color: #0f872182;
 }
 
-.friend-name, .group-name{
+.friend-name,
+.group-name {
 	color: white;
 	border: 2px solid black;
-    text-align: center;
-    margin: 5px;
-    border-radius: 20px;
-    padding: 5px;
-    width: 200px;
-    display: block;
+	text-align: center;
+	margin: 5px;
+	border-radius: 20px;
+	padding: 5px;
+	width: 200px;
+	display: block;
 	box-shadow: inset -1px -1px 3px black;
 }
 
-#groups-div{
+#groups-div {
 	display: flex;
 	flex-wrap: wrap;
 }
 
-.modal-body{
+.modal-body {
 	overflow-y: auto;
 	overflow-x: hidden;
 }
 
-.select-type{
+.select-type {
 	display: none;
 }
 
-.animate__animated.animate__fadeInRight, .animate__animated.animate__fadeInLeft{
+.animate__animated.animate__fadeInRight,
+.animate__animated.animate__fadeInLeft {
 	--animate-duration: 0.3s;
 }
 
-.alert{
+.alert {
 	display: flex;
 	justify-content: space-between;
 }

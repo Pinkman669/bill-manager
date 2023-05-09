@@ -1,5 +1,3 @@
-
-
 .container-fluid {
 	max-width: 1240px;
 }
@@ -17,7 +15,7 @@
 	div.main-block {
 		height: 250px;
 	}
-	.navbar .container-fluid{
+	.navbar .container-fluid {
 		justify-content: center;
 	}
 }
@@ -82,7 +80,7 @@
 	font-weight: bold;
 }
 
-li.nav-item > a{
+li.nav-item > a {
 	color: black;
 }
 

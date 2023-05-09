@@ -42,7 +42,6 @@ CREATE TABLE groups (
     id SERIAL PRIMARY KEY,
     creator_id INTEGER NOT NULL,
     name VARCHAR(255) NOT NULL,
-    creator_id INTEGER NOT NULL,
     FOREIGN KEY (creator_id) REFERENCES users(id)
 );
 

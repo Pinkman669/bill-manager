@@ -14,27 +14,26 @@ export async function settleBalance(req: Request, res: Response) {
 	try {
 		const userID = req.session.userID;
 		const friendID = req.body.friendId;
-	// console.log(`userid:${userID},friendid:${friendID}`)
+		// console.log(`userid:${userID},friendid:${friendID}`)
 
 		await client.query(
 			`UPDATE records SET due = true 
 			WHERE
 			((requestor_id = $1 AND receiver_id = $2) OR (requestor_id = $2  AND receiver_id = $1 )) AND due = false AND accepted = true`,
-			[userID,friendID]
-		)
-		res.json({success: true})
-
+			[userID, friendID]
+		);
+		res.json({ success: true });
 	} catch (e) {
 		logger.error('[Err005] Settle Balance not Found ' + e);
 		res.json({ success: false, msg: '[ERR005]' });
-	}};
-
+	}
+}
 
 export async function getFriendsDetail(req: Request, res: Response) {
 	try {
 		const userID = req.session.userID;
 		const friendID = req.params.friendID;
-		
+
 		const userInfo = await client.query(
 			`SELECT nickname FROM users WHERE id = $1`,
 			[userID]
@@ -53,7 +52,7 @@ export async function getFriendsDetail(req: Request, res: Response) {
             ((records.requestor_id = $1 AND records.receiver_id = $2) OR (records.requestor_id = $2  AND records.receiver_id = $1 )) AND records.accepted = true 
             ORDER BY 
             events.date`,
-			[userID,friendID]
+			[userID, friendID]
 		);
 		const fdRecordsReq = await client.query(
 			`SELECT 
@@ -64,7 +63,7 @@ export async function getFriendsDetail(req: Request, res: Response) {
             records.requestor_id = $1  AND records.receiver_id = $2 AND records.due = false AND records.accepted = true
             ORDER BY 
             records.id`,
-			[userID,friendID]
+			[userID, friendID]
 		);
 
 		const fdRecordsRes = await client.query(
@@ -76,7 +75,7 @@ export async function getFriendsDetail(req: Request, res: Response) {
             records.requestor_id = $2  AND records.receiver_id = $1 AND records.due = false AND records.accepted = true
             ORDER BY 
             records.id`,
-			[userID,friendID]
+			[userID, friendID]
 		);
 
 		let totalAmount: number = 0;
@@ -91,12 +90,14 @@ export async function getFriendsDetail(req: Request, res: Response) {
 		}
 
 		res.json({
-			user: userInfo.rows, friend: friendInfo.rows,totalAmount, history:friendHistory.rows
+			user: userInfo.rows,
+			friend: friendInfo.rows,
+			totalAmount,
+			history: friendHistory.rows
 		});
 		// console.log({
 		// 	user: userInfo.rows, friend: friendInfo.rows, history:friendHistory.rows
 		// })
-	
 	} catch (e) {
 		logger.error('[Err004] History detail not found ' + e);
 		res.json({ success: false, msg: '[ERR004]' });

@@ -10,12 +10,12 @@ import path from 'path';
 import { memberRoutes } from './memberRoutes';
 import { isLoggedIn } from './loginRoutes';
 import { friendsRoutes } from './friendsRoutes';
-import { activityRoutes } from './activityRoutes'; 
+import { activityRoutes } from './activityRoutes';
 import grant from 'grant';
 import { historyRoutes } from './historyRoutes';
 import { groupsRoutes } from './groupsRoutes';
 import { friendsDetail } from './friendsdetail';
-import {eventDetail} from './eventDetail';
+import { eventDetail } from './eventDetail';
 // import { group } from 'console';
 
 declare module 'express-session' {
@@ -92,10 +92,10 @@ app.use(
 ); // Login and sign up routes
 app.use('/home', memberRoutes); // routes about member function
 app.use('/history', historyRoutes); //routes about history page
-app.use('/friendsdetail',friendsDetail); //routes about friends page
+app.use('/friendsdetail', friendsDetail); //routes about friends page
 app.use('/friends', friendsRoutes); // routes for friends record
-app.use('/groups', groupsRoutes);// routes for groups page
-app.use('/eventdetail', eventDetail);// routes for groups page
+app.use('/groups', groupsRoutes); // routes for groups page
+app.use('/eventdetail', eventDetail); // routes for groups page
 
 app.use('/activity', activityRoutes); // routes for create activity
 

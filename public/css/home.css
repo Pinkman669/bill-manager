@@ -10,7 +10,7 @@
 	justify-content: space-between;
 }
 
-nav .container-fluid{
+nav .container-fluid {
 	border-bottom: 3px black double;
 	border-top: 3px black double;
 }
@@ -29,7 +29,7 @@ nav .container-fluid{
 	justify-content: space-between;
 }
 
-#greet-box{
+#greet-box {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -44,21 +44,21 @@ nav .container-fluid{
 	background-color: white;
 }
 
-h3{
+h3 {
 	font-family: 'Anton', sans-serif;
 }
 
-h2#greet{
+h2#greet {
 	font-family: 'Poltawski Nowy', sans-serif;
 	font-style: italic;
 }
 
-h2#greet-user{
+h2#greet-user {
 	font-family: 'Poltawski Nowy', sans-serif;
 	font-weight: bold;
 }
 
-h4{
+h4 {
 	font-family: 'Jost';
 	font-weight: 600;
 }
@@ -104,20 +104,20 @@ h4{
 	justify-content: center;
 }
 
-.loadMore-Btn > a{
+.loadMore-Btn > a {
 	text-decoration: none;
 	color: white;
 }
 
-.create-activities-btn{
-	background-color: #FFE7A2;
-    border-radius: 10px;
-    box-shadow: 1px 1px 1px black;
+.create-activities-btn {
+	background-color: #ffe7a2;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px black;
 	color: black;
-    cursor: pointer;
-    padding: 5px 10px;
+	cursor: pointer;
+	padding: 5px 10px;
 }
 
-.create-activities-btn > i{
+.create-activities-btn > i {
 	font-size: 20px;
 }

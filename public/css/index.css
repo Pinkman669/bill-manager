@@ -13,7 +13,8 @@
 	padding: 50px;
 }
 
-.feature-container1, .feature-container2{
+.feature-container1,
+.feature-container2 {
 	margin: 18px;
 	display: flex;
 	align-items: flex-start;

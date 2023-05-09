@@ -125,7 +125,7 @@ export async function userTotalAmount(req: Request, res: Response) {
 					friendID: i.requestor_id,
 					friendsName: i.nickname,
 					friendsImage: i.image,
-					friendsAmount: -(i.amount)
+					friendsAmount: -i.amount
 				});
 				// console.log(
 				// 	`NEWreq: - ${i.amount} allFriendsDetail:${JSON.stringify(
