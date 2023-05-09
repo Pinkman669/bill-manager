@@ -12,6 +12,7 @@ async function loadEventDetail() {
 	const billTotal = document.querySelector('#bill-total-amount');
 	const message = document.querySelector('#message');
 	const settle = document.querySelector('#settle');
+	
 
 
 	
@@ -27,7 +28,9 @@ async function loadEventDetail() {
 	}else if (result.eventInfo[0].method === "custom"){
 		splitMethod.textContent = 'custom';
 	}else {
-		splitMethod.textContent = `Split in ${result.eventInfo[0].method} ways`;
+		const shares = JSON. parse(result.eventInfo[0].method).shares
+		console.log(shares);
+		splitMethod.textContent = `Split in ${shares} ways`;
 	}
 
 }
