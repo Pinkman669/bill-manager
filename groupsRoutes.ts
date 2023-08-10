@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import { client } from './main';
 import { logger } from './logger';
 import { isLoggedIn } from './loginRoutes';
-// import { UserHistory, History } from './type';
 
 export const groupsRoutes = express.Router();
 
@@ -137,7 +136,6 @@ async function loadGroupDetail(req: Request, res: Response) {
 		);
 		let groupBalance = 0;
 		for (let eventInfo of groupEventsInfo.rows) {
-			// console.log(eventInfo)
 			if (eventInfo.requestor_id === userID && !eventInfo.due) {
 				groupBalance += eventInfo.amount;
 			} else if (eventInfo.receiver_id === userID && !eventInfo.due) {

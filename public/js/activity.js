@@ -1,19 +1,3 @@
-// state :
-// friendlist
-// totalAmount
-// msg
-// ...
-
-
-// loadfdlist(input) {
-// 	// 
-// }
-
-
-
-
-
-
 import {
 	searchUsers,
 	addFriend,
@@ -135,7 +119,9 @@ async function LoadFriendsInput(method) {
 		if (friend.checked) {
 			const friendName = friend.getAttribute('friend-name');
 			const friendID = friend.value;
-			const totalAmount = Number(document.querySelector('#total-amount').value);
+			const totalAmount = Number(
+				document.querySelector('#total-amount').value
+			);
 			userAmountBox.innerHTML += `<div class="selected-user-div">
                                             <div class="selected-input-div">
                                                 <input class="usersCheckBox" type="checkbox" value="${friendID}" name="${friendName}" form="activity-form" ${
@@ -149,15 +135,18 @@ async function LoadFriendsInput(method) {
 											form="activity-form" ${method === 'evenly' ? `disabled` : `required`} 
 											${requestorBtn.value == friendID ? `disabled` : ``} 
 											min="1"
-											value="${method === 'evenly' ? totalAmount / selectedFriends.length : undefined}"
+											value="${
+												method === 'evenly'
+													? totalAmount /
+													  selectedFriends.length
+													: undefined
+											}"
 											>
                                         </div>`;
 		}
 	});
 	userCheckBoxChange();
 }
-
-// state  1. method: evenly 2. load friend list
 
 // Rendering payment input depends on split-method
 function splitMethod() {
@@ -280,7 +269,7 @@ document.querySelector('#form-submit-btn').addEventListener(
 		});
 		const result = await res.json();
 		if (result.success) {
-			// form.reset()
+			form.reset()
 			resMsgBox.classList.replace('alert-warning', 'alert-success');
 			document.querySelector('.container-fluid.users-amount').innerHTML =
 				'';
@@ -292,7 +281,6 @@ document.querySelector('#form-submit-btn').addEventListener(
 	},
 	'#activity-form'
 );
-// }
 
 // input option on change select
 requestorBtn.addEventListener('change', (e) => {

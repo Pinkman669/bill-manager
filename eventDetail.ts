@@ -52,7 +52,6 @@ export async function getEventDetail(req: Request, res: Response) {
 			res: receiver.rows,
 			eventInfo: eventDetail.rows
 		});
-		// console.log(JSON.stringify({user: userInfo,req: requestor,res: receiver, eventInfo: eventDetail}));
 	} catch (e) {
 		logger.error('[Err006] Event detail not Found ' + e);
 		res.json({ success: false, msg: '[ERR006]' });

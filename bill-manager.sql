@@ -31,7 +31,7 @@ CREATE TABLE records (
     receiver_id INTEGER NOT NULL,
     event_id INTEGER NOT NULL,
     amount INTEGER NOT NULL,
-    due BOOLEAN,
+    due BOOLEAN SET DEFAULT false,
     accepted BOOLEAN,
     FOREIGN KEY (requestor_id) REFERENCES users(id),
     FOREIGN KEY (receiver_id) REFERENCES users(id),

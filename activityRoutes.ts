@@ -19,11 +19,9 @@ async function createActivity(req: Request, res: Response) {
 		const actInfo = req.body;
 
 		if (typeof actInfo.method === 'string' && actInfo.method === 'evenly') {
-			console.log(actInfo.method);
 			actInfo.receiversInfo.userAmount =
 				actInfo.receiversInfo.userAmount.map((amount: string) => {
 					return Math.round(
-						Number(amount) *
 							(Number(actInfo.totalAmount) /
 								actInfo.receiversInfo.userAmount.length)
 					);
@@ -32,7 +30,6 @@ async function createActivity(req: Request, res: Response) {
 
 		// Calculate shares to amount
 		if (actInfo.method instanceof Object) {
-			console.log(actInfo.method);
 			if (
 				actInfo.receiversInfo.userAmount.reduce(
 					(acc: number, curr: string) => {
@@ -54,15 +51,12 @@ async function createActivity(req: Request, res: Response) {
 					);
 				});
 		}
-		console.log(actInfo.receiversInfo.userAmount);
-		console.log(actInfo);
 
 		// Reject if amount not match
 		let checkAmount = 0;
 		actInfo.receiversInfo.userAmount.forEach((amount: string) => {
 			checkAmount += Number(amount);
 		});
-		console.log(checkAmount);
 		if (
 			actInfo.method !== 'evenly' &&
 			Number(actInfo.totalAmount) !== checkAmount
@@ -95,6 +89,7 @@ async function createActivity(req: Request, res: Response) {
 		);
 		// Insert records
 		for (let i in actInfo.receiversInfo.userID) {
+			console.log(actInfo.receiversInfo.userAmount[i])
 			await client.query(
 				`INSERT INTO records (requestor_id, receiver_id, event_id, amount) VALUES ($1,$2,$3,$4)`,
 				[

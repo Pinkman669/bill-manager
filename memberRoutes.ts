@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 import { client } from './main';
 import { logger } from './logger';
 import { isLoggedIn } from './loginRoutes';
-import errorCode from './error-code.json'
-// import { UserHistory, History } from './type'
+import errorCode from './error-code.json';
+
 
 export const memberRoutes = express.Router();
 

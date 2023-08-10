@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { client } from './main';
 import { logger } from './logger';
 import { isLoggedIn } from './loginRoutes';
-// import { isLoggedIn } from './loginRoutes';
+
 
 export const friendsDetail = express.Router();
 
@@ -42,7 +42,8 @@ export async function getFriendsDetail(req: Request, res: Response) {
 			[friendID]
 		);
 
-		const friendHistory = await client.query(`
+		const friendHistory = await client.query(
+			`
 				SELECT
 				events.id as event_id, events.name, events.date, records.id as record_id, records.requestor_id, records.receiver_id, records.amount, records.due, records.accepted
 				FROM

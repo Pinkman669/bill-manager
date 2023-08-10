@@ -65,7 +65,7 @@ export async function userTotalAmount(req: Request, res: Response) {
 
 		// for (let i of usersRecordsReq.rows) {
 		// 			this is O(1)
-		// 	if (allFriendsSummary[i.receiver_id]) 
+		// 	if (allFriendsSummary[i.receiver_id])
 		// 	{
 		// 		xxx
 		// 	}
