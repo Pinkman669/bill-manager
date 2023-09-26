@@ -61,16 +61,6 @@ export async function userTotalAmount(req: Request, res: Response) {
 		}
 		let allFriendsDetail: FriendsDetail[] = [];
 
-		// const allFriendsSummary = {}
-
-		// for (let i of usersRecordsReq.rows) {
-		// 			this is O(1)
-		// 	if (allFriendsSummary[i.receiver_id])
-		// 	{
-		// 		xxx
-		// 	}
-		// }
-
 		for (let i of usersRecordsReq.rows) {
 			let friend = allFriendsDetail.find(
 				(obj) => obj.friendID === i.receiver_id

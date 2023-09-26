@@ -70,8 +70,7 @@ loginRoutes.post('/login', async (req, res) => {
 			throw new Error('Username/Password not matched');
 		}
 	} catch (e) {
-		console.log('login fail');
-		console.error(e);
+		logger.error(e);
 		res.status(400).json({ success: false });
 	}
 });

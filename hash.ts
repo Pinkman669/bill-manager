@@ -18,10 +18,3 @@ export async function checkPassword(
 	);
 	return isMatched;
 }
-
-// async function hash(){
-//    const result = await hashPassword("12345678910");
-//    console.log(result)
-// }
-
-// hash();
